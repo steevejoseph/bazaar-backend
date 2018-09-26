@@ -7,8 +7,8 @@ const userCon = require('../controllers/users.js'); //require the users controll
 
 router.post('/signup', userCon.user_signup); //signup route
 
-router.post('login', userCon.user_login); //login route (gives user a token that will be required for routes needing authentication)
+router.post('/login', userCon.user_login); //login route (gives user a token that will be required for routes needing authentication)
 
-router.delete('/:userID', checkAuth, userCon.user_delete);
+router.delete('/:userID', checkAuth, userCon.user_delete); //delete user and check that they are authenticated before doing so
 
 module.exports = router;

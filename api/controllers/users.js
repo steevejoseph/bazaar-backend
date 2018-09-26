@@ -3,7 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs'); //normal bcrypt has issues with heroku thus the use of bcryptjs
 const jwt = require('jsonwebtoken'); //for creation of tokens to authentication
-mongoose.connect('') //need to put mongoose url
+mongoose.connect('mongodb://team7:ABC123@ds263832.mlab.com:63832/largo-dev', {useNewUrlParser: true});
+
 
 const saltRounds = 10; //number of times to salt password hash
 
@@ -20,7 +21,7 @@ exports.user_signup = (req, res, next) => {
             //email has not been used good to create an account
           }else {
             //hashes the users password before storeing it
-            bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+            bcrypt.hash(req.body.password, saltRounds, (err, hash) => { 
               if(err) {
                 return res.status(500).json({
                   error: err
@@ -63,7 +64,7 @@ exports.user_login = (req, res, next) => {
           email: user[0].email,
           userId: user[0]._id
           },
-          "8faHdXnNLhKxfjydSFChsjmcTWZt",
+          "8faHdXnNLhKxfjydSFbtEjmcTWZt",
           {
             expiresIn: "1 hour"
           }
@@ -75,7 +76,7 @@ exports.user_login = (req, res, next) => {
         });
       }
       return res.status(401).json({
-        message: 'Authentication failed'
+        message: 'Authentication failed 3'
       });
     });
   })
