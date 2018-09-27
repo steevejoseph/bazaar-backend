@@ -109,4 +109,11 @@ function isLoggedIn(req, res, next){
 	res.redirect("/login");
 };
 
+//logout route!
+router.get("/logout", function(req, res){
+	req.logout();
+	res.redirect("/");
+});
+
+
 module.exports = router;
