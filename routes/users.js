@@ -48,8 +48,19 @@ router.post("/signup", function(req, res){
 			return res.render("signup.ejs");
 		}
 		console.log("Success user");
+		
+		// Does multiple things:
+		// 1. Logs user in.
+		// 2. Takes care of all session info
+		// 3. Stores correct info
+		// 4. Runs serializeUser()
+		// 5. Uses specified stratefy (local)
+		// "local" can be changed to multiple different strats.
 		passport.authenticate("local")(req, res, function(){
-		res.render('login.ejs');
+		// res.render('login.ejs');
+		// changed rendering of login page to just go ahead and log-in
+		// after signup.
+		res.redirect('/users/' + user._id);
 		});
 	});
 });
