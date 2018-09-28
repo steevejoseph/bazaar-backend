@@ -1,0 +1,10 @@
+<% include ../partials/header.ejs %>
+<h1>Services Index</h1>
+
+  <% if(services.length == 0) { %>
+  <p>No Services!</p>
+  <% } %>
+  <% for(var i = 0; i < services.length; i++) { %>
+    <p><%= services[i] %></p>
+  <% } %>
+<% include ../partials/footer.ejs %>
