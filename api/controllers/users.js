@@ -1,10 +1,9 @@
 //this user controller which contains the logic for the requests for the api
 const express = require('express');
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs'); //normal bcrypt has issues with heroku thus the use of bcryptjs
+const bcrypt = require('bcryptjs'); //normal bcrypt has issues with heroku thus the use of bcryptjs need to change to use same thing as last project (passport)
 const jwt = require('jsonwebtoken'); //for creation of tokens to authentication
 mongoose.connect('mongodb://team7:ABC123@ds263832.mlab.com:63832/largo-dev', {useNewUrlParser: true});
-
 
 const saltRounds = 10; //number of times to salt password hash
 
@@ -76,7 +75,7 @@ exports.user_login = (req, res, next) => {
         });
       }
       return res.status(401).json({
-        message: 'Authentication failed 3'
+        message: 'Authentication failed'
       });
     });
   })
