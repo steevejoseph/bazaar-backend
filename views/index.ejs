@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
+<% include ./partials/header.ejs %>
     <p>Welcome to <%= title %></p>
     <a href="/signup">Signup</a>
     <a href="/login">Login</a>
-    <!-- Beginning of Card -->
-            <!--<form action="/action_page.php">-->
-            <!--    Username: <input type="text" name="username" ><br>-->
-            <!--    Password: <input type="text" name="password" ><br>-->
-            <!--    <input type="submit" value="Submit">-->
-            <!--</form>   -->
-  <!-- end of card -->
-    
-  </body>
-</html>
+<% include ./partials/footer.ejs %>
+

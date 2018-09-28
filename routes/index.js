@@ -1,42 +1,12 @@
 var express = require('express');
 var passport = require('passport');
-var	bodyParser = require("body-parser");
-var	LocalStrategy = require("passport-local");
-var	passportLocalMongoose	= require("passport-local-mongoose");
 var User = require('../models/user.js');
-var session = require('express-session');
-var middleware =  require('../middleware/index.js');
 var router = express.Router();
-
-var flash = require('connect-flash');
-
-router.use(session({
-    // this secret will be used to 
-    // encode (encrypt) and decode(decrypt) the sessions.
-    secret:"I love you",
-    resave: false,
-    saveUninitialized: false
-}));
-
-router.use(passport.initialize());
-router.use(passport.session());
-
-passport.use(new LocalStrategy(User.authenticate()));
-
-// Two more lines before we can start working on the routes
-// Responsible for encoding data and putting it back into the session
-passport.serializeUser(User.serializeUser());
-// Responsible for reading the session, taking data from the session and unencoding it
-passport.deserializeUser(User.deserializeUser());
-
-//router.set("view engine", "ejs");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-
-
 
 router.get("/signup", function(req, res){
 	res.render("signup.ejs");
@@ -49,9 +19,9 @@ router.post("/signup", function(req, res){
 	User.register(new User({username:req.body.username}), req.body.password, function(err, user){
 		if(err){
 			console.log(err);
-			return res.render("signup.ejs");
+			req.flash("failure", err.message);
+			return res.redirect("/signup");
 		}
-		console.log("Success user");
 		
 		// Does multiple things:
 		// 1. Logs user in.
@@ -61,7 +31,7 @@ router.post("/signup", function(req, res){
 		// 5. Uses specified stratefy (local)
 		// "local" can be changed to multiple different strats.
 		passport.authenticate("local")(req, res, function(){
-		// res.render('login.ejs');
+		req.flash("success", "Successfully created account.");
 		// changed rendering of login page to just go ahead and log-in
 		// after signup.
 		res.redirect('/users/' + user._id);
@@ -76,15 +46,16 @@ router.get("/login", function(req, res){
 
 // Perform authentication on login
 router.post("/login", function(req, res){
-	passport.authenticate('local', {successFlash: 'Welcome!', failureFlash: 'Invalid username or password.' }, function(err, user, info) {
+	passport.authenticate('local', function(err, user, info) {
     if (err) { 
     	console.log(err);
-    	return;
+			req.flash("failure", err.message);
+    	return res.redirect('/login');
     	
     } if (!user) { 
     	console.log('Incorrect username or password');
-    	//req.flash("error", "Incorrect username or password");
-    	return res.render('login.ejs'); 
+    	req.flash('failure', info.message);
+    	return res.redirect('/login'); 
     }
     
     req.logIn(user, function(err) {
@@ -92,7 +63,7 @@ router.post("/login", function(req, res){
       	console.log(err);
       }
     
-      //req.flash("success", "You are signed in!");
+      req.flash("success", "Successfully logged in.");
       res.redirect('/users/' + user._id);
     });
   })(req, res);
@@ -101,8 +72,8 @@ router.post("/login", function(req, res){
 //logout route!
 router.get("/logout", function(req, res){
 	req.logout();
+	req.flash("success", "Successfully logged out.");
 	res.redirect("/");
 });
-
 
 module.exports = router;
