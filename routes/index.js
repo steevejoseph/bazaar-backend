@@ -4,11 +4,12 @@ var	bodyParser = require("body-parser");
 var	LocalStrategy = require("passport-local");
 var	passportLocalMongoose	= require("passport-local-mongoose");
 var User = require('../models/user.js');
+var session = require('express-session');
 var router = express.Router();
 
 var flash = require('connect-flash');
 
-router.use(require("express-session")({
+router.use(session({
     // this secret will be used to 
     // encode (encrypt) and decode(decrypt) the sessions.
     secret:"I love you",
@@ -89,11 +90,10 @@ router.post("/login", isLoggedIn, function(req, res){
     req.logIn(user, function(err) {
       if (err) { 
       	console.log(err);
-    }
+      }
     
-    //req.flash("success", "You are signed in!");
-    res.redirect('/users/' + user._id);
-    
+      //req.flash("success", "You are signed in!");
+      res.redirect('/users/' + user._id);
     });
   })(req, res);
 });
