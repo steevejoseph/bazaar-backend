@@ -5,6 +5,7 @@ var	LocalStrategy = require("passport-local");
 var	passportLocalMongoose	= require("passport-local-mongoose");
 var User = require('../models/user.js');
 var session = require('express-session');
+var middleware =  require('../middleware/index.js');
 var router = express.Router();
 
 var flash = require('connect-flash');
@@ -69,13 +70,12 @@ router.post("/signup", function(req, res){
 });
 
 
-
 router.get("/login", function(req, res){
 	res.render('login.ejs'); 
 });
 
 // Perform authentication on login
-router.post("/login", isLoggedIn, function(req, res){
+router.post("/login", function(req, res){
 	passport.authenticate('local', {successFlash: 'Welcome!', failureFlash: 'Invalid username or password.' }, function(err, user, info) {
     if (err) { 
     	console.log(err);
@@ -97,17 +97,6 @@ router.post("/login", isLoggedIn, function(req, res){
     });
   })(req, res);
 });
-
-function isLoggedIn(req, res, next){
-	if(req.isAuthenticated()){
-		return next();
-	}
-	
-	//flash messages that indicates a user must be logged in
-	//req.flash("error", "Please log in first!" );
-	
-	res.redirect("/login");
-};
 
 //logout route!
 router.get("/logout", function(req, res){
