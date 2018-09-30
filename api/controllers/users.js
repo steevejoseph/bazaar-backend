@@ -33,7 +33,7 @@ exports.user_signup = (req, res, next) => {
                 user.save();
                 res.status(201).json({
                   message: 'sucessful user creation',
-                  //createdUser: user
+                  createdUser: user
                 });
                 console.log(user);
               }
