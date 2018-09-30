@@ -43,25 +43,27 @@ exports.user_signup = (req, res, next) => {
 }
 
 exports.user_login = (req, res, next) => {
-  User.find({email: req.body.email}).exec()
+  User.findOne({email: req.body.email}).exec()
   .then(user => {
-    if(user.length < 1) {
+    console.log("type: " + typeof user +" user:\n"+user);
+    if(user === {} || user === null || user === undefined) {
       return res.status(401).json({
-        message: 'Authentication failed'
+        message: 'Authentication failed 1'
       });
     }
-    bcrypt.compare(req.body.password, user[0].passwordHash, (err, result) => {
+    bcrypt.compare(req.body.password, user.passwordHash, (err, result) => {
       if(err) {
+        console.log(err);
         return res.status(401).json({
-          message: 'Authentication failed'
+          message: 'Authentication failed 2'
         });
       }
       if(result) {
 
         const token = jwt.sign(
           {
-          email: user[0].email,
-          userId: user[0]._id
+          email: user.email,
+          userId: user._id
           },
           "8faHdXnNLhKxfjydSFbtEjmcTWZt",
           {
@@ -75,7 +77,7 @@ exports.user_login = (req, res, next) => {
         });
       }
       return res.status(401).json({
-        message: 'Authentication failed'
+        message: 'Authentication failed 3'
       });
     });
   })
