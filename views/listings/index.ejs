@@ -6,12 +6,17 @@
 <% } %>
 
 <% for(var i = 0; i < listings.length; i++) { %>
-<h5><b>Title:  </b><%= listings[i].name %></h5>
+<h5><b>Title:  </b><%= listings[i].title %></h5>
 <h5><b>Description:  </b></h5>
 <p><%= listings[i].body %></p>
 <h5><b>Posted by:  </b><%= listings[i].user %></h5>
 <h5><b>Category:  </b><%= listings[i].category %></h5>
-<h5><b>Tags: </b><% for(var i = 0; i < listings[i].tags.length; i++) { %> <%= listings[i].tags[i] %><% } %></h5>
+<h5><b>Tags:  </b></h5>
+<p>
+    <% for(var j = 0; j < listings[i].tags.length; j++) { %>
+    <%= listings[i].tags[j] %>, 
+    <% } %>
+</p>
 <% } %>
 
 <% include ../partials/footer.ejs %>
