@@ -1,0 +1,17 @@
+<% include ../partials/header.ejs %>
+<form action="/listings/new" method="POST">
+    <input type="text" name="title" placeholder="Title" required>
+    <!--author:String,-->
+    <br>
+    <textarea type="text" name="description" placeholder="Description" required></textarea>
+    <br>
+    <select name="category">
+        <% for(var i = 0; i < categories.length; i++) { %>
+        <option value="<%= categories[i]._id %>"><%= categories[i].name %></option>
+        <% } %>
+    </select>
+    </br>
+    <input type="text" name="tag" placeholder="Tag" required>
+    <input type="submit" value="Submit">
+</form>
+<% include ../partials/footer.ejs %>
