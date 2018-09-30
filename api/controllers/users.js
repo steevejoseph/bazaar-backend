@@ -19,7 +19,7 @@ exports.user_signup = (req, res, next) => {
             })
             //email has not been used good to create an account
           }else {
-            //hashes the users password before storeing it
+            //hashes the users password before storeing it can be moved in a pre save function in the schema
             bcrypt.hash(req.body.password, saltRounds, (err, hash) => { 
               if(err) {
                 return res.status(500).json({
@@ -31,9 +31,19 @@ exports.user_signup = (req, res, next) => {
                   passwordHash: hash
                 });
                 user.save();
+                const token = jwt.sign({
+                  email: user.email,
+                  userId: user._id
+                  },
+                  "8faHdXnNLhKxfjydSFbtEjmcTWZt",
+                  {
+                    expiresIn: "1 hour"
+                  }
+                );
                 res.status(201).json({
                   message: 'sucessful user creation',
-                  createdUser: user
+                  createdUser: user,
+                  token: token
                 });
                 console.log(user);
               }
@@ -103,3 +113,25 @@ exports.user_delete = (req, res, next) => {
       });
     });
 }
+
+exports.user_get = (req, res, next) => {
+  var emailtmp =req.userData.email;
+  console.log(req.userData);
+  var idtmp = req.userData.userId;
+  console.log(idtmp);
+  return res.status(200).json({
+    email: emailtmp,
+    id: idtmp
+  })
+}
+
+exports.user_edit = (req, res, next) => {
+  
+  
+}
+
+
+
+
+
+

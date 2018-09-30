@@ -11,7 +11,6 @@ var userSchema = new mongoose.Schema({
     username: String,
 
     // hashed password
-    password: String,
     services:
     [
       {
@@ -20,6 +19,8 @@ var userSchema = new mongoose.Schema({
       }
     ],
     passwordHash: String,
+    email:String,
+    passwordHash: String, 
     type:String
 });
 
