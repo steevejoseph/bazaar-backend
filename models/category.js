@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 
 var categorySchema = new mongoose.Schema({
-    name:String,
-    tags:[String]
+    name:{type:String, unique:true, index:true},
+    tags:{type:[String], unique:true}
 });
 
 var Category = mongoose.model('Category', categorySchema);
