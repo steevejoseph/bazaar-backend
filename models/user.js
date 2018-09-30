@@ -18,7 +18,9 @@ var userSchema = new mongoose.Schema({
          type: mongoose.Schema.Types.ObjectId,
          ref: "Service"
       }
-    ]
+    ],
+    passwordHash: String,
+    type:String
 });
 
 // After we've defined the schema, use passport
