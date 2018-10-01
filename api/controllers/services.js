@@ -18,7 +18,7 @@ exports.service_get = (req, res, next) => {
     
 }
 
-//need to make search
+//made search boi
 exports.service_search = (req, res, next) => {
     Service.search(req.body.query).exec()
     .then(results => {
@@ -33,3 +33,25 @@ exports.service_search = (req, res, next) => {
       });
     });
 }
+
+//edit service boiii
+exports.service_edit = (req, res, next) => {
+    Service.update({_id : req.body.id}, {
+        name : req.body.name,
+        author : req.body.author,
+        description : req.body.description
+    })
+    .exec().then(result => {
+        res.status(200).json({
+            result : result        
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        return res.status(500).json({
+            error: err
+        });
+    });
+}
+
+

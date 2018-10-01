@@ -13,7 +13,8 @@ router.get('/services', checkAuth, serviceCon.service_get);
 //search for a service
 router.post('/search', serviceCon.service_search);
 
-//should add an edit service (possibly)
+//edit service
+router.post('/edit', serviceCon.service_edit);
 
 
 module.exports = router;

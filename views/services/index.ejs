@@ -5,6 +5,12 @@
   <p>No Services!</p>
   <% } %>
   <% for(var i = 0; i < services.length; i++) { %>
-    <p><%= services[i] %></p>
+    <h5><%= services[i] %></h5>
+    <form action="/services/edit" method="GET">
+       <input type="hidden" name="id" value="<%= services[i].id %>">
+       <input type="hidden" name="name" value="<%= services[i].name %>">
+       <input type="hidden" name="description" value="<%= services[i].description %>">
+       <button type="submit">Edit</button> 
+    </form>
   <% } %>
 <% include ../partials/footer.ejs %>
