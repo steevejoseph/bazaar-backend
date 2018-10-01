@@ -66,12 +66,9 @@ router.post('/search', function(req, res) {
 			  return res.redirect("/");
 			}
 	    console.log(body);
-	    // console.log
 	    if(response && response.statusCode == 200){
 				var results = body.results;
-				req.flash("success", "Successfully created account.");
-		  // changed rendering of login page to just go ahead and log-in
-		  // after signup.
+		  
 	        return res.render('services/search_results.ejs', {results:results});
 	    }
 	    console.log('cant return, going home');
