@@ -38,6 +38,9 @@ router.post("/signup", function(req, res){
 	    // console.log
 	    if(response && response.statusCode == 201){
 				user = body.createdUser;
+				req.session.user = user;
+				req.user = user;
+				res.locals.currentUser = user;
 				req.flash("success", "Successfully created account.");
 		  // changed rendering of login page to just go ahead and log-in
 		  // after signup.

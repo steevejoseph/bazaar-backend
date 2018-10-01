@@ -12,6 +12,7 @@ const User = require('../../models/user.js'); //require the user schema
 exports.user_signup = (req, res, next) => {
     User.find({email: req.body.email}).exec()
         .then(user =>{
+          // console.log(user);
           //email already used
           if(user.length >= 1) {
             return res.status(409).json({
@@ -43,7 +44,8 @@ exports.user_signup = (req, res, next) => {
                 res.status(201).json({
                   message: 'sucessful user creation',
                   createdUser: user,
-                  token: token
+                  token: token,
+                  userId: user._id
                 });
                 console.log(user);
               }
@@ -83,7 +85,8 @@ exports.user_login = (req, res, next) => {
 
         return res.status(200).json({
           message: 'Authentication sucessful',
-          token: token
+          token: token,
+          userId: user._id
         });
       }
       return res.status(401).json({
