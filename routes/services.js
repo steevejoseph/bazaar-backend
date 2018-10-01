@@ -24,7 +24,6 @@ router.get('/new', middleware.isLoggedIn, function(req, res){
 });
 
 router.post('/new', middleware.isLoggedIn, function(req, res){
-    // req.user
     Service.create({
     name:req.body.name,
     owner:req.user,

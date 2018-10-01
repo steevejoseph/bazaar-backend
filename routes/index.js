@@ -4,10 +4,7 @@ var User = require('../models/user.js');
 var router = express.Router();
 var request = require('request');
 var urljoin = require("url-join");
-
-var baseUrl = 'http://localhost:'+ process.env.PORT;
-
-
+var baseUrl = 'http://localhost:' + process.env.PORT;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -75,9 +72,6 @@ router.post("/signup", function(req, res){
 	// 	res.redirect('/users/' + user._id);
 	// 	});
 	// });
-	
-	
-	
 });
 
 
@@ -128,14 +122,18 @@ router.post("/login", function(req, res){
 	    console.log(body);
 	    // console.log
 	    if(response && response.statusCode == 200){
-				req.flash("success", "Successfully created account.");
+				req.flash("success", "Successfully logged in.");
 		  // changed rendering of login page to just go ahead and log-in
 		  // after signup.
 			  // res.redirect('/users/' + user._id);
-			  res.redirect('/');
-
+			  res.redirect('/home');
 	    }
 	});
+});
+
+
+router.get("/home", function(req, res) {
+    res.render('dashboard.ejs');
 });
 
 //logout route!

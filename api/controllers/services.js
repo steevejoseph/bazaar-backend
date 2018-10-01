@@ -12,7 +12,6 @@ exports.service_create = (req, res, next) => {
         description: req.body.description, //weird formatting may need to change the name
         tags: req.body.tags
     });
-    
 }
 //need to make get all
 exports.service_get = (req, res, next) => {

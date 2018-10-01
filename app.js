@@ -17,6 +17,7 @@ var servicesRouter = require('./routes/services');
 const userAPI = require('./api/routes/usersapi');
 
 var app = express();
+const jwt = require('jsonwebtoken');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -54,12 +55,10 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next) {
-    res.locals.currentUser = req.user;
     res.locals.success = req.flash("success");
     res.locals.failure = req.flash("failure");
     next();
 });
-
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
