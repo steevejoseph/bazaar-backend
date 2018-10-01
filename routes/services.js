@@ -78,9 +78,7 @@ router.post('/search', function(req, res) {
 
 router.get('/edit', function(req, res) {
     res.render('services/edit.ejs', {
-        id:req.body.id,
-        name:req.body.name,
-        description:req.body.description
+        id:req.query.id,
     });
 });
 
@@ -89,21 +87,22 @@ router.post('/edit', function(req, res) {
         url: urljoin(baseUrl, '/api/services/edit'),
         method:'POST',
         json:{
-            id:req.body.id,
+            id:mongoose.Types.ObjectId(req.body.id),
             name:req.body.name,
             description:req.body.description
-        }, function(error, response, body) {
-            if(error) {
-                console.log(error);
-				console.log("error in POST edit User side");
-                return res.redirect("/");
-            }
-            console.log(body);
-            if(response && response.statusCode == 200)
-                return res.render('services/edit_result.ejs', {results:body.results});
-	        console.log('cant return, going home');
-	        res.render('dashboard.ejs');
         }
+    }, function(error, response, body) {
+        if(error) {
+            console.log(error);
+			console.log("error in POST edit User side");
+            return res.redirect("/");
+        }
+        console.log(body);
+        if(response && response.statusCode == 200) {
+            return res.render('services/edit_result.ejs', {result:body.result});
+        }
+	    console.log('cant return, going home');
+	    res.render('dashboard.ejs');
     });
 });
 

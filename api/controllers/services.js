@@ -36,11 +36,11 @@ exports.service_search = (req, res, next) => {
 
 //edit service boiii
 exports.service_edit = (req, res, next) => {
-    Service.update({_id : req.body.id}, {
+    var serviceId = mongoose.Types.ObjectId(req.body.id);
+    Service.findOneAndUpdate({_id : serviceId}, {
         name : req.body.name,
-        author : req.body.author,
         description : req.body.description
-    })
+    }, {'new' : true})
     .exec().then(result => {
         res.status(200).json({
             result : result        
