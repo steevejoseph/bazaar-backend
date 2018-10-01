@@ -13,11 +13,11 @@ serviceSchema.index({
     tags:'text'
 });
 
-serviceSchema.statics.search = function search(query, cb) {
+serviceSchema.statics.search = function search(query) {
     return this.find(
         {$text: {$search:query}},
         {score: {$meta:'textScore'}}
-    ).sort({score: {$meta:'textScore'}}, cb);
+    ).sort({score: {$meta:'textScore'}});
 }
 
 module.exports = mongoose.model('Service', serviceSchema);
