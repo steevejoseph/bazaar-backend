@@ -72,9 +72,9 @@ router.post('/search', function(req, res) {
 				req.flash("success", "Successfully created account.");
 		  // changed rendering of login page to just go ahead and log-in
 		  // after signup.
-	        res.render('services/search_results.ejs', {results:results});
+	        return res.render('services/search_results.ejs', {results:results});
 	    }
-	    console.log('cant search, going home');
+	    console.log('cant return, going home');
 	    res.render('dashboard.ejs');
 	});
 });

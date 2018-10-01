@@ -1,5 +1,7 @@
 <% include ../partials/header.ejs %>
 <% for(var i = 0; i < results.length; i++) {%>
-  <p><%= results[i] %></p>
+  <p><%= results[i].name %></p>
+  <p><%= results[i].description %></p>
+  <p><%= results[i].id %></p>
 <% } %>
 <% include ../partials/footer.ejs %>
