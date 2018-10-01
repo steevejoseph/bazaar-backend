@@ -17,4 +17,19 @@ exports.service_create = (req, res, next) => {
 exports.service_get = (req, res, next) => {
     
 }
+
 //need to make search
+exports.service_search = (req, res, next) => {
+    Service.search(req.body.query).exec()
+    .then(results => {
+      result.status(200).json({
+        results : results        
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(500).json({
+        error: err
+      });
+    });
+}

@@ -7,4 +7,17 @@ var serviceSchema = new mongoose.Schema({
     tags:[String]
 });
 
+serviceSchema.index({
+    name:'text',
+    description:'text',
+    tags:'text'
+});
+
+serviceSchema.statics.search = function search(query, cb) {
+    return this.find(
+        {$text: {$search:query}},
+        {score: {$meta:'textScore'}}
+    ).sort({score: {$meta:'textScore'}}, cb);
+}
+
 module.exports = mongoose.model('Service', serviceSchema);
