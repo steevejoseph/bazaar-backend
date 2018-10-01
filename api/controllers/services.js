@@ -22,7 +22,7 @@ exports.service_get = (req, res, next) => {
 exports.service_search = (req, res, next) => {
     Service.search(req.body.query).exec()
     .then(results => {
-      result.status(200).json({
+      res.status(200).json({
         results : results        
       });
     })

@@ -9,9 +9,9 @@ router.post('/create', checkAuth, serviceCon.service_create);
 //get all current services
 router.get('/services', checkAuth, serviceCon.service_get);
 //delete a service
-router.delete(':serviceID', checkAuth, serviceCon.service_delete);
+// router.delete(':serviceID', checkAuth, serviceCon.service_delete);
 //search for a service
-router.post('/search', checkAuth, serviceCon.service_search);
+router.post('/search', serviceCon.service_search);
 
 //should add an edit service (possibly)
 

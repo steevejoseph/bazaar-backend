@@ -53,7 +53,7 @@ router.post('/search', function(req, res) {
         var user;
 		
 		request({
-	    url: urljoin(baseUrl, '/api/users/signup'),
+	    url: urljoin(baseUrl, '/api/services/search'),
 	    method:'POST',
 	    json:{
 	        query:req.body.query,
