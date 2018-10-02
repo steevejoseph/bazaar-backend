@@ -122,7 +122,7 @@ router.post('/delete', function(req, res) {
         }
         console.log(body);
         if(response && response.statusCode == 200) {
-            return res.render('services/index.ejs', {result:body.result});
+            return res.render('services/index.ejs', {result:body.result, services:body.services });
         }
 	    console.log('cant return, going home');
 	    res.render('dashboard.ejs');

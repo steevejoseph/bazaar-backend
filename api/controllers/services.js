@@ -58,9 +58,19 @@ exports.service_delete = (req, res, next) => {
     var serviceId = mongoose.Types.ObjectId(req.body.id);
     Service.findOneAndRemove({_id : serviceId})
     .exec().then(result => {
-        res.status(200).json({
-            result : result        
+        
+        Service.find({}, function(err, services){
+            if(err){
+                res.status(500).json({error:err});
+            }else{
+                res.status(200).json({
+                result : result,
+                services: services
+              });
+                
+            }
         });
+       
     })
     .catch(err => {
         console.log(err);
