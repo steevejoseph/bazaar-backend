@@ -54,4 +54,20 @@ exports.service_edit = (req, res, next) => {
     });
 }
 
+exports.service_delete = (req, res, next) => {
+    var serviceId = mongoose.Types.ObjectId(req.body.id);
+    Service.findOneAndRemove({_id : serviceId})
+    .exec().then(result => {
+        res.status(200).json({
+            result : result        
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        return res.status(500).json({
+            error: err
+        });
+    });
+}
+
 

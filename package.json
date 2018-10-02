@@ -22,6 +22,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
+    "request": "^2.88.0",
     "url": "^0.11.0",
     "url-join": "^4.0.0",
     "urljoin": "^0.1.5"

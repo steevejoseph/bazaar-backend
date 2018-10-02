@@ -10,5 +10,10 @@
        <input type="hidden" name="id" value="<%= services[i].id %>">
        <button type="submit">Edit</button> 
     </form>
+    
+    <form action="/services/delete" method="POST">
+       <input type="hidden" name="id" value="<%= services[i].id %>">
+       <button type="submit">Delete</button> 
+    </form>
   <% } %>
 <% include ../partials/footer.ejs %>

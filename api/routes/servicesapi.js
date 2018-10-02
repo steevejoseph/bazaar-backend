@@ -16,5 +16,8 @@ router.post('/search', serviceCon.service_search);
 //edit service
 router.post('/edit', serviceCon.service_edit);
 
+// delete service
+router.post('/delete', serviceCon.service_delete);
+
 
 module.exports = router;

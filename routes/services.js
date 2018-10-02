@@ -106,4 +106,27 @@ router.post('/edit', function(req, res) {
     });
 });
 
+
+router.post('/delete', function(req, res) {
+    request({
+        url: urljoin(baseUrl, '/api/services/delete'),
+        method:'POST',
+        json:{
+            id:mongoose.Types.ObjectId(req.body.id)
+        }
+    }, function(error, response, body) {
+        if(error) {
+            console.log(error);
+			console.log("error in POST delete User side");
+            return res.redirect("/");
+        }
+        console.log(body);
+        if(response && response.statusCode == 200) {
+            return res.render('services/index.ejs', {result:body.result});
+        }
+	    console.log('cant return, going home');
+	    res.render('dashboard.ejs');
+    });
+});
+
 module.exports = router;
