@@ -6,13 +6,41 @@ const Service = require('../../models/service.js');
 
 exports.service_create = (req, res, next) => {
     //create a new service 
-    const service = new Service({
-        title: req.body.title,
-        author: req.body.author,
-        description: req.body.description, //weird formatting may need to change the name
-        tags: req.body.tags
+  var srv =  new Service({
+    name:req.body.name,
+    owner:req.user,
+    description:req.body.description,
+  });
+
+   srv.save()
+   .then(service => {
+     Service.find({}, function(err, services) {
+         if(err) console.log(err);
+        
+        
+        res.status(200).json({
+          services: services,
+          service : service        
+        });
+      
+     });
+    })
+    .catch(err => {
+      console.log(err);
+      Service.find({}, function(err, services) {
+         if(err) console.log(err);
+        
+        
+        res.status(500).json({
+          error: err,
+          services : services        
+        });
+      
+     });
     });
 }
+
+
 //need to make get all
 exports.service_get = (req, res, next) => {
     

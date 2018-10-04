@@ -28,21 +28,32 @@ router.get('/new', function(req, res){
 });
 
 router.post('/new', function(req, res){
-    Service.create({
-    name:req.body.name,
-    owner:req.user,
-    description:req.body.description,
-    }, function(err, service){
-        if(err){
-            console.log(err);
-            req.flash("failure", err.message);
-        }
-        
-        else{
-            req.flash("success", "Service added!");
-            res.redirect('/services');
-        }
-    });
+    
+    request({
+	    url: urljoin(baseUrl, '/api/services/create'),
+	    method:'POST',
+	    json:{
+	        name:req.body.name,
+            owner:req.user,
+            description:req.body.description,
+	    },
+	}, function(error, response, body){
+			if(error){
+				console.log(error);
+				console.log("error in POST add Service User side");
+			  // req.flash("failure", err.message);
+			  return res.redirect("/");
+			}
+	    console.log(body);
+	    if(response && response.statusCode == 200){
+	        var services = body.services;
+	        req.flash("success", "Service added!");
+	        return res.render('services/index.ejs', {services:services});
+	    }
+	    req.flash("failure", error.message);
+	    console.log('cant return, going home');
+	    res.render('dashboard.ejs');
+	});
 });
 
 router.get('/search', function(req, res) {
