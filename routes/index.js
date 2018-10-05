@@ -5,6 +5,7 @@ var router = express.Router();
 var request = require('request');
 var urljoin = require("url-join");
 var baseUrl = 'http://localhost:' + process.env.PORT;
+var nodemailer = require('nodemailer');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -42,9 +43,50 @@ router.post("/signup", function(req, res){
 				req.user = user;
 				res.locals.currentUser = user;
 				req.flash("success", "Successfully created account.");
-		  // changed rendering of login page to just go ahead and log-in
-		  // after signup.
-			  return res.redirect('/login/');
+		  
+		  // Sends a welcome email after user signs up
+		nodemailer.createTestAccount((err, account) => {
+			
+			if(err){
+			  console.log(err);
+			}
+			
+			let transporter = nodemailer.createTransport({
+				
+				//host: 'smtp.ethereal.email',
+				//port: 587,
+				//secure: false,
+				service: 'gmail',
+				auth: {
+					user: 'largo.brawns@gmail.com',
+					pass: 'br@aaWNSS7'
+				}
+			});
+			
+			
+			let mailOptions = {
+				from: '"Your fav app" <largo.brawns@gmail.com>',
+				to: req.body.email,
+				subject: 'Welcome!',
+				html: '<p>Hi there!</p> <p>Thanks for signing up :)</p>'
+				
+			};
+			
+			
+			transporter.sendMail(mailOptions, (err, info) => {
+				
+				if(err) {
+				  console.log(err);
+				}
+				
+				console.log('Message send: %s', info.messageId);
+			//	console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+				
+			});
+		
+		});
+
+		  return res.redirect('/login/');
 	    }
 	    
 	    res.redirect('/signup');

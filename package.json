@@ -18,7 +18,11 @@
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.17",
     "morgan": "~1.9.0",
+<<<<<<< HEAD
     "nodemon": "^1.18.4",
+=======
+    "nodemailer": "^4.6.8",
+>>>>>>> 8d5a56e40a52bbcb05b093023f1bed95e8f7bf39
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
