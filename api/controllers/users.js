@@ -57,7 +57,7 @@ exports.user_signup = (req, res, next) => {
 exports.user_login = (req, res, next) => {
   User.findOne({email: req.body.email}).exec()
   .then(user => {
-    console.log("type: " + typeof user +" user:\n"+user);
+    // console.log("type: " + typeof user +" user:\n"+user);
     if(user === {} || user === null || user === undefined) {
       return res.status(401).json({
         message: 'Authentication failed 1'
@@ -86,7 +86,7 @@ exports.user_login = (req, res, next) => {
         return res.status(200).json({
           message: 'Authentication sucessful',
           token: token,
-          userId: user._id
+          user: user
         });
       }
       return res.status(401).json({

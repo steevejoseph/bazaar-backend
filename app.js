@@ -10,6 +10,7 @@ var session = require('express-session');
 var User = require("./models/user");
 var	LocalStrategy = require("passport-local");
 var bodyParser = require('body-parser');
+var store = require('store');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -56,7 +57,17 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next) {
-    res.locals.currentUser = req.session.user;
+    res.locals.currentUser = app.locals.user;
+    res.locals.token       = app.locals.token;
+
+    // Sanity checking the current logged in user.
+    // console.log("Start current user");
+    // console.log(res.locals.currentUser);
+    // console.log("End current user");
+
+    // sanity checking "global" variables.
+    // console.log(app.locals);
+    
     res.locals.success = req.flash("success");
     res.locals.failure = req.flash("failure");
     next();

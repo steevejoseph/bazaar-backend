@@ -5,6 +5,9 @@ mongoose.connect('mongodb://team7:ABC123@ds263832.mlab.com:63832/largo-dev', {us
 const Service = require('../../models/service.js');
 
 exports.service_create = (req, res, next) => {
+  
+    // console.log(req.headers.authorization);
+    
     //create a new service 
   var srv =  new Service({
     name:req.body.name,

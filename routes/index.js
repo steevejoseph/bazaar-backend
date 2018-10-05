@@ -6,6 +6,7 @@ var request = require('request');
 var urljoin = require("url-join");
 var baseUrl = 'http://localhost:' + process.env.PORT;
 var nodemailer = require('nodemailer');
+var store = require('store');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -38,10 +39,8 @@ router.post("/signup", function(req, res){
 	    console.log(body);
 	    // console.log
 	    if(response && response.statusCode == 201){
-				user = body.createdUser;
-				req.session.user = user;
-				req.user = user;
-				res.locals.currentUser = user;
+				req.app.locals.user = body.createdUser;
+				req.app.locals.token = body.token;
 				req.flash("success", "Successfully created account.");
 		  
 		  // Sends a welcome email after user signs up
@@ -51,38 +50,38 @@ router.post("/signup", function(req, res){
 			  console.log(err);
 			}
 			
-			let transporter = nodemailer.createTransport({
+			// let transporter = nodemailer.createTransport({
 				
-				//host: 'smtp.ethereal.email',
-				//port: 587,
-				//secure: false,
-				service: 'gmail',
-				auth: {
-					user: 'largo.brawns@gmail.com',
-					pass: 'br@aaWNSS7'
-				}
-			});
+			// 	//host: 'smtp.ethereal.email',
+			// 	//port: 587,
+			// 	//secure: false,
+			// 	service: 'gmail',
+			// 	auth: {
+			// 		user: 'largo.brawns@gmail.com',
+			// 		pass: 'br@aaWNSS7'
+			// 	}
+			// });
 			
 			
-			let mailOptions = {
-				from: '"Your fav app" <largo.brawns@gmail.com>',
-				to: req.body.email,
-				subject: 'Welcome!',
-				html: '<p>Hi there!</p> <p>Thanks for signing up :)</p>'
+			// let mailOptions = {
+			// 	from: '"Your fav app" <largo.brawns@gmail.com>',
+			// 	to: req.body.email,
+			// 	subject: 'Welcome!',
+			// 	html: '<p>Hi there!</p> <p>Thanks for signing up :)</p>'
 				
-			};
+			// };
 			
 			
-			transporter.sendMail(mailOptions, (err, info) => {
+			// transporter.sendMail(mailOptions, (err, info) => {
 				
-				if(err) {
-				  console.log(err);
-				}
+			// 	if(err) {
+			// 	  console.log(err);
+			// 	}
 				
-				console.log('Message send: %s', info.messageId);
-			//	console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+			// 	console.log('Message send: %s', info.messageId);
+			// //	console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 				
-			});
+			// });
 		
 		});
 
@@ -116,10 +115,17 @@ router.post("/login", function(req, res){
 			  // req.flash("failure", err.message);
 			  return res.redirect("/login");
 			}
-	    console.log(body);
+	    // console.log(body);
 	    // console.log
 	    if(response && response.statusCode == 200){
-				req.flash("success", "Successfully logged in.");
+	    	req.app.locals.user = body.user;
+			req.app.locals.token = body.token;
+			store.set('token', body.token);
+			console.log("token: " + store.get('token'));
+
+			
+
+			req.flash("success", "Successfully logged in.");
 		  // changed rendering of login page to just go ahead and log-in
 		  // after signup.
 			  // res.redirect('/users/' + user._id);

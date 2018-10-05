@@ -29,7 +29,13 @@ router.get('/new', function(req, res){
 
 router.post('/new', function(req, res){
     
+    // console.log(res.locals);
+    
+    
     request({
+        headers:{
+          'authorization': 'Bearer ' + res.locals.token 
+        },
 	    url: urljoin(baseUrl, '/api/services/create'),
 	    method:'POST',
 	    json:{
@@ -44,13 +50,13 @@ router.post('/new', function(req, res){
 			  // req.flash("failure", err.message);
 			  return res.redirect("/");
 			}
-	    console.log(body);
+	   // console.log(body);
 	    if(response && response.statusCode == 200){
 	        var services = body.services;
 	        req.flash("success", "Service added!");
 	        return res.render('services/index.ejs', {services:services});
 	    }
-	    req.flash("failure", error.message);
+	    req.flash("failure", error);
 	    console.log('cant return, going home');
 	    res.render('dashboard.ejs');
 	});
