@@ -13,8 +13,12 @@ var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var servicesRouter = require('./routes/services');
+const userAPI = require('./api/routes/usersapi');
+var servicesAPI = require('./api/routes/servicesapi');
 
 var app = express();
+const jwt = require('jsonwebtoken');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -52,15 +56,25 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next) {
-    res.locals.currentUser = req.user;
+
+    // Sanity checking the current logged in user.
+    // console.log("Start current user");
+    // console.log(res.locals.currentUser);
+    // console.log("End current user");
+
+    // sanity checking "global" variables.
+    // console.log(app.locals);
+    
     res.locals.success = req.flash("success");
     res.locals.failure = req.flash("failure");
     next();
 });
 
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/services', servicesRouter);
+app.use('/api/users', userAPI);
+app.use('/api/services', servicesAPI);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

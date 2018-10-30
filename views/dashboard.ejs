@@ -1,4 +1,7 @@
 <% include ./partials/header.ejs %>
-Welcome home, <%= currentUser.username %>!
+<script>
+    console.log(document.cookie);
+</script>
+<a href="/services/search">Search</a>
 <a href="/logout">Logout</a>
 <% include ./partials/footer.ejs %>

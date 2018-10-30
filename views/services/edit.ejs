@@ -1,0 +1,11 @@
+<% include ../partials/header.ejs %>
+<form action="/services/edit" method="POST">
+    <input type="hidden" name="id" value="<%= id %>">
+    <input type="text" name="name" placeholder="name" required>
+    <!--author:String,-->
+    <br>
+    <textarea type="text" name="description" placeholder="description" required></textarea>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+<% include ../partials/footer.ejs %>
