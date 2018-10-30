@@ -10,7 +10,6 @@ var session = require('express-session');
 var User = require("./models/user");
 var	LocalStrategy = require("passport-local");
 var bodyParser = require('body-parser');
-var store = require('store');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -57,8 +56,6 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next) {
-    res.locals.currentUser = app.locals.user;
-    res.locals.token       = app.locals.token;
 
     // Sanity checking the current logged in user.
     // console.log("Start current user");
@@ -78,6 +75,7 @@ app.use('/users', usersRouter);
 app.use('/services', servicesRouter);
 app.use('/api/users', userAPI);
 app.use('/api/services', servicesAPI);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
