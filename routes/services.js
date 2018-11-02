@@ -11,16 +11,27 @@ var middleware = require('../middleware/index.js'),
     
     
 router.get('/', function(req, res){
-    Service.find({}, function(err, services){
-        if(err){
-            console.log(err);
-            req.flash("failure", err.message);
-            return res.redirect('/users/' + req.user._id);
-        }
-        
-        res.render('services/index.ejs', {services:services});
-        
-    });
+    console.log(baseUrl);
+    request({
+	    url: urljoin(baseUrl, '/api/services'),
+	    method:'GET',
+	    json:{},
+	}, function(error, response, body){
+			if(error){
+				console.log(error);
+				console.log("error in Service index User side");
+			  return res.redirect("/");
+			}
+	    console.log(body);
+	    if(response && response.statusCode == 200){
+	        var services = body.services;
+	        req.flash("success", "Service added!");
+	        return res.render('services/index.ejs', {services:services});
+	    }
+	    req.flash("failure", error);
+	    console.log('cant return, going home');
+	    res.render('dashboard.ejs');
+	});
 });
 
 router.get('/new', function(req, res){

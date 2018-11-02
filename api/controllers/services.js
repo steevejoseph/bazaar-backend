@@ -45,8 +45,20 @@ exports.service_create = (req, res, next) => {
 
 
 //need to make get all
-exports.service_get = (req, res, next) => {
-    
+exports.service_index = (req, res, next) => {
+    Service.find({}, function(err, services) {
+         if(err){
+             console.log(err);
+             res.status(500).json({
+             error: err,
+             });
+         } 
+        
+        res.status(200).json({
+          services: services,
+        });
+      
+     });
 }
 
 //made search boi

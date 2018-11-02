@@ -6,10 +6,13 @@ const serviceCon = require('../controllers/services.js');
 
 //create a service (user must be logged in)
 router.post('/create', checkAuth, serviceCon.service_create);
+
 //get all current services
-router.get('/services', checkAuth, serviceCon.service_get);
+router.get('/', serviceCon.service_index);
+
 //delete a service
 // router.delete(':serviceID', checkAuth, serviceCon.service_delete);
+
 //search for a service
 router.post('/search', serviceCon.service_search);
 
