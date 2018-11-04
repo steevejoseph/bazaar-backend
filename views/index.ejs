@@ -1,6 +1,13 @@
 <% include ./partials/header.ejs %>
-    <p>Welcome to <%= title %></p>
-    <a href="/signup">Signup</a>
-    <a href="/login">Login</a>
+    <p>Welcome to  Bazaar's API!</p>
+    <p>Redirecting you to frontend in 3 seconds...</p>
+    <!--<a href="/signup">Signup</a>-->
+    <!--<a href="/login">Login</a>-->
+    <script>
+      var timeout = 3000;
+      setTimeout(function () {
+         window.location = "https://bazaar-frontend.herokuapp.com";
+      }, timeout);
+    </script>
 <% include ./partials/footer.ejs %>
 
