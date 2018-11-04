@@ -8,7 +8,7 @@ var baseUrl = 'http://localhost:' + process.env.PORT;
 var nodemailer = require('nodemailer');
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index');
 });
 
 router.get("/signup", function(req, res){
