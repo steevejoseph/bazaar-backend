@@ -5,6 +5,8 @@ const checkAuth = require('../middleware/check-auth.js');
 
 const userCon = require('../controllers/users.js'); //require the users controller
 
+router.get('/', userCon.user_index);
+
 router.post('/signup', userCon.user_signup, userCon.user_login); //signup route
 
 router.post('/login', userCon.user_login); //login route (gives user a token that will be required for routes needing authentication)
@@ -15,4 +17,5 @@ router.delete('/delete/:userID', checkAuth, userCon.user_delete); //delete user 
 //should possibly addd  an edit to user
 router.patch('/edit/:userID', checkAuth, userCon.user_edit);
 router.get('/gettest', checkAuth, userCon.user_get);
+
 module.exports = router;
