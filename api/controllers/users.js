@@ -128,6 +128,21 @@ exports.user_get = (req, res, next) => {
   })
 }
 
+exports.user_index = (req, res, next) => {
+  User.find({}, function(err, users){
+    if(err){
+      console.log(err);
+      return res.status(500).json({
+        message:'can\'t get users :/'
+      });
+    }
+    
+    res.status(200).json({
+      users: users
+    });
+    
+  });
+}
 exports.user_edit = (req, res, next) => {
   
   
