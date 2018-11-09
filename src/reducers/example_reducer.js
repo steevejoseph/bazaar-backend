@@ -1,13 +1,13 @@
 import _ from 'lodash';
-import { FETCH_POSTS, FETCH_POST, DELETE_POST } from '../actions';
+import { CREATE_USER, CREATE_SERVICE } from '../actions';
 
 export default function(state = {}, action) {
     switch (action.type) {
-        case DELETE_POST:
+        case DELETE_SERVICE:
             return _.omit(state, action.payload);
-        case FETCH_POSTS:
+        case CREATE_USER:
             return _.mapKeys(action.payload.data, 'id');
-        case FETCH_POST:
+        case CREATE_SERVICE:
             return { ...state, [action.payload.data.id]: action.payload.data }
         default:
             return state;

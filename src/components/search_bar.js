@@ -4,7 +4,7 @@ export default class SearchBar extends Component {
     render() {
         return (
             <div>
-                <input />
+                <input className="form-control form-control-lg" type="text" placeholder="Search" />
             </div>
         );
     }
