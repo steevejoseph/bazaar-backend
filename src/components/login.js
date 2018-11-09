@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { Route , withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createUser } from '../actions';
+import { login } from '../actions';
 
-class Signup extends Component {
+class Login extends Component {
     renderField(field) {
         const { meta: {touched, error } } = field;
         const className = `form-group${touched && error ? 'has-error' : ''}`;
@@ -15,7 +16,7 @@ class Signup extends Component {
                         type="text" 
                         className="form-control form-control-lg"
                         placeholder={field.label}
-                        {...field.input} 
+                        {...field.input}
                     />
                 </div>
                 <div className="col-sm-2"></div>
@@ -27,7 +28,7 @@ class Signup extends Component {
     }
 
     onSubmit(values) {
-        this.props.createUser(values, () => {
+        this.props.login(values, () => {
             this.props.history.push('/');
         });
     }
@@ -37,16 +38,6 @@ class Signup extends Component {
         return (
             <div className="modal-body">
                 <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                    <Field 
-                        label="First Name"
-                        name="firstName"
-                        component={this.renderField}
-                    />
-                    <Field 
-                        label="Last Name"
-                        name="lastName"
-                        component={this.renderField}
-                    />
                     <Field 
                         label="Email"
                         name="email"
@@ -62,7 +53,7 @@ class Signup extends Component {
                     </div>
                 </form>
                 <div className="text-center">                    
-                    <p onClick={this.props.switchToLogin}>Already have an account? <a onClick={this.toggleIntent}>Log in</a></p>
+                    <p onClick={this.props.switchToSignup}>Already have an account? <a onClick={this.toggleIntent}>Log in</a></p>
                 </div>
             </div>
         );
@@ -72,12 +63,6 @@ class Signup extends Component {
 function validate(values) {
     const errors = {};
 
-    if (!values.firstName) 
-        errors.firstName = "Enter your first name.";
-
-    if (!values.lastName) 
-        errors.lastName = "Enter your last name.";
-    
     if (!values.email) 
         errors.email = "Enter your UCF email.";
     
@@ -89,7 +74,7 @@ function validate(values) {
 
 export default reduxForm({
     validate,
-    form: 'SignupForm'
+    form: 'LoginForm'
 })(
-    connect(null, {createUser})(Signup)
+    connect(null, {login})(Login)
 );

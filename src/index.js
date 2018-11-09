@@ -5,7 +5,6 @@ import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import promise from 'redux-promise';
 import './style/index.css';
-// import * as serviceWorker from './serviceWorker';
 
 import Navbar from './components/navbar';
 import Signup from './components/signup';
@@ -23,6 +22,7 @@ ReactDOM.render(
                 <Navbar loggedIn={false}/>
                 <Switch>
                     <Route path="/service/:id" />
+                    <Route path="/account" />
                     <Route path="/create-service" component={CreateService} />
                     <Route path="/signup" component={Signup} />
                     <Route path="/" component={Home} />
@@ -31,8 +31,3 @@ ReactDOM.render(
         </BrowserRouter>
     </Provider>
     , document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-// serviceWorker.unregister();
