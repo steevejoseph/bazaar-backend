@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Signup from './signup';
 import Login from './login';
+import { connect } from 'react-redux';
 
 class Navbar extends Component {
     constructor(props) {
@@ -59,7 +60,7 @@ class Navbar extends Component {
                                 // Show if loggedIn
 
                                 <li className="nav-item">
-                                    <Link to="/signup" className="nav-link">Account</Link>
+                                    <Link to="/account" className="nav-link">Account</Link>
                                 </li>
                                 
                                 : 
@@ -67,7 +68,7 @@ class Navbar extends Component {
                                 // Show if !loggedIn
 
                                 <li className="nav-item">
-                                    <a className="nav-link" data-toggle="modal" data-target="#exampleModal" href="" onClick={() => this.setIntent(false)}>Sign Up</a>
+                                    <a className="nav-link" data-toggle="modal" data-target="#exampleModal" href="" onClick={() => this.setIntent(false)}>Sign up</a>
                                 </li>
                 
                                 }
@@ -76,7 +77,7 @@ class Navbar extends Component {
                             {this.props.loggedIn ? '' :
                             
                                 <li className="nav-item">
-                                    <a className="nav-link" data-toggle="modal" data-target="#exampleModal" href="" onClick={() => this.setIntent(true)}>Login</a>
+                                    <a className="nav-link" data-toggle="modal" data-target="#exampleModal" href="" onClick={() => this.setIntent(true)}>Log in</a>
                                 </li>
 
                                 }
@@ -89,4 +90,8 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar;
+function mapStateToProps(state) {
+    return { loggedIn: state.user.loggedIn };
+}
+
+export default connect(mapStateToProps)(Navbar);

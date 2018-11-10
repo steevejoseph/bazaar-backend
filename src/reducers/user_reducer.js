@@ -1,12 +1,13 @@
 import _ from 'lodash';
-import { CREATE_USER } from '../actions';
+import { CREATE_USER, LOGIN } from '../actions';
 
-export default function(state = {}, action) {
-    
-    
+export default function(state = {}, action) {   
     switch (action.type) {
         case CREATE_USER: 
-            console.log(action);
+            return state;
+        case LOGIN: 
+            if (action.payload.status === 200)
+                return { loggedIn: true }
             return state;
         default:
             return state;

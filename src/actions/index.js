@@ -5,7 +5,7 @@ export const CREATE_USER = 'create_user';
 export const CREATE_SERVICE = 'create_service';
 export const LOGIN = 'login';
 export const SERVICE_SEARCH = 'service_search';
-export const FETCH_SERVICES = 'festch_services';
+export const FETCH_ALL_SERVICES = 'fetch_services';
 export const FETCH_USER = 'fetch_user';
 
 export function login(values, callback) {
@@ -13,12 +13,10 @@ export function login(values, callback) {
         email: values.email,
         password: values.password
     };
-    const request = axios.post(`${ROOT_URL}/users/login`, data)
-    .then(() => callback());
 
     return {
         type: LOGIN,
-        payload: request
+        payload: axios.post(`${ROOT_URL}/users/login`, data)
     };
 }
 
@@ -29,12 +27,10 @@ export function createUser(values, callback) {
         email: values.email,
         password: values.password
     };
-    const request = axios.post(`${ROOT_URL}/users/signup`, data)
-    .then(() => callback());
 
     return {
         type: CREATE_USER,
-        payload: request
+        payload: axios.post(`${ROOT_URL}/users/signup`, data)
     };
 }
 
@@ -44,11 +40,16 @@ export function createService(values, callback) {
         description: values.description,
         tags: values.tags
     };
-    const request = axios.post(`${ROOT_URL}/services/create`, data)
-    .then(() => callback());
 
     return {
         type: CREATE_SERVICE,
-        payload: request
+        payload: axios.post(`${ROOT_URL}/services/create`, data)
     };
+}
+
+export function fetchServices() {
+    return {
+        type: FETCH_ALL_SERVICES,
+        payload: axios.get(`${ROOT_URL}/services`)
+    }
 }

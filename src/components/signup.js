@@ -14,21 +14,21 @@ class Signup extends Component {
                     <input 
                         type="text" 
                         className="form-control form-control-lg"
+                        autoComplete="off"
                         placeholder={field.label}
                         {...field.input} 
                     />
                 </div>
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10 text-danger">
+                <p className="text-danger">
                     {touched ? error : ''}
-                </div>
+                </p>
             </div>
         );
     }
 
     onSubmit(values) {
         this.props.createUser(values, () => {
-            this.props.history.push('/');
+            
         });
     }
 
@@ -58,11 +58,11 @@ class Signup extends Component {
                         component={this.renderField}
                     />
                     <div className="form-group">
-                        <button type="submit" className="btn btn-lg btn-block btn-danger">Sign Up</button>
+                        <button type="submit" className="btn btn-lg btn-block btn-danger">Sign up</button>
                     </div>
                 </form>
                 <div className="text-center">                    
-                    <p onClick={this.props.switchToLogin}>Already have an account? <a onClick={this.toggleIntent}>Log in</a></p>
+                    <p>Already have an account? <a href="#" onClick={this.props.switchToLogin}>Log in</a></p>
                 </div>
             </div>
         );

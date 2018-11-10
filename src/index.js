@@ -7,7 +7,6 @@ import promise from 'redux-promise';
 import './style/index.css';
 
 import Navbar from './components/navbar';
-import Signup from './components/signup';
 import CreateService from './components/create_service';
 import Home from './components/home';
 
@@ -24,7 +23,6 @@ ReactDOM.render(
                     <Route path="/service/:id" />
                     <Route path="/account" />
                     <Route path="/create-service" component={CreateService} />
-                    <Route path="/signup" component={Signup} />
                     <Route path="/" component={Home} />
                 </Switch>
             </div>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Route , withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions';
 
@@ -15,21 +14,21 @@ class Login extends Component {
                     <input 
                         type="text" 
                         className="form-control form-control-lg"
+                        autoComplete="off"
                         placeholder={field.label}
                         {...field.input}
                     />
                 </div>
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10 text-danger">
+                <p className="text-danger">
                     {touched ? error : ''}
-                </div>
+                </p>
             </div>
         );
     }
 
     onSubmit(values) {
         this.props.login(values, () => {
-            this.props.history.push('/');
+        
         });
     }
 
@@ -49,11 +48,11 @@ class Login extends Component {
                         component={this.renderField}
                     />
                     <div className="form-group">
-                        <button type="submit" className="btn btn-lg btn-block btn-danger">Sign Up</button>
+                        <button type="submit" className="btn btn-lg btn-block btn-danger">Log in</button>
                     </div>
                 </form>
                 <div className="text-center">                    
-                    <p onClick={this.props.switchToSignup}>Already have an account? <a onClick={this.toggleIntent}>Log in</a></p>
+                    <p onClick={this.props.switchToSignup}>Don't have an account? <a href="#">Sign up</a></p>
                 </div>
             </div>
         );
