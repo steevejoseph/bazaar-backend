@@ -6,9 +6,7 @@ export default class ServiceCardListRow extends Component {
     renderCardList() {
         return _.map(this.props.services, service => {
             return (
-                <div key={service.name}>
-                    <ServiceCard serviceName={service.description}/>
-                </div>
+                <ServiceCard key={service._id} service={service}/>
             )
         });
     }

@@ -8,7 +8,7 @@ class Navbar extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { isTryingToLogIn: null };
+        this.state = { isTryingToLogin: false };
 
         this.toggleIntent = this.toggleIntent.bind(this);
         this.loginSignupModal = this.loginSignupModal.bind(this);
@@ -19,7 +19,7 @@ class Navbar extends Component {
     }
 
     toggleIntent() {
-        this.setState({isTryingToLogin: !this.state.isTryingToLogIn});
+        this.setState({isTryingToLogin: !this.state.isTryingToLogin});
     }
 
     loginSignupModal() {
@@ -32,7 +32,7 @@ class Navbar extends Component {
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    {this.state.isTryingToLogin ?  <Login switchToSignup={() => this.setIntent(true)}/> : <Signup switchToLogin={this.toggleIntent} />}
+                    {this.state.isTryingToLogin ?  <Login switchToSignup={this.toggleIntent}/> : <Signup switchToLogin={this.toggleIntent} />}
                 </div>
             </div>
         </div>

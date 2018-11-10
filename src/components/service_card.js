@@ -6,9 +6,9 @@ export default class ServiceCard extends Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <h5 className="card-title">{this.props.serviceName}</h5>
+                        <h5 className="card-title">{this.props.service.name}</h5>
                         <h6 className="card-subtitle mb-2 text-success">$15/hr</h6>
-                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p className="card-text">{this.props.service.description}</p>
                      </div>
                 </div>
             </div>

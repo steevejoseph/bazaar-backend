@@ -37,8 +37,8 @@ export function createUser(values, callback) {
 export function createService(values, callback) {
     const data = {
         name: values.name,
-        description: values.description,
-        tags: values.tags
+        tags: values.tags,
+        description: values.description
     };
 
     return {

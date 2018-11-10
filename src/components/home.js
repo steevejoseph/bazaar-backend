@@ -13,7 +13,6 @@ class Home extends Component {
     render() {
         return (
             <div className="home container" >
-                {/* <ServiceCardListRow services={samplesServices}/> */}
                 <ServiceCardListRow services={this.props.services}/>
             </div>
         );

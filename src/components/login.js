@@ -52,7 +52,7 @@ class Login extends Component {
                     </div>
                 </form>
                 <div className="text-center">                    
-                    <p onClick={this.props.switchToSignup}>Don't have an account? <a href="#">Sign up</a></p>
+                    <p>Don't have an account? <a href="#"  onClick={this.props.switchToSignup}>Sign up</a></p>
                 </div>
             </div>
         );
