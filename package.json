@@ -34,16 +34,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,css,md}": [
-      "eslint --fix",
-      "git add"
-    ]
-  }
+  ]
 }
