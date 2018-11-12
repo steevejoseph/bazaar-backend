@@ -107,7 +107,7 @@ class Navbar extends Component {
                         </ul>
                     </div>
                 </nav>
-                {this.loginSignupModal()}
+                {this.props.loggedIn ? '' :  this.loginSignupModal()}
             </div>
         );
     }
