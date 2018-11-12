@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { serviceSearch } from '../actions/index';
+import { fetchServices } from '../actions/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -22,12 +23,14 @@ class SearchBar extends Component {
 
     onInputChange(term){
 
-        if(term =='')
-            console.log("is empty");
-
-        console.log(term);
         this.setState( { term: term } );
-        this.props.serviceSearch(term);
+        console.log(term);
+
+        if(term == '')
+            this.props.fetchServices();
+
+        else 
+            this.props.serviceSearch(term);
     }
 
 
@@ -50,7 +53,7 @@ class SearchBar extends Component {
 
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({serviceSearch}, dispatch);
+    return bindActionCreators({serviceSearch, fetchServices}, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(SearchBar);
