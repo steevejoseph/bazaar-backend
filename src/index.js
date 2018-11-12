@@ -9,6 +9,7 @@ import './style/index.css';
 import Navbar from './components/navbar';
 import CreateService from './components/create_service';
 import Home from './components/home';
+import Account from './components/account';
 
 import reducers from './reducers';
 
@@ -18,10 +19,10 @@ ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>
         <BrowserRouter>
             <div>
-                <Navbar loggedIn={false}/>
+                <Route component={Navbar} />
                 <Switch>
                     <Route path="/service/:id" />
-                    <Route path="/account" />
+                    <Route path="/account" component={Account} />
                     <Route path="/create-service" component={CreateService} />
                     <Route path="/" component={Home} />
                 </Switch>

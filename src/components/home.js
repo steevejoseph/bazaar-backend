@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ServiceCardListRow from './service_card_list_row';
+import Search from './search';
 import { connect } from 'react-redux';
 import { fetchServices } from '../actions';
 
@@ -12,8 +13,11 @@ class Home extends Component {
 
     render() {
         return (
-            <div className="home container" >
-                <ServiceCardListRow services={this.props.services}/>
+            <div>
+                <Search />
+                <div className="home container">
+                    <ServiceCardListRow services={this.props.services}/>
+                </div>
             </div>
         );
     }

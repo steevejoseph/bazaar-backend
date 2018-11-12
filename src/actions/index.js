@@ -7,6 +7,8 @@ export const LOGIN = 'login';
 export const SERVICE_SEARCH = 'service_search';
 export const FETCH_ALL_SERVICES = 'fetch_services';
 export const FETCH_USER = 'fetch_user';
+export const GET_USER_FROM_LOCAL_STORAGE = 'get_local_from_storage';
+export const LOG_OUT_USER = 'log_out';
 
 export function login(values, callback) {
     const data = {
@@ -51,5 +53,19 @@ export function fetchServices() {
     return {
         type: FETCH_ALL_SERVICES,
         payload: axios.get(`${ROOT_URL}/services`)
+    }
+}
+
+export function getUserFromLocalStorage() { 
+        return {
+            type: GET_USER_FROM_LOCAL_STORAGE,
+            payload: localStorage.getItem('loggedInUser')
+        };
+}
+
+export function logOutUser() {
+    localStorage.removeItem('loggedInUser');
+    return {
+        type: LOG_OUT_USER
     }
 }

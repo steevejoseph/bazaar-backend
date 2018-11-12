@@ -3,7 +3,9 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { createService } from '../actions';
 
-class Signup extends Component {
+// TODO: Put this inside a modal instead and only be able to see it once logged in
+
+class CreateService extends Component {
     renderField(field) {
         const { meta: {touched, error } } = field;
         const className = `form-group${touched && error ? 'has-error' : ''}`;
@@ -80,5 +82,5 @@ export default reduxForm({
     validate,
     form: 'ServiceForm'
 })(
-    connect(null, {createService})(Signup)
+    connect(null, {createService})(CreateService)
 );

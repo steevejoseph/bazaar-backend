@@ -8,6 +8,10 @@
   padding-top: 15px;
 }
 
+.account {
+  padding-top: 15px;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -30,4 +34,10 @@ code {
 .card {
   width: 16rem;
   margin: 12px;
+}
+
+.search-component {
+  height: 50vh;
+  background-position: center;
+  background-size: cover;
 }
