@@ -42,7 +42,7 @@ exports.user_signup = (req, res, next) => {
                   }
                 );
                 res.status(201).json({
-                  message: 'sucessful user creation',
+                  message: 'User created.',
                   createdUser: user,
                   token: token,
                   userId: user._id
@@ -84,7 +84,7 @@ exports.user_login = (req, res, next) => {
         );
 
         return res.status(200).json({
-          message: 'Authentication sucessful',
+          message: 'User authenticated.',
           token: token,
           user: user
         });
@@ -106,7 +106,7 @@ exports.user_delete = (req, res, next) => {
     User.remove({_id: req.params.userID}).exec()
     .then(result => {
       result.status(200).json({
-        message: 'User deleted'
+        message: 'User deleted.'
       });
     })
     .catch(err => {
