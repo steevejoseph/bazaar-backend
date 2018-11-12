@@ -2,7 +2,9 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import ServiceCard from './service_card';
 
+
 export default class ServiceCardListRow extends Component {  
+    
     renderCardList() {
         return _.map(this.props.services, service => {
             return (

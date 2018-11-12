@@ -56,6 +56,17 @@ export function fetchServices() {
     }
 }
 
+export function serviceSearch(term){
+    const data = {
+        query: term
+    }
+
+    return {
+        type: SERVICE_SEARCH,
+        payload: axios.post(`${ROOT_URL}/services/search`, data)
+    };
+}
+
 export function getUserFromLocalStorage() { 
         return {
             type: GET_USER_FROM_LOCAL_STORAGE,
