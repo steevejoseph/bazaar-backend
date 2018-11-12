@@ -12,7 +12,6 @@ export default function(state = {}, action) {
             console.log(action.payload.data.results.length);
             return { services: action.payload.data.results };
         
-            // return state
         default:
             return state;
     }

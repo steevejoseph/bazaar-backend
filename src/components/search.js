@@ -23,10 +23,9 @@ class SearchBar extends Component {
 
     onInputChange(term){
 
-        this.setState( { term: term } );
-        console.log(term);
+        this.setState({ term });
 
-        if(term == '')
+        if(term === '')
             this.props.fetchServices();
 
         else 
