@@ -65,7 +65,6 @@ export function serviceSearch(term){
         type: SERVICE_SEARCH,
         payload: axios.post(`${ROOT_URL}/services/search`, data)
     };
-
 }
 
 export function getUserFromLocalStorage() { 

@@ -6,12 +6,9 @@ export default function(state = {}, action) {
         case FETCH_ALL_SERVICES: 
             return { services: action.payload.data.services }
         case CREATE_SERVICE:
-        console.log(action);
-
+            return state;
         case SERVICE_SEARCH:
-            console.log(action.payload.data.results.length);
             return { services: action.payload.data.results };
-        
         default:
             return state;
     }
