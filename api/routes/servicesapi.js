@@ -22,5 +22,8 @@ router.post('/edit', serviceCon.service_edit);
 // delete service
 router.post('/delete', serviceCon.service_delete);
 
+// get specific service.
+router.get('/:id', serviceCon.service_get);
+
 
 module.exports = router;

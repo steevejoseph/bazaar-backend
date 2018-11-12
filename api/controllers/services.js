@@ -44,7 +44,7 @@ exports.service_create = (req, res, next) => {
 }
 
 
-//need to make get all
+//this is get all
 exports.service_index = (req, res, next) => {
     Service.find({}, function(err, services) {
          if(err){
@@ -123,4 +123,21 @@ exports.service_delete = (req, res, next) => {
     });
 }
 
+// get specific service 
+//  (api/services/:id)
+exports.service_get = (req, res, next) => {
+    var serviceId = mongoose.Types.ObjectId(req.params.id);
 
+    Service.findById(serviceId)
+    .exec().then(service => {
+        res.status(200).json({
+            service : service        
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        return res.status(500).json({
+            error: err
+        });
+    });
+}
