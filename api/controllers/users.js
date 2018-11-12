@@ -29,6 +29,8 @@ exports.user_signup = (req, res, next) => {
               } else {
                 const user = new User({
                   email: req.body.email,
+                  firstName: req.body.firstName,
+                  lastName: req.body.lastName,
                   passwordHash: hash
                 });
                 user.save();
