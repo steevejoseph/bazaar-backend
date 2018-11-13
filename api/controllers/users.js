@@ -129,7 +129,7 @@ exports.user_get = (req, res, next) => {
   .catch(err => {
     console.log(err);
     return res.status(500).json({
-      message:'can\'t get users :/'
+      message:'Cannot get specified user.'
     });
   })
 }
@@ -139,7 +139,7 @@ exports.user_index = (req, res, next) => {
     if(err){
       console.log(err);
       return res.status(500).json({
-        message:'can\'t get users :/'
+        message:'Cannot get users.'
       });
     }
     
