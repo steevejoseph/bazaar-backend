@@ -22,8 +22,9 @@ exports.service_create = (req, res, next) => {
         
         
         res.status(200).json({
-          services: services,
-          service : service        
+            createdService: srv,
+            //services: services,
+            //service : service        
         });
       
      });

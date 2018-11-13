@@ -16,7 +16,7 @@ exports.user_signup = (req, res, next) => {
           //email already used
           if(user.length >= 1) {
             return res.status(409).json({
-              message: 'Email already used'
+              message: 'Email already used: ', user
             })
             //email has not been used good to create an account
           }else {
