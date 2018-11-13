@@ -5,6 +5,7 @@ export const CREATE_USER = 'create_user';
 export const CREATE_SERVICE = 'create_service';
 export const LOGIN = 'login';
 export const SERVICE_SEARCH = 'service_search';
+export const SERVICE_VIEW = 'service_view';
 export const FETCH_ALL_SERVICES = 'fetch_services';
 export const FETCH_USER = 'fetch_user';
 export const GET_USER_FROM_LOCAL_STORAGE = 'get_local_from_storage';
@@ -64,6 +65,13 @@ export function serviceSearch(term){
     return {
         type: SERVICE_SEARCH,
         payload: axios.post(`${ROOT_URL}/services/search`, data)
+    };
+}
+
+export function serviceView(id) {
+    return {
+        type: SERVICE_VIEW,
+        payload: axios.get(`${ROOT_URL}/services/${id}`)
     };
 }
 

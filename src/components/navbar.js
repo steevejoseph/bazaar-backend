@@ -78,7 +78,7 @@ class Navbar extends Component {
                                     </a>
 
                                     {/* Dropdown is too wide and hangs off the page :( */}
-                                    <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                         <Link to="/account" className="dropdown-item">Account</Link>
                                         <div className="dropdown-divider"></div>
                                         <a onClick={this.logOut} className="dropdown-item">Log out</a>

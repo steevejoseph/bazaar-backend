@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { FETCH_ALL_SERVICES, CREATE_SERVICE, SERVICE_SEARCH } from '../actions';
+import { FETCH_ALL_SERVICES, CREATE_SERVICE, SERVICE_SEARCH, SERVICE_VIEW } from '../actions';
 
 export default function(state = {}, action) {   
     switch (action.type) {
@@ -9,6 +9,8 @@ export default function(state = {}, action) {
             return state;
         case SERVICE_SEARCH:
             return { services: action.payload.data.results };
+        case SERVICE_VIEW:
+            return { service: action.payload.data.service };
         default:
             return state;
     }
