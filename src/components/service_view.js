@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { serviceView } from '../actions/index';
 import ServiceDescription from './service_description';
-import { Link, withRouter } from 'react-router-dom';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 
 class ServiceView extends Component {
-
     componentDidMount() {
         const { id } = this.props.match.params;
         this.props.serviceView(id);
@@ -31,7 +29,6 @@ class ServiceView extends Component {
 }
 
 function mapStateToProps( state ) {
-    console.log("hello", state.services.service);
     return { service: state.services.service };
 }
 

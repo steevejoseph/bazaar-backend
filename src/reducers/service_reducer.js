@@ -11,7 +11,6 @@ export default function(state = {}, action) {
             return { services: action.payload.data.results };
         case SERVICE_VIEW:
             return { service: action.payload.data.service };
-            //return { ...state, [action.payload.data.service._id]: action.payload.data };
         default:
             return state;
     }
