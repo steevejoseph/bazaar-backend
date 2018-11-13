@@ -41,3 +41,7 @@ code {
   background-position: center;
   background-size: cover;
 }
+
+.dropdown-menu-right {
+  text-align: center;
+}
