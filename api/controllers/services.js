@@ -63,17 +63,24 @@ exports.service_index = (req, res, next) => {
 
 //made search boi
 exports.service_search = (req, res, next) => {
-    Service.search(req.body.query).exec()
-    .then(results => {
-      res.status(200).json({
-        results : results        
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      return res.status(500).json({
-        error: err
-      });
+    const query = req.body.query;
+    const regex = {'$regex': query, '$options': 'i'};
+
+    Service.find({
+        '$or': [{name: regex},
+                {tags: regex},
+                {description: regex}
+                ]}, function(err, services) {
+        if(err){
+            console.log(err);
+            return res.status(500).json({
+                error: err,
+            });
+        } 
+
+        return res.status(200).json({
+            results: services,
+        });
     });
 }
 
