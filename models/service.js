@@ -38,7 +38,7 @@ var serviceSchema = new mongoose.Schema({
     
     // set tags to be array of strings.
     // each tag given has to be a member of of defaultTags.
-    tags:[{type:String, enum: defaultTags}],
+    tags:[{type:String, /*enum: defaultTags*/}],
     
     
     // options is an array of objects, each with a name, desc, and cost field.
@@ -49,8 +49,10 @@ var serviceSchema = new mongoose.Schema({
     }],
     
     
-    // if reported, won't be shown.
-    reported: {type: Boolean, default: false}
+    // if reported, won't be shown (in theory).
+    reported: {type: Boolean, default: false},
+    
+    price: {type: Number, default: 1}
 });
 
 serviceSchema.index({
