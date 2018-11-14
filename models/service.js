@@ -21,7 +21,7 @@ var defaultTags = [
 
 
 var serviceSchema = new mongoose.Schema({
-    name:{type: String},
+    name:{type: String, required: true},
     owner:{type:mongoose.Schema.Types.ObjectId, ref:"User"},
     description:{type: String, default: "No description provided."},
     
