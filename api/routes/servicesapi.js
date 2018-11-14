@@ -20,7 +20,7 @@ router.post('/search', serviceCon.service_search);
 router.post('/edit', serviceCon.service_edit);
 
 // delete service
-router.post('/delete', serviceCon.service_delete);
+router.post('/delete',checkAuth, serviceCon.service_delete);
 
 // get specific service.
 router.get('/:id', serviceCon.service_get);

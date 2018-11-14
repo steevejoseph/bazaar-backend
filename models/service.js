@@ -25,28 +25,10 @@ var serviceSchema = new mongoose.Schema({
     owner:{type:mongoose.Schema.Types.ObjectId, ref:"User"},
     description:{type: String, default: "No description provided."},
     
-    
-    // photos is an array of objects, each with a url field.
-      // (may add more fields in future.)
-    // photos[i].url gives the photo's url.
-    photos: {
-        type: [{
-          url: {type:String},
-        }]
-    },
-    
-    
     // set tags to be array of strings.
     // each tag given has to be a member of of defaultTags.
-    tags:[{type:String, /*enum: defaultTags*/}],
-    
-    
-    // options is an array of objects, each with a name, desc, and cost field.
-    options: [{
-      name: {type: String, required: true},
-      description: {type:String, default:"No description provided."},
-      cost: {type: Number, default: 1}
-    }],
+    //going to look at diffrent ways to implement tags that may be easier to use
+   // tags:[{type:String, /*enum: defaultTags*/}],
     
     
     // if reported, won't be shown (in theory).

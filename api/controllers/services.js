@@ -10,9 +10,12 @@ exports.service_create = (req, res, next) => {
     
     //create a new service 
   var srv =  new Service({
-    name:req.body.name,
-    owner:req.user,
-    description:req.body.description,
+    name: req.body.name,
+    owner: req.userData.userId,
+    description: req.body.description,
+    price: req.body.price,
+    reported: false,
+    
   });
 
    srv.save()
@@ -37,7 +40,8 @@ exports.service_create = (req, res, next) => {
         
         res.status(500).json({
           error: err,
-          services : services        
+          badserv: srv
+          //services : services        
         });
       
      });
@@ -107,27 +111,43 @@ exports.service_edit = (req, res, next) => {
 
 exports.service_delete = (req, res, next) => {
     var serviceId = mongoose.Types.ObjectId(req.body.id);
-    Service.findOneAndRemove({_id : serviceId})
-    .exec().then(result => {
+    var query = Service.where({_id : serviceId});
+    var toDelete = query.findOne(function (err, found){
         
-        Service.find({}, function(err, services){
-            if(err){
-                res.status(500).json({error:err});
-            }else{
-                res.status(200).json({
-                result : result,
-                services: services
-              });
-                
-            }
-        });
-       
-    })
-    .catch(err => {
-        console.log(err);
-        return res.status(500).json({
-            error: err
-        });
+        if(err) {
+            //handel error
+            res.status(500).json({
+                error: err
+            })
+        }
+        if(found == null){
+            res.status(500).json({
+                msg: 'no service matching id found'
+            })
+        } else if(found.owner == req.userData.userId){
+        Service.findOneAndRemove({_id : serviceId})
+        .exec().then(result => {
+            
+            Service.find({}, function(err, services){
+                if(err){
+                    res.status(500).json({error:err});
+                }else{
+                    res.status(200).json({
+                    result : result,
+                    services: services
+                  });
+                    
+                }
+            });
+           
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json({
+                error: err
+            });
+        });}
+        
     });
 }
 
