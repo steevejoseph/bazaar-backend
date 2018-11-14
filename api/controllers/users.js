@@ -120,13 +120,17 @@ exports.user_delete = (req, res, next) => {
 }
 
 exports.user_get = (req, res, next) => {
-  var emailtmp =req.userData.email;
-  console.log(req.userData);
-  var idtmp = req.userData.userId;
-  console.log(idtmp);
-  return res.status(200).json({
-    email: emailtmp,
-    id: idtmp
+  User.findById(req.params.userId).exec()
+  .then(user => {
+    res.status(200).json({
+      user: user
+    });
+  })
+  .catch(err => {
+    console.log(err);
+    return res.status(500).json({
+      message:'Cannot get specified user.'
+    });
   })
 }
 
@@ -135,7 +139,7 @@ exports.user_index = (req, res, next) => {
     if(err){
       console.log(err);
       return res.status(500).json({
-        message:'can\'t get users :/'
+        message:'Cannot get users.'
       });
     }
     
