@@ -10,9 +10,13 @@ exports.service_create = (req, res, next) => {
     
     //create a new service 
   var srv =  new Service({
-    name:req.body.name,
-    owner:req.user,
-    description:req.body.description,
+    name: req.body.name,
+    owner: req.user,
+    description: req.body.description,
+    price: req.body.price,
+    options: req.body.options,
+    reported: false,
+    
   });
 
    srv.save()
@@ -37,7 +41,8 @@ exports.service_create = (req, res, next) => {
         
         res.status(500).json({
           error: err,
-          services : services        
+          badserv: srv
+          //services : services        
         });
       
      });
