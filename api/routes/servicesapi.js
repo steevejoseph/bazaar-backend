@@ -17,7 +17,7 @@ router.get('/', serviceCon.service_index);
 router.post('/search', serviceCon.service_search);
 
 //edit service
-router.post('/edit', serviceCon.service_edit);
+router.post('/edit', checkAuth, serviceCon.service_edit);
 
 // delete service
 router.post('/delete',checkAuth, serviceCon.service_delete);
