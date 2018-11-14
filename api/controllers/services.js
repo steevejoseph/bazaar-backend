@@ -8,39 +8,27 @@ exports.service_create = (req, res, next) => {
   
     // console.log(req.headers.authorization);
     
+    // owner field not coming through...
+    console.log(req.body);
     //create a new service 
   var srv =  new Service({
     name:req.body.name,
-    owner:req.user,
+    owner:req.body.owner,
     description:req.body.description,
   });
 
    srv.save()
    .then(service => {
-     Service.find({}, function(err, services) {
-         if(err) console.log(err);
-        
-        
         res.status(200).json({
-            createdService: srv,
-            //services: services,
-            //service : service        
+            service: srv
         });
-      
-     });
     })
     .catch(err => {
       console.log(err);
-      Service.find({}, function(err, services) {
-         if(err) console.log(err);
-        
-        
         res.status(500).json({
           error: err,
-          services : services        
         });
       
-     });
     });
 }
 
@@ -109,19 +97,9 @@ exports.service_delete = (req, res, next) => {
     var serviceId = mongoose.Types.ObjectId(req.body.id);
     Service.findOneAndRemove({_id : serviceId})
     .exec().then(result => {
-        
-        Service.find({}, function(err, services){
-            if(err){
-                res.status(500).json({error:err});
-            }else{
-                res.status(200).json({
-                result : result,
-                services: services
-              });
-                
-            }
+        res.status(200).json({
+            result : result,
         });
-       
     })
     .catch(err => {
         console.log(err);

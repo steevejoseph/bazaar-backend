@@ -5,7 +5,8 @@ const checkAuth = require('../middleware/check-auth.js');
 const serviceCon = require('../controllers/services.js');
 
 //create a service (user must be logged in)
-router.post('/create', checkAuth, serviceCon.service_create);
+// router.post('/create', checkAuth, serviceCon.service_create);
+router.post('/create', serviceCon.service_create);
 
 //get all current services
 router.get('/', serviceCon.service_index);
