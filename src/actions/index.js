@@ -75,10 +75,15 @@ export function serviceView(id) {
     };
 }
 
-export function getUserFromLocalStorage() { 
+export function getUserFromLocalStorage() {
+    
+        // console.log(typeof(localStorage.getItem('loggedInUser')));
+        const user = JSON.parse(localStorage.getItem('loggedInUser'));
+        // console.log(typeof(user));
+
         return {
             type: GET_USER_FROM_LOCAL_STORAGE,
-            payload: localStorage.getItem('loggedInUser')
+            payload: user
         };
 }
 
