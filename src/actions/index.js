@@ -11,6 +11,13 @@ export const FETCH_USER = 'fetch_user';
 export const GET_USER_FROM_LOCAL_STORAGE = 'get_local_from_storage';
 export const LOG_OUT_USER = 'log_out';
 
+// set authorization header.    
+// gotta JSON.parse here as well.. (Errant double quotes).
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem("token"));
+
+//sanity check
+// console.log(axios.defaults.headers.common['Authorization']);
+
 export function login(values, callback) {
     const data = {
         email: values.email,
@@ -39,9 +46,10 @@ export function createUser(values, callback) {
 
 export function createService(values, callback) {
     const data = {
-        name: values.name,
+        name: values.serviceName,
         tags: values.tags,
-        description: values.description
+        description: values.description,
+        owner: values.user._id
     };
 
     return {
