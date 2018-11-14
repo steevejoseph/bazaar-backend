@@ -29,12 +29,15 @@ class CreateService extends Component {
     }
 
     onSubmit(values) {
+        // add the user so "owner" can be properly assigned.
+        values = { ...values, user:this.props.user}
         this.props.createService(values, () => {
             this.props.history.push("/");
         });
     }
 
     render() {
+        // console.log(this.props.token)
         const { handleSubmit } = this.props;
         return (
             <div className="modal-body">
@@ -81,16 +84,14 @@ function validate(values) {
 // let the form know that there's a user in the house.
 function mapStateToProps(state) {
 
-    // right below returns a string.
-    // console.log(typeof(state.user.user));
     const user = JSON.parse(state.user.user);
-
-    // now an object.
-    // console.log(typeof(user));
-
+    
+    // yep, gotta parse this one too. (Errant double quotes if otherwise)
+    const token = JSON.parse(state.user.token);
 
     return {
         user:user,
+        token: state.user.token
     };
 }
 
