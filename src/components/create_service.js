@@ -78,9 +78,25 @@ function validate(values) {
     return errors;
 }
 
+// let the form know that there's a user in the house.
+function mapStateToProps(state) {
+
+    // right below returns a string.
+    // console.log(typeof(state.user.user));
+    const user = JSON.parse(state.user.user);
+
+    // now an object.
+    // console.log(typeof(user));
+
+
+    return {
+        user:user,
+    };
+}
+
 export default reduxForm({
     validate,
     form: 'ServiceForm'
 })(
-    connect(null, {createService})(CreateService)
+    connect(mapStateToProps, {createService})(CreateService)
 );
