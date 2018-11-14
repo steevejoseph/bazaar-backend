@@ -92,21 +92,36 @@ exports.service_search = (req, res, next) => {
 //edit service boiii
 exports.service_edit = (req, res, next) => {
     var serviceId = mongoose.Types.ObjectId(req.body.id);
-    Service.findOneAndUpdate({_id : serviceId}, {
-        name : req.body.name,
-        description : req.body.description
-    }, {'new' : true})
-    .exec().then(result => {
-        res.status(200).json({
-            result : result        
-        });
+    var query = Service.where({_id : serviceId})
+    var toUpdate = query.findOne(function (err, found) {
+        if(err) {
+            res.status(500).json({
+                error: err
+            })
+        } else if(found == null) {
+            res.status(500).json({
+                msg: 'service to update not found'
+            })
+        } else if(found.owner == req.userData.userId) {
+            Service.findOneAndUpdate({_id : serviceId}, {
+                name : req.body.name,
+                description : req.body.description,
+                price: req.body.price
+            }, {'new' : true})
+            .exec().then(result => {
+                res.status(200).json({
+                    result : result        
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                return res.status(500).json({
+                    error: err
+                });
+            });
+        }
     })
-    .catch(err => {
-        console.log(err);
-        return res.status(500).json({
-            error: err
-        });
-    });
+    
 }
 
 exports.service_delete = (req, res, next) => {
