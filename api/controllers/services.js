@@ -184,3 +184,25 @@ exports.service_get = (req, res, next) => {
         });
     });
 }
+
+//get all of a users services
+exports.service_get_user_service = (req, res, next) => {
+    var userId = mongoose.Types.ObjectId(req.params.usersId);
+    
+    var query = Service.where({owner: userId});
+    query.find((err, found) => {
+        if(err) {
+            return res.status(500).json({
+                error: err
+            })
+        } else if(found[0] == null) {
+            res.status(500).json({
+                msg: 'no services found for user' 
+            })
+        } else {
+            res.status(200).json({
+                userServices: found
+            })
+        }
+    })   
+}
