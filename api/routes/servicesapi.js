@@ -28,5 +28,8 @@ router.get('/:id', serviceCon.service_get);
 //get all of a users services
 router.get('/user/:usersId', serviceCon.service_get_user_service);
 
+//create a comment for a service
+router.post('/createComment', checkAuth, serviceCon.service_create_comment);
+
 
 module.exports = router;
