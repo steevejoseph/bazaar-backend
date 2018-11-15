@@ -25,5 +25,8 @@ router.post('/delete',checkAuth, serviceCon.service_delete);
 // get specific service.
 router.get('/:id', serviceCon.service_get);
 
+//get all of a users services
+router.get('/user/:usersId', serviceCon.service_get_user_service);
+
 
 module.exports = router;
