@@ -170,19 +170,34 @@ exports.service_delete = (req, res, next) => {
 //  (api/services/:id)
 exports.service_get = (req, res, next) => {
     var serviceId = mongoose.Types.ObjectId(req.params.id);
-
-    Service.findById(serviceId)
-    .exec().then(service => {
-        res.status(200).json({
-            service : service        
-        });
+    var sev = Service.where({_id: serviceId});
+    sev.findOne((err, service) => {
+        if(err){
+            res.status(500).json({
+                error: err
+            })
+        } else if(service == null) {
+            res.status(500).json({
+                msg: 'service not found'
+            })
+        } else {
+            var query = Comment.where({serviceId: serviceId});
+            query.find((err, comments) => {
+                if(err){
+                    return res.status(500).json({
+                        error: err
+                    })
+                } else {
+                    return res.status(200).json({
+                        service: service,
+                        comments: comments
+                    })
+                }
+                
+            })
+        }
     })
-    .catch(err => {
-        console.log(err);
-        return res.status(500).json({
-            error: err
-        });
-    });
+    
 }
 
 //get all of a users services
