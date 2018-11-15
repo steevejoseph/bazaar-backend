@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://team7:ABC123@ds263832.mlab.com:63832/largo-dev', {useNewUrlParser: true});
 
 const Service = require('../../models/service.js');
-
+const Comment = require('../../models/comment.js');
 exports.service_create = (req, res, next) => {
   
     // console.log(req.headers.authorization);
@@ -200,9 +200,50 @@ exports.service_get_user_service = (req, res, next) => {
                 msg: 'no services found for user' 
             })
         } else {
-            res.status(200).json({
+            return res.status(200).json({
                 userServices: found
             })
         }
     })   
+}
+
+exports.service_create_comment = (req, res, next) => {
+    
+    var servId = mongoose.Types.ObjectId(req.body.serviceId)
+    var query = Service.where({_id: servId});
+    query.findOne((err, found) => {
+        if(err){
+            return res.status(500).json({
+                error: err
+            })
+        }else if(found == null){
+            return res.status(500).json({
+                msg: 'sevice not found'
+            })
+        } else if(found.owner == req.userData.userId) {
+            return res.status(500).json({
+                msg: 'you can not rate your own service'
+            })
+        } else {
+            if(req.body.rateing != null && req.body.rateing >= 0 && req.body.rateing <= 5) {
+                var newComment = new Comment({
+                    owner: req.userData.userId,
+                    serviceId: req.body.serviceId,
+                    comment: req.body.comment,
+                    rateing: req.body.rateing
+                
+                    })
+                    newComment.save();
+                    return res.status(200).json({
+                        createdComment: newComment
+                    })
+                } else {
+                    return res.status(500).json({
+                        msg: 'rateing must be a value from 0 to 5'
+                    })
+                }
+        }
+        
+    })
+    
 }
