@@ -11,12 +11,7 @@ export const FETCH_USER = 'fetch_user';
 export const GET_USER_FROM_LOCAL_STORAGE = 'get_local_from_storage';
 export const LOG_OUT_USER = 'log_out';
 
-// set authorization header.    
-// gotta JSON.parse here as well.. (Errant double quotes).
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem("token"));
-
-//sanity check
-// console.log(axios.defaults.headers.common['Authorization']);
 
 export function login(values, callback) {
     const data = {
@@ -84,14 +79,9 @@ export function serviceView(id) {
 }
 
 export function getUserFromLocalStorage() {
-    
-        // console.log(typeof(localStorage.getItem('loggedInUser')));
-        const user = JSON.parse(localStorage.getItem('loggedInUser'));
-        // console.log(typeof(user));
-
         return {
             type: GET_USER_FROM_LOCAL_STORAGE,
-            payload: user
+            payload: JSON.parse(localStorage.getItem('loggedInUser'))
         };
 }
 
