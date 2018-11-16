@@ -11,7 +11,7 @@ export const FETCH_USER = 'fetch_user';
 export const GET_USER_FROM_LOCAL_STORAGE = 'get_local_from_storage';
 export const LOG_OUT_USER = 'log_out';
 
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem("token"));
+axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem('token'))}`;
 
 export function login(values, callback) {
     const data = {
