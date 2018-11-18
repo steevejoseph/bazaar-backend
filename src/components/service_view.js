@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { serviceView } from '../actions/index';
 import ServiceDescription from './service_description';
-import 'font-awesome/css/font-awesome.min.css';
 
 class ServiceView extends Component {
     componentDidMount() {
