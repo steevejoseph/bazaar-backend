@@ -12,7 +12,11 @@ export default function(state = {}, action) {
         case SERVICE_VIEW:
             return { service: action.payload.data.service };
         case FETCH_USERS_SERVICES:
-            return { services: action.payload.data.userServices };
+            if(!action.payload.response.ok){
+                return {};
+            }
+            else
+                return { services: action.payload.data.userServices };
         default:
             return state;
     }
