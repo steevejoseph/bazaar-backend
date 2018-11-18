@@ -51,15 +51,20 @@ export function createUser(values, callback) {
 export function createService(values, callback) {
     const data = {
         name: values.serviceName,
-        tags: values.tags,
+        //tags: values.category,
         description: values.description,
-        owner: values.user._id
+        owner: values.user._id,
+        price: values.price
     };
 
-    return {
-        type: CREATE_SERVICE,
-        payload: axios.post(`${ROOT_URL}/services/create`, data)
-    };
+    return axios.post(`${ROOT_URL}/services/create`, data).then((req) => {
+        callback(req.data.createdService._id);
+
+        return {
+            type: CREATE_SERVICE,
+            payload: req
+        };
+    })
 }
 
 export function fetchServices() {

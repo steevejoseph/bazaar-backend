@@ -1,26 +1,71 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createService } from '../actions';
 
-// TODO: Put this inside a modal instead and only be able to see it once logged in
+const CATEGORIES = [
+    'Default',
+    'Graphics & Design',
+    'Digital Marketing',
+    'Writing & Translation',
+    'Video & Animation',
+    'Music & Audio',
+    'Programming & Tech',
+    'Business',
+    'Fun & Lifestyle',
+    'Lessons/Tutoring',
+    'Event Management',
+    'Beauty',
+    'E-Commerce',
+    'Photography'
+];
 
-class CreateService extends Component {
-    renderField(field) {
+class CreateService extends Component {    
+    constructor(props) {
+        super(props);
+
+        this.renderDropdown = this.renderDropdown.bind(this);
+    }
+
+    renderInputField(field) {
         const { meta: {touched, error } } = field;
-        const className = `form-group${touched && error ? 'has-error' : ''}`;
+        const className = `form-control form-control-lg ${touched && error ? 'is-invalid ' : touched && !error ? 'is-valid' : ''}`;
 
         return (
-            <div className={className}>
-                <div>
-                    <input 
-                        type="text" 
-                        className="form-control form-control-lg"
-                        autoComplete="off"
-                        placeholder={field.label}
-                        {...field.input} 
-                    />
-                </div>
+            <div>
+                <input 
+                    type="text" 
+                    className={className}
+                    autoComplete="off"
+                    placeholder={field.label}
+                    {...field.input} 
+                />
+                <p className="text-danger">
+                    {touched ? error : ''}
+                </p>
+            </div>
+        );
+    }
+
+    renderSelectOptions() {
+        return _.map(CATEGORIES, category => {
+            return (
+                <option key={category} value={category}>{category}</option>
+            )
+        });
+    }
+
+    renderDropdown(field) {
+        const { meta: {touched, error } } = field;
+        const className = `form-control form-control-lg ${touched && error ? 'is-invalid' : touched && !error ? 'is-valid' : ''}`;
+
+        return (
+            <div>
+                <select className={className} {...field.input} >
+                    {this.renderSelectOptions()}
+                </select>
                 <p className="text-danger">
                     {touched ? error : ''}
                 </p>
@@ -30,8 +75,9 @@ class CreateService extends Component {
 
     onSubmit(values) {
         values = { ...values, user:this.props.user}
-        this.props.createService(values, () => {
-            this.props.history.push("/");
+        this.props.createService(values, (id) => {
+            this.props.successCallback();
+            this.props.history.push(`/services/${id}`);
         });
     }
 
@@ -43,17 +89,22 @@ class CreateService extends Component {
                     <Field 
                         label="Service Name"
                         name="serviceName"
-                        component={this.renderField}
+                        component={this.renderInputField}
                     />
                     <Field 
-                        label="Tags"
-                        name="tags"
-                        component={this.renderField}
+                        label="Category"
+                        name="category"
+                        component={this.renderDropdown}
                     />
                     <Field 
                         label="Description"
                         name="description"
-                        component={this.renderField}
+                        component={this.renderInputField}
+                    />
+                    <Field 
+                        label="Price"
+                        name="price"
+                        component={this.renderInputField}
                     />
                     <div className="form-group">
                         <button type="submit" className="btn btn-lg btn-block btn-danger">Submit</button>
@@ -70,12 +121,28 @@ function validate(values) {
     if (!values.serviceName) 
         errors.serviceName = "Enter a service name.";
 
-    if (!values.tags) 
-        errors.tags = "Enter some tags.";
+    if (!values.category) 
+        errors.category = "Choose a category.";
     
+    else if (values.category == "Default") 
+        errors.category = "Choose a category.";
+
     if (!values.description) 
         errors.description = "Enter a description.";
-    
+
+    if (!values.price) 
+        errors.price = "Enter a price.";
+    else if (values.price) {
+        const parse = parseInt(values.price);
+
+        if (parse)
+            values.price = parse;
+        else {
+            values.price = ''
+            errors.price = "Enter only numbers.";
+        }
+    }
+
     return errors;
 }
 
@@ -89,5 +156,5 @@ export default reduxForm({
     validate,
     form: 'ServiceForm'
 })(
-    connect(mapStateToProps, {createService})(CreateService)
+    withRouter(connect(mapStateToProps, {createService})(CreateService))
 );
