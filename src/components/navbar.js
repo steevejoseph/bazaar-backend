@@ -27,13 +27,7 @@ class Navbar extends Component {
         // Check local storage to see if user has signed in
         // TODO: Check to see if token is valid instead
         if (localStorage.getItem('loggedInUser'))
-            this.props.getUserFromLocalStorage();
-        
-        if (this.props.loggedIn)
-            this.setState({ 
-                isTryingToLogin: this.state.isTryingToLogin,
-                modal: false
-            });        
+            this.props.getUserFromLocalStorage();   
     }
 
     setIntent(intent, callback = {}) {
