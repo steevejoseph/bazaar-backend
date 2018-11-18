@@ -4,15 +4,34 @@ import { FETCH_ALL_SERVICES, CREATE_SERVICE, SERVICE_SEARCH, SERVICE_VIEW, FETCH
 export default function(state = {}, action) {   
     switch (action.type) {
         case FETCH_ALL_SERVICES: 
-            return { services: action.payload.data.services }
+            return { 
+                ...state,
+                services: action.payload.data.services
+             }
         case CREATE_SERVICE:
             return state;
         case SERVICE_SEARCH:
-            return { services: action.payload.data.results };
+            return { 
+                ...state,
+                services: action.payload.data.results
+             };
         case SERVICE_VIEW:
-            return { service: action.payload.data.service };
+            return { 
+                ...state,
+                service: action.payload.data.service
+             };
         case FETCH_USERS_SERVICES:
-            return { services: action.payload.data.userServices };
+            if (action.payload.status == 200){
+                return { 
+                    ...state,
+                    services: action.payload.data.userServices
+                 };
+            }
+            else
+                return {
+                    ...state,
+                    services: null
+                };
         default:
             return state;
     }

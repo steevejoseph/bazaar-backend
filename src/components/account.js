@@ -12,6 +12,14 @@ class Account extends Component {
         if (!this.props.user)
             return <div>loading</div>
 
+        if(!this.props.services)
+            return (
+                <div className="container account">
+                    <h1>Account - {this.props.user.lastName}</h1>
+                    <h5>You do not own any services</h5>
+                </div>
+            );
+
         return (
             <div className="container account">
                 <h1>Account - {this.props.user.lastName}</h1>
