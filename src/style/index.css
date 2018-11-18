@@ -45,3 +45,7 @@ code {
 .dropdown-menu-right {
   text-align: center;
 }
+
+.home .card {
+  cursor: pointer;
+}
