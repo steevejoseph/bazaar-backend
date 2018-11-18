@@ -28,7 +28,7 @@ class Signup extends Component {
 
     onSubmit(values) {
         this.props.createUser(values, () => {
-            
+            this.props.successCallback();
         });
     }
 
