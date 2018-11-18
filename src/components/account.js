@@ -4,16 +4,11 @@ import { fetchUsersServices } from '../actions';
 import ServiceCardListRow from './service_card_list_row.js';
 
 class Account extends Component {
-
     componentDidMount() {
         this.props.fetchUsersServices(this.props.user._id);
     }
-    
 
     render() {
-
-        //const userObj = JSON.parse(this.props.user);
-
         if (!this.props.user)
             return <div>loading</div>
 
