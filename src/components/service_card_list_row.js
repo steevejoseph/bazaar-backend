@@ -4,7 +4,7 @@ import ServiceCard from './service_card';
 
 
 export default class ServiceCardListRow extends Component {  
-    
+
     renderCardList() {
         console.log("in service card list row ", this.props.ableToEdit);
         return _.map(this.props.services, service => {
@@ -19,7 +19,7 @@ export default class ServiceCardListRow extends Component {
             <div>
                 <h1>Services</h1>
                 <div className="row flex-row">
-                    {this.renderCardList()}
+                    { this.renderCardList()}
                 </div>
             </div>
         );

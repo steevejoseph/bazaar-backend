@@ -20,7 +20,7 @@ class Account extends Component {
         return (
             <div className="container account">
                 <h1>Account - {this.props.user.lastName}</h1>
-                <ServiceCardListRow services={this.props.services} abletoEdit={true}/>
+                <ServiceCardListRow services={this.props.services} ableToEdit={true}/>
             </div>
         );
     }
