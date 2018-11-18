@@ -8,6 +8,7 @@ export const SERVICE_SEARCH = 'service_search';
 export const SERVICE_VIEW = 'service_view';
 export const FETCH_ALL_SERVICES = 'fetch_services';
 export const FETCH_USER = 'fetch_user';
+export const FETCH_USERS_SERVICES = 'fetch_users_services';
 export const GET_USER_FROM_LOCAL_STORAGE = 'get_local_from_storage';
 export const LOG_OUT_USER = 'log_out';
 
@@ -65,6 +66,13 @@ export function fetchServices() {
     return {
         type: FETCH_ALL_SERVICES,
         payload: axios.get(`${ROOT_URL}/services`)
+    }
+}
+
+export function fetchUsersServices(userID){
+    return {
+        type: FETCH_USERS_SERVICES, 
+        payload: axios.get(`${ROOT_URL}/services/user/${userID}`)
     }
 }
 
