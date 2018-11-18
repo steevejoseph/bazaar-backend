@@ -16,7 +16,7 @@ class Home extends Component {
             <div>
                 <Search />
                 <div className="home container">
-                    <ServiceCardListRow services={this.props.services}/>
+                    <ServiceCardListRow services={this.props.services} ableToEdit={false} />
                 </div>
             </div>
         );
