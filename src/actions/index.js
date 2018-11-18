@@ -19,10 +19,14 @@ export function login(values, callback) {
         password: values.password
     };
 
-    return {
-        type: LOGIN,
-        payload: axios.post(`${ROOT_URL}/users/login`, data)
-    };
+    return axios.post(`${ROOT_URL}/users/login`, data).then((req) => {
+        callback();
+
+        return {
+            type: LOGIN,
+            payload: req
+        };
+    });
 }
 
 export function createUser(values, callback) {
@@ -32,11 +36,15 @@ export function createUser(values, callback) {
         email: values.email,
         password: values.password
     };
+    
+    return axios.post(`${ROOT_URL}/users/signup`, data).then((req) => {
+        callback();
 
-    return {
-        type: CREATE_USER,
-        payload: axios.post(`${ROOT_URL}/users/signup`, data)
-    };
+        return {
+            type: CREATE_USER,
+            payload: req
+        };
+    });
 }
 
 export function createService(values, callback) {

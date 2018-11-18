@@ -1,34 +1,53 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Signup from './signup';
 import Login from './login';
+import Modal from './modal';
 import { connect } from 'react-redux';
-import { getUserFromLocalStorage, logOutUser } from '../actions'
+import { getUserFromLocalStorage, logOutUser } from '../actions';
 
 class Navbar extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { isTryingToLogin: false };
+        this.state = { 
+            isTryingToLogin: false,
+            modal: false
+        };
 
         this.toggleIntent = this.toggleIntent.bind(this);
         this.loginSignupModal = this.loginSignupModal.bind(this);
         this.logOut = this.logOut.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.handleLoginClickEvent = this.handleLoginClickEvent.bind(this);
+        this.handleSignupClickEvent = this.handleSignupClickEvent.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         // Check local storage to see if user has signed in
         // TODO: Check to see if token is valid instead
         if (localStorage.getItem('loggedInUser'))
             this.props.getUserFromLocalStorage();
+        
+        if (this.props.loggedIn)
+            this.setState({ 
+                isTryingToLogin: this.state.isTryingToLogin,
+                modal: false
+            });        
     }
 
-    setIntent(intent) {
-        this.setState({isTryingToLogin: intent});
+    setIntent(intent, callback = {}) {
+        this.setState({ 
+            isTryingToLogin: intent,
+            modal: this.state.modal
+        }, () => callback());
     }
 
     toggleIntent() {
-        this.setState({isTryingToLogin: !this.state.isTryingToLogin});
+        this.setState({ 
+            isTryingToLogin: !this.state.isTryingToLogin,
+            modal: this.state.modal
+        });
     }
 
     logOut() {
@@ -36,21 +55,29 @@ class Navbar extends Component {
         this.props.history.push('/');
     }
 
+    toggleModal() {
+        this.setState({ 
+            isTryingToLogin: this.state.isTryingToLogin,
+            modal: !this.state.modal
+        });
+    }
+
     loginSignupModal() {
         return (
-        <div className="modal fade" id="loginSignupModal" tabIndex="-1" role="dialog" aria-labelledby="loginSignupModalLabel" aria-hidden="true">
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    {this.state.isTryingToLogin ?  <Login switchToSignup={this.toggleIntent}/> : <Signup switchToLogin={this.toggleIntent} />}
-                </div>
-            </div>
-        </div>
+            <Modal 
+                isOpen={this.state.modal} 
+                toggle={this.toggleModal} 
+                modalBody={this.state.isTryingToLogin ? <Login switchToSignup={this.toggleIntent} successCallback={this.toggleModal} /> : <Signup switchToLogin={this.toggleIntent} successCallback={this.toggleModal} />}
+                />
         );
+    }
+
+    handleSignupClickEvent() {
+        this.setIntent(false, () => this.toggleModal()); 
+    }
+
+    handleLoginClickEvent() {
+        this.setIntent(true, () => this.toggleModal()); 
     }
 
     render() {
@@ -77,7 +104,6 @@ class Navbar extends Component {
                                     Account
                                     </a>
 
-                                    {/* Dropdown is too wide and hangs off the page :( */}
                                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                         <Link to="/account" className="dropdown-item">Account</Link>
                                         <div className="dropdown-divider"></div>
@@ -87,12 +113,12 @@ class Navbar extends Component {
                                 :  '' }
 
                             
-                            {/* Yes, weird, cumbersome use of tertiary, but works only this way weirdly. Open to other solutions */}
+                            {/* Yes, weird, cumbersome use of ternary, but works only this way weirdly. Open to other solutions */}
 
                             {this.props.loggedIn ? '' :
                             
                                 <li className="nav-item">
-                                    <a className="nav-link" data-toggle="modal" data-target="#loginSignupModal" href="" onClick={() => this.setIntent(false)}>Sign up</a>
+                                    <a className="nav-link" data-toggle="modal" data-target="#loginSignupModal" href="" onClick={this.handleSignupClickEvent}>Sign up</a>
                                 </li>
 
                             }
@@ -100,14 +126,14 @@ class Navbar extends Component {
                             {this.props.loggedIn ? '' :
                             
                                 <li className="nav-item">
-                                    <a className="nav-link" data-toggle="modal" data-target="#loginSignupModal" href="" onClick={() => this.setIntent(true)}>Log in</a>
+                                    <a className="nav-link" data-toggle="modal" data-target="#loginSignupModal" href="" onClick={this.handleLoginClickEvent}>Log in</a>
                                 </li>
 
                                 }
                         </ul>
                     </div>
                 </nav>
-                {this.props.loggedIn ? '' :  this.loginSignupModal()}
+                {this.loginSignupModal()}
             </div>
         );
     }

@@ -27,8 +27,8 @@ class Login extends Component {
     }
 
     onSubmit(values) {
-        this.props.login(values, (user) => {
-            localStorage.setItem('loggedInUser', user)
+        this.props.login(values, () => {
+            this.props.successCallback();
         });
     }
 
