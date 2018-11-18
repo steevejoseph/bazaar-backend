@@ -3,6 +3,7 @@ import ServiceCardListRow from './service_card_list_row';
 import Search from './search';
 import { connect } from 'react-redux';
 import { fetchServices } from '../actions';
+import BasicModal from './basic_modal';
 
 const samplesServices = ['Pancake Lessons', 'Frog Taming', 'Cereal Pouring Basics', 'Greek Life Initiation', 'Chick-fil-A Line Holder', 'Yeet'];
 
@@ -16,6 +17,7 @@ class Home extends Component {
             <div>
                 <Search />
                 <div className="home container">
+                    <BasicModal />
                     <ServiceCardListRow services={this.props.services}/>
                 </div>
             </div>
