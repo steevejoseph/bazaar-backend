@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createService } from '../actions';
 
@@ -51,7 +52,7 @@ class CreateService extends Component {
     renderSelectOptions() {
         return _.map(CATEGORIES, category => {
             return (
-                    <option value={category}>{category}</option>
+                <option key={category} value={category}>{category}</option>
             )
         });
     }
@@ -62,7 +63,7 @@ class CreateService extends Component {
 
         return (
             <div>
-                <select className={className}>
+                <select className={className} {...field.input} >
                     {this.renderSelectOptions()}
                 </select>
                 <p className="text-danger">
@@ -74,8 +75,9 @@ class CreateService extends Component {
 
     onSubmit(values) {
         values = { ...values, user:this.props.user}
-        this.props.createService(values, () => {
-            this.props.history.push("/");
+        this.props.createService(values, (id) => {
+            this.props.successCallback();
+            this.props.history.push(`/services/${id}`);
         });
     }
 
@@ -119,15 +121,28 @@ function validate(values) {
     if (!values.serviceName) 
         errors.serviceName = "Enter a service name.";
 
-    if (values.category) 
+    if (!values.category) 
         errors.category = "Choose a category.";
     
+    else if (values.category == "Default") 
+        errors.category = "Choose a category.";
+
     if (!values.description) 
         errors.description = "Enter a description.";
 
     if (!values.price) 
         errors.price = "Enter a price.";
-    
+    else if (values.price) {
+        const parse = parseInt(values.price);
+
+        if (parse)
+            values.price = parseInt(values.price);
+        else {
+            values.price = ''
+            errors.price = "Enter only numbers.";
+        }
+    }
+
     return errors;
 }
 
@@ -141,5 +156,5 @@ export default reduxForm({
     validate,
     form: 'ServiceForm'
 })(
-    connect(mapStateToProps, {createService})(CreateService)
+    withRouter(connect(mapStateToProps, {createService})(CreateService))
 );

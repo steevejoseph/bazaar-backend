@@ -72,7 +72,7 @@ class Navbar extends Component {
             <Modal 
                 isOpen={this.state.showCreateServiceModal} 
                 toggle={this.toggleCreateServiceModal} 
-                modalBody={<CreateService />}
+                modalBody={<CreateService successCallback={this.toggleCreateServiceModal}/>}
                 />
         );
     }
