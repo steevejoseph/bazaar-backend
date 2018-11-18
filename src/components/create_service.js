@@ -136,7 +136,7 @@ function validate(values) {
         const parse = parseInt(values.price);
 
         if (parse)
-            values.price = parseInt(values.price);
+            values.price = parse;
         else {
             values.price = ''
             errors.price = "Enter only numbers.";
