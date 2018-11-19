@@ -145,6 +145,7 @@ export function getUserFromLocalStorage() {
 
 export function logOutUser() {
     localStorage.removeItem('loggedInUser');
+    localStorage.removeItem('token');
     return {
         type: LOG_OUT_USER
     }
