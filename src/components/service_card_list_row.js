@@ -6,7 +6,12 @@ export default class ServiceCardListRow extends Component {
     renderCardList() {
         return _.map(this.props.services, service => {
             return (
-                <ServiceCard key={service._id} service={service} ableToEdit={this.props.ableToEdit}/>
+                <ServiceCard 
+                    key={service._id} 
+                    service={service} 
+                    ableToEdit={this.props.ableToEdit}
+                    toggleEditServiceModal={this.props.toggleEditServiceModal}
+                    />
             )
         });
     }
@@ -14,7 +19,7 @@ export default class ServiceCardListRow extends Component {
     render() {
         return (
             <div>
-                <h1>Services</h1>
+                <h1>{this.props.header}</h1>
                 <div className="row flex-row">
                     { this.renderCardList() }
                 </div>
