@@ -174,9 +174,7 @@ function mapStateToProps(state) {
 
 export default reduxForm({
     validate,
-    form: 'EditServiceForm',
-    enableReinitialize: true,
-    keepDirtyOnReinitialize: true
+    form: 'EditServiceForm'
 })(
     withRouter(connect(mapStateToProps, {editService, deleteService, fetchUsersServices})(EditService))
 );
