@@ -61,20 +61,6 @@ class Account extends Component {
         );
     }
 
-    renderDeleteModalBody() {
-        return (
-            <div className="delete text-center">
-                <i className="fa fa-trash-o fa-5x text-danger p-4" />
-                <h1>Are you sure?</h1>
-                <p>Are you sure you want us to permanently delete this service?</p>
-                <div className="p-2">
-                    <button type="button" className="btn btn-lg btn-danger">Delete</button>
-                    <button type="button" className="btn btn-lg">Cancel</button>
-                </div>
-            </div>
-        );
-    }
-
     renderDeleteModal() {
         return (
             <Modal 
