@@ -49,6 +49,26 @@ class CreateService extends Component {
         );
     }
 
+    renderTextarea(field) {
+        const { meta: {touched, error } } = field;
+        const className = `form-control form-control-lg ${touched && error ? 'is-invalid ' : touched && !error ? 'is-valid' : ''}`;
+        
+        return (
+            <div>
+                <textarea 
+                    type="text" 
+                    className={className}
+                    autoComplete="off"
+                    placeholder={field.label}
+                    {...field.input} 
+                />
+                <p className="text-danger">
+                    {touched ? error : ''}
+                </p>
+            </div>
+        );
+    }
+
     renderSelectOptions() {
         return _.map(CATEGORIES, category => {
             return (
@@ -92,6 +112,11 @@ class CreateService extends Component {
                         component={this.renderInputField}
                     />
                     <Field 
+                        label="Price"
+                        name="price"
+                        component={this.renderInputField}
+                    />
+                    <Field 
                         label="Category"
                         name="category"
                         component={this.renderDropdown}
@@ -99,12 +124,7 @@ class CreateService extends Component {
                     <Field 
                         label="Description"
                         name="description"
-                        component={this.renderInputField}
-                    />
-                    <Field 
-                        label="Price"
-                        name="price"
-                        component={this.renderInputField}
+                        component={this.renderTextarea}
                     />
                     <div className="form-group">
                         <button type="submit" className="btn btn-lg btn-block btn-danger">Submit</button>

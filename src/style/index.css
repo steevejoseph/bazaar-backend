@@ -49,3 +49,18 @@ code {
 .home .card {
   cursor: pointer;
 }
+
+.gearbox {
+  margin-bottom: -10px;
+  margin-top: 5px;
+  font-size: 20px;
+}
+
+.gearbox i {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.delete button {
+  margin-left: 10px;
+}

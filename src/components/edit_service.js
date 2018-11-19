@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { editService, deleteService, fetchUsersServices } from '../actions';
+import { editService, fetchUsersServices } from '../actions';
 
 const CATEGORIES = [
     'Category',
@@ -27,7 +27,6 @@ class EditService extends Component {
         super(props);
 
         this.renderDropdown = this.renderDropdown.bind(this);
-        this.handleDeleteClickEvent = this.handleDeleteClickEvent.bind(this);
     }
 
     componentDidMount() {
@@ -45,7 +44,27 @@ class EditService extends Component {
 
         return (
             <div>
-                <input 
+                <input
+                    type="text" 
+                    className={className}
+                    autoComplete="off"
+                    placeholder={field.label}
+                    {...field.input} 
+                />
+                <p className="text-danger">
+                    {touched ? error : ''}
+                </p>
+            </div>
+        );
+    }
+
+    renderTextarea(field) {
+        const { meta: {touched, error } } = field;
+        const className = `form-control form-control-lg ${touched && error ? 'is-invalid ' : touched && !error ? 'is-valid' : ''}`;
+        
+        return (
+            <div>
+                <textarea 
                     type="text" 
                     className={className}
                     autoComplete="off"
@@ -93,12 +112,6 @@ class EditService extends Component {
         });
     }
 
-    handleDeleteClickEvent() {
-        this.props.deleteService(this.props.service._id, () => {
-            this.props.successCallback();
-        });
-    }
-
     render() {
         const { handleSubmit } = this.props;
         return (
@@ -110,6 +123,11 @@ class EditService extends Component {
                         component={this.renderInputField}
                     />
                     <Field 
+                        label="Price"
+                        name="price"
+                        component={this.renderInputField}
+                    />
+                    <Field 
                         label="Category"
                         name="category"
                         component={this.renderDropdown}
@@ -117,16 +135,10 @@ class EditService extends Component {
                     <Field 
                         label="Description"
                         name="description"
-                        component={this.renderInputField}
-                    />
-                    <Field 
-                        label="Price"
-                        name="price"
-                        component={this.renderInputField}
+                        component={this.renderTextarea}
                     />
                     <div className="form-group">
                         <button type="submit" className="btn btn-lg btn-block btn-danger">Save</button>
-                        <button onClick={this.handleDeleteClickEvent} type="button" className="btn btn-lg btn-block btn-dark">Delete</button>
                     </div>
                 </form>
             </div>
@@ -176,5 +188,5 @@ export default reduxForm({
     validate,
     form: 'EditServiceForm'
 })(
-    withRouter(connect(mapStateToProps, {editService, deleteService, fetchUsersServices})(EditService))
+    withRouter(connect(mapStateToProps, {editService, fetchUsersServices})(EditService))
 );

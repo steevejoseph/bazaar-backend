@@ -9,7 +9,7 @@ import { getUserFromLocalStorage } from '../actions';
 
 class App extends Component {
     componentWillMount() {
-        if (localStorage.getItem('loggedInUser') && !this.props.user)
+        if (localStorage.getItem('loggedInUser'))
             this.props.getUserFromLocalStorage(); 
     }
 
