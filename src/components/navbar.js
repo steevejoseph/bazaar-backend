@@ -5,7 +5,7 @@ import Login from './login';
 import Modal from './modal';
 import CreateService from './create_service';
 import { connect } from 'react-redux';
-import { getUserFromLocalStorage, logOutUser } from '../actions';
+import { logOutUser } from '../actions';
 
 class Navbar extends Component {
     constructor(props) {
@@ -25,13 +25,6 @@ class Navbar extends Component {
         this.handleLoginClickEvent = this.handleLoginClickEvent.bind(this);
         this.handleSignupClickEvent = this.handleSignupClickEvent.bind(this);
         this.handleCreateServiceClickEvent = this.handleCreateServiceClickEvent.bind(this);
-    }
-
-    componentDidMount() {
-        // Check local storage to see if user has signed in
-        // TODO: Check to see if token is valid instead
-        if (localStorage.getItem('loggedInUser'))
-            this.props.getUserFromLocalStorage();   
     }
 
     setLoginIntent(intent, callback = {}) {
@@ -171,4 +164,4 @@ function mapStateToProps(state) {
     return { loggedIn: state.user.loggedIn };
 }
 
-export default connect(mapStateToProps, {getUserFromLocalStorage, logOutUser})(Navbar);
+export default connect(mapStateToProps, {logOutUser})(Navbar);

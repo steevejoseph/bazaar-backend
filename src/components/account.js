@@ -5,7 +5,8 @@ import ServiceCardListRow from './service_card_list_row.js';
 
 class Account extends Component {
     componentDidMount() {
-        this.props.fetchUsersServices(this.props.user._id);
+        if(this.props.user)
+            this.props.fetchUsersServices(this.props.user._id);
     }
 
     render() {
@@ -30,7 +31,10 @@ class Account extends Component {
 }
 
 function mapStateToProps(state) {
-    return { user: state.user.user, services: state.services.services };
+    return { 
+        user: state.user.user, 
+        services: state.services.services 
+    };
 }
 
 export default connect(mapStateToProps, {fetchUsersServices} )(Account);

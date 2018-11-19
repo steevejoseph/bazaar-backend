@@ -8,10 +8,7 @@ import promise from 'redux-promise';
 import './style/index.css';
 import 'font-awesome/css/font-awesome.min.css';
 
-import Navbar from './components/navbar';
-import Home from './components/home';
-import Account from './components/account';
-import ServiceView from './components/service_view';
+import App from './components/app';
 
 import reducers from './reducers';
 
@@ -19,15 +16,6 @@ const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>
-        <BrowserRouter>
-            <div>
-                <Route component={Navbar} />
-                <Switch>
-                    <Route path="/services/:id" component={ServiceView} />
-                    <Route path="/account" component={Account} />
-                    <Route path="/" component={Home} />
-                </Switch>
-            </div>
-        </BrowserRouter>
+        <App />
     </Provider>
     , document.getElementById('root'));
