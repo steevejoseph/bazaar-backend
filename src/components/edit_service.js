@@ -33,6 +33,7 @@ class EditService extends Component {
     componentDidMount() {
         this.props.initialize({ 
             serviceName: this.props.service.name,
+            //category: this.props.tags,
             description: this.props.service.description,
             price: this.props.service.price
         });
@@ -50,7 +51,6 @@ class EditService extends Component {
                     autoComplete="off"
                     placeholder={field.label}
                     {...field.input} 
-                    value={field.initVal}
                 />
                 <p className="text-danger">
                     {touched ? error : ''}
@@ -95,7 +95,6 @@ class EditService extends Component {
 
     handleDeleteClickEvent() {
         this.props.deleteService(this.props.service._id, () => {
-            this.props.fetchUsersServices();
             this.props.successCallback();
         });
     }

@@ -31,7 +31,7 @@ class Account extends Component {
     }
 
     editSuccessCallback() {
-        //this.props.fetchUsersServices();
+        this.props.fetchUsersServices(this.props.user._id);
         this.toggleEditServiceModal();
     }
 
