@@ -6,19 +6,17 @@ import { createUser } from '../actions';
 class Signup extends Component {
     renderField(field) {
         const { meta: {touched, error } } = field;
-        const className = `form-group${touched && error ? 'has-error' : ''}`;
+        const className = `form-control form-control-lg ${touched && error ? 'is-invalid ' : ''}`;
 
         return (
-            <div className={className}>
-                <div>
-                    <input 
-                        type="text" 
-                        className="form-control form-control-lg"
-                        autoComplete="off"
-                        placeholder={field.label}
-                        {...field.input} 
-                    />
-                </div>
+            <div>
+                <input 
+                    type="text" 
+                    className={className}
+                    autoComplete="off"
+                    placeholder={field.label}
+                    {...field.input} 
+                />
                 <p className="text-danger">
                     {touched ? error : ''}
                 </p>

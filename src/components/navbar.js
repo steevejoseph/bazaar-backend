@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import Signup from './signup';
 import Login from './login';
 import Modal from './modal';
+import CreateService from './create_service';
 import { connect } from 'react-redux';
-import { getUserFromLocalStorage, logOutUser } from '../actions';
+import { logOutUser } from '../actions';
 
 class Navbar extends Component {
     constructor(props) {
@@ -12,35 +13,31 @@ class Navbar extends Component {
 
         this.state = { 
             isTryingToLogin: false,
-            modal: false
+            showCreateServiceModal: false,
+            showLoginSignupModal: false
         };
 
-        this.toggleIntent = this.toggleIntent.bind(this);
-        this.loginSignupModal = this.loginSignupModal.bind(this);
+        this.toggleLoginIntent = this.toggleLoginIntent.bind(this);
+        this.renderLoginSignupModal = this.renderLoginSignupModal.bind(this);
         this.logOut = this.logOut.bind(this);
-        this.toggleModal = this.toggleModal.bind(this);
+        this.toggleCreateServiceModal = this.toggleCreateServiceModal.bind(this);
+        this.toggleLoginSignupModal = this.toggleLoginSignupModal.bind(this);
         this.handleLoginClickEvent = this.handleLoginClickEvent.bind(this);
         this.handleSignupClickEvent = this.handleSignupClickEvent.bind(this);
+        this.handleCreateServiceClickEvent = this.handleCreateServiceClickEvent.bind(this);
     }
 
-    componentDidMount() {
-        // Check local storage to see if user has signed in
-        // TODO: Check to see if token is valid instead
-        if (localStorage.getItem('loggedInUser'))
-            this.props.getUserFromLocalStorage();   
-    }
-
-    setIntent(intent, callback = {}) {
+    setLoginIntent(intent, callback = {}) {
         this.setState({ 
-            isTryingToLogin: intent,
-            modal: this.state.modal
+            ...this.state,
+            isTryingToLogin: intent
         }, () => callback());
     }
 
-    toggleIntent() {
+    toggleLoginIntent() {
         this.setState({ 
+            ...this.state,
             isTryingToLogin: !this.state.isTryingToLogin,
-            modal: this.state.modal
         });
     }
 
@@ -49,29 +46,58 @@ class Navbar extends Component {
         this.props.history.push('/');
     }
 
-    toggleModal() {
+    toggleCreateServiceModal() {
         this.setState({ 
-            isTryingToLogin: this.state.isTryingToLogin,
-            modal: !this.state.modal
+            ...this.state,
+            showCreateServiceModal: !this.state.showCreateServiceModal
         });
     }
 
-    loginSignupModal() {
+    toggleLoginSignupModal() {
+        this.setState({ 
+            ...this.state,
+            showLoginSignupModal: !this.state.showLoginSignupModal
+        });
+    }
+
+    renderCreateServiceModal() {
         return (
             <Modal 
-                isOpen={this.state.modal} 
-                toggle={this.toggleModal} 
-                modalBody={this.state.isTryingToLogin ? <Login switchToSignup={this.toggleIntent} successCallback={this.toggleModal} /> : <Signup switchToLogin={this.toggleIntent} successCallback={this.toggleModal} />}
+                isOpen={this.state.showCreateServiceModal} 
+                toggle={this.toggleCreateServiceModal} 
+                modalBody={<CreateService successCallback={this.toggleCreateServiceModal}/>}
                 />
         );
     }
 
+    renderLoginSignupModal() {
+        return (
+            <Modal 
+                isOpen={this.state.showLoginSignupModal} 
+                toggle={this.toggleLoginSignupModal} 
+                modalBody={this.state.isTryingToLogin ?
+                                  <Login switchToSignup={this.toggleLoginIntent} successCallback={this.toggleLoginSignupModal} /> 
+                                : <Signup switchToLogin={this.toggleLoginIntent} successCallback={this.toggleLoginSignupModal} />}
+                />
+        );
+    }
+
+    handleCreateServiceClickEvent() {
+        if (!this.props.loggedIn)
+            this.setLoginIntent(true, () => this.toggleLoginSignupModal());
+        else
+            this.setState({ 
+                ...this.state,
+                showCreateServiceModal: !this.state.showCreateServiceModal
+            });
+    }
+
     handleSignupClickEvent() {
-        this.setIntent(false, () => this.toggleModal()); 
+        this.setLoginIntent(false, () => this.toggleLoginSignupModal()); 
     }
 
     handleLoginClickEvent() {
-        this.setIntent(true, () => this.toggleModal()); 
+        this.setLoginIntent(true, () => this.toggleLoginSignupModal()); 
     }
 
     render() {
@@ -88,7 +114,7 @@ class Navbar extends Component {
                                 <Link to="/" className="nav-link">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/create-service" className="nav-link">Create Service</Link>
+                                <a className="nav-link" href="#" onClick={this.handleCreateServiceClickEvent}>Create Service</a>
                             </li>
                             
                             {this.props.loggedIn ? 
@@ -112,7 +138,7 @@ class Navbar extends Component {
                             {this.props.loggedIn ? '' :
                             
                                 <li className="nav-item">
-                                    <a className="nav-link" data-toggle="modal" data-target="#loginSignupModal" href="" onClick={this.handleSignupClickEvent}>Sign up</a>
+                                    <a className="nav-link" href="#" onClick={this.handleSignupClickEvent}>Sign up</a>
                                 </li>
 
                             }
@@ -120,14 +146,15 @@ class Navbar extends Component {
                             {this.props.loggedIn ? '' :
                             
                                 <li className="nav-item">
-                                    <a className="nav-link" data-toggle="modal" data-target="#loginSignupModal" href="" onClick={this.handleLoginClickEvent}>Log in</a>
+                                    <a className="nav-link" href="#" onClick={this.handleLoginClickEvent}>Log in</a>
                                 </li>
 
                                 }
                         </ul>
                     </div>
                 </nav>
-                {this.loginSignupModal()}
+                {this.renderLoginSignupModal()}
+                {this.renderCreateServiceModal()}
             </div>
         );
     }
@@ -137,4 +164,4 @@ function mapStateToProps(state) {
     return { loggedIn: state.user.loggedIn };
 }
 
-export default connect(mapStateToProps, {getUserFromLocalStorage, logOutUser})(Navbar);
+export default connect(mapStateToProps, {logOutUser})(Navbar);

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createService } from '../actions';
+import { editService, fetchUsersServices } from '../actions';
 
 const CATEGORIES = [
     'Category',
@@ -22,11 +22,20 @@ const CATEGORIES = [
     'Photography'
 ];
 
-class CreateService extends Component {    
+class EditService extends Component {    
     constructor(props) {
         super(props);
 
         this.renderDropdown = this.renderDropdown.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.initialize({ 
+            serviceName: this.props.service.name,
+            //category: this.props.tags,
+            description: this.props.service.description,
+            price: this.props.service.price
+        });
     }
 
     renderInputField(field) {
@@ -35,7 +44,7 @@ class CreateService extends Component {
 
         return (
             <div>
-                <input 
+                <input
                     type="text" 
                     className={className}
                     autoComplete="off"
@@ -94,10 +103,12 @@ class CreateService extends Component {
     }
 
     onSubmit(values) {
-        values = { ...values, user:this.props.user}
-        this.props.createService(values, (id) => {
+        values = { 
+            ...values, 
+            id: this.props.service._id
+        }
+        this.props.editService(values, () => {
             this.props.successCallback();
-            this.props.history.push(`/services/${id}`);
         });
     }
 
@@ -127,7 +138,7 @@ class CreateService extends Component {
                         component={this.renderTextarea}
                     />
                     <div className="form-group">
-                        <button type="submit" className="btn btn-lg btn-block btn-danger">Submit</button>
+                        <button type="submit" className="btn btn-lg btn-block btn-danger">Save</button>
                     </div>
                 </form>
             </div>
@@ -168,13 +179,14 @@ function validate(values) {
 
 function mapStateToProps(state) {
     return {
-        user:state.user.user,
+        user: state.user.user,
+        service: state.services.serviceToEdit
     };
 }
 
 export default reduxForm({
     validate,
-    form: 'ServiceForm'
+    form: 'EditServiceForm'
 })(
-    withRouter(connect(mapStateToProps, {createService})(CreateService))
+    withRouter(connect(mapStateToProps, {editService, fetchUsersServices})(EditService))
 );
