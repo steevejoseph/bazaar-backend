@@ -10,7 +10,9 @@ const saltRounds = 10; //number of times to salt password hash
 const User = require('../../models/user.js'); //require the user schema
 
 exports.user_signup = (req, res, next) => {
-    User.find({email: req.body.email}).exec()
+    var userEmail = req.body.email.toLowerCase()
+    
+    User.find({email: userEmail}).exec()
         .then(user =>{
           // console.log(user);
           //email already used
@@ -28,7 +30,7 @@ exports.user_signup = (req, res, next) => {
                 });
               } else {
                 const user = new User({
-                  email: req.body.email,
+                  email: userEmail,
                   firstName: req.body.firstName,
                   lastName: req.body.lastName,
                   passwordHash: hash
@@ -57,7 +59,8 @@ exports.user_signup = (req, res, next) => {
 }
 
 exports.user_login = (req, res, next) => {
-  User.findOne({email: req.body.email}).exec()
+  var userEmail = req.body.email.toLowerCase()
+  User.findOne({email: userEmail}).exec()
   .then(user => {
     // console.log("type: " + typeof user +" user:\n"+user);
     if(user === {} || user === null || user === undefined) {
