@@ -28,7 +28,7 @@ var serviceSchema = new mongoose.Schema({
     // set tags to be array of strings.
     // each tag given has to be a member of of defaultTags.
     //going to look at diffrent ways to implement tags that may be easier to use
-   // tags:[{type:String, /*enum: defaultTags*/}],
+   tags: [String],
     
     
     // if reported, won't be shown (in theory).
