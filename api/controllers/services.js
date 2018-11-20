@@ -7,7 +7,11 @@ const Comment = require('../../models/comment.js');
 exports.service_create = (req, res, next) => {
   
     // console.log(req.headers.authorization);
-    
+  var tagList
+  console.log(req.body.tags);
+  /*for(var i = 0; i < req.body.tags.length; i++) {
+      tagList[i] = req.body.tags[i]
+  }*/
     //create a new service 
   var srv =  new Service({
     name: req.body.name,
@@ -15,6 +19,7 @@ exports.service_create = (req, res, next) => {
     description: req.body.description,
     price: req.body.price,
     reported: false,
+    tags: req.body.tags
     
   });
 
@@ -106,7 +111,8 @@ exports.service_edit = (req, res, next) => {
             Service.findOneAndUpdate({_id : serviceId}, {
                 name : req.body.name,
                 description : req.body.description,
-                price: req.body.price
+                price: req.body.price,
+                tags: req.body.tags
             }, {'new' : true})
             .exec().then(result => {
                 res.status(200).json({
