@@ -37,39 +37,58 @@ var upload = multer({storage: storage});
 
 
 // routes ======================================================================
-router.post('/service/:serviceId/create', upload.single('image'), (req, res, next) => {
+router.post('/service/:serviceId/create', checkAuth, upload.single('image'), (req, res, next) => {
     console.log(JSON.stringify(req.file));
     const file = (req.file.path);
 
-    imgur
-      .uploadFile(file)
-      .then(function (json) {
-          console.log(json.data.link);
-          Service.findByIdAndUpdate(req.params.serviceId, {$push: {photos: json.data.link}}, function(err, service){
-            if(err){
-                console.error(err);
-                res.status(500).json({
-                  message: 'Could not upload image.',
-                  err: err
-                });
-            }
+    Service.findById(req.params.serviceId, function(err, service){
+        if(err) {
+            console.error(err);
+            return res.status(500).json({
+                message: 'Could not find service.',
+                err: err
+            });
+        }
     
-            else {
-                res.status(200).json({
-                    message: 'Image uploaded successfully.',
-                    url: json.data.link
-                });
-            }    
+        if(service.owner != req.userData.userId) {
+            console.log("owner: " + service.owner);
+            console.log("reqer: " + req.userData.userId);
+            return res.status(401).json({
+                message: 'The requestor is not the owner of the service.'
+            });
+        }
+            
+        imgur
+          .uploadFile(file)
+          .then(function (json) {
+            console.log(json.data.link);
+            service.photos.push(json.data.link);
+            service.save(function(err){
+                if(err){
+                    console.log(err);
+                    return res.status(500).json({
+                        message: 'Could not upload image.',
+                        err: err
+                    });
+                }
+                else{
+                    
+                    return res.status(200).json({
+                        message: 'Image uploaded successfully.',
+                        url: json.data.link
+                    });
+                }
+            });
+          })  
+
+          .catch(function (err) {
+            console.error(err);
+              res.status(500).json({
+                message: 'Could not upload image.',
+                err: err
+              });
         });
-    
-      })
-      .catch(function (err) {
-          console.error(err);
-          res.status(500).json({
-            message: 'Could not upload image.',
-            err: err
-          });
-      });
+    });
 });
 
 
