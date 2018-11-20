@@ -3,6 +3,7 @@ import axios from 'axios';
 export const ROOT_URL = 'https://bazaar-backend.herokuapp.com/api';
 export const CREATE_USER = 'create_user';
 export const CREATE_SERVICE = 'create_service';
+export const EDIT_SERVICE = 'editservice';
 export const LOGIN = 'login';
 export const SERVICE_SEARCH = 'service_search';
 export const SERVICE_VIEW = 'service_view';
@@ -61,6 +62,13 @@ export function createService(values, callback) {
         payload: axios.post(`${ROOT_URL}/services/create`, data)
     };
 }
+
+export function editservice(values, callback) {
+    const data = {
+        name: values.name,
+        tags: values.tags,
+        description: values.description
+    };
 
 export function fetchServices() {
     return {
