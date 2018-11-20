@@ -12,3 +12,6 @@ User API Specification:
 
 Service API Specification:
 * https://docs.google.com/document/d/1Me3JWNBoYTcA4qdGUUl86sMfDichKdttBX7f6nNOrs8/edit?usp=sharing
+
+API Documentation
+* https://documenter.getpostman.com/view/5785834/RzZ6HLLg
