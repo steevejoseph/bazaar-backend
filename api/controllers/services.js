@@ -142,7 +142,7 @@ exports.service_delete = (req, res, next) => {
             })
         }
         if(found == null){
-            res.status(500).json({
+            res.status(404).json({
                 msg: 'no service matching id found'
             })
         } else if(found.owner == req.userData.userId){
@@ -183,7 +183,7 @@ exports.service_get = (req, res, next) => {
                 error: err
             })
         } else if(service == null) {
-            res.status(500).json({
+            res.status(404).json({
                 msg: 'service not found'
             })
         } else {
@@ -217,8 +217,9 @@ exports.service_get_user_service = (req, res, next) => {
                 error: err
             })
         } else if(found[0] == null) {
-            res.status(500).json({
-                msg: 'no services found for user' 
+            res.status(404).json({
+                msg: 'no services found for user',
+                userServices: []
             })
         } else {
             return res.status(200).json({
@@ -238,11 +239,11 @@ exports.service_create_comment = (req, res, next) => {
                 error: err
             })
         }else if(found == null){
-            return res.status(500).json({
+            return res.status(404).json({
                 msg: 'sevice not found'
             })
         } else if(found.owner == req.userData.userId) {
-            return res.status(500).json({
+            return res.status(403).json({
                 msg: 'you can not rate your own service'
             })
         } else {
@@ -259,7 +260,7 @@ exports.service_create_comment = (req, res, next) => {
                         createdComment: newComment
                     })
                 } else {
-                    return res.status(500).json({
+                    return res.status(400).json({
                         msg: 'rateing must be a value from 0 to 5'
                     })
                 }

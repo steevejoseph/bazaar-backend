@@ -65,14 +65,14 @@ exports.user_login = (req, res, next) => {
     // console.log("type: " + typeof user +" user:\n"+user);
     if(user === {} || user === null || user === undefined) {
       return res.status(401).json({
-        message: 'Authentication failed 1'
+        message: 'Authentication failed'
       });
     }
     bcrypt.compare(req.body.password, user.passwordHash, (err, result) => {
       if(err) {
         console.log(err);
         return res.status(401).json({
-          message: 'Authentication failed 2'
+          message: 'Authentication failed'
         });
       }
       if(result) {
@@ -95,7 +95,7 @@ exports.user_login = (req, res, next) => {
         });
       }
       return res.status(401).json({
-        message: 'Authentication failed 3'
+        message: 'Authentication failed'
       });
     });
   })
@@ -152,6 +152,8 @@ exports.user_index = (req, res, next) => {
     
   });
 }
+
+
 exports.user_edit = (req, res, next) => {
   
   
