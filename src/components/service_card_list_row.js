@@ -11,6 +11,7 @@ export default class ServiceCardListRow extends Component {
                     service={service} 
                     ableToEdit={this.props.ableToEdit}
                     toggleEditServiceModal={this.props.toggleEditServiceModal}
+                    toggleDeleteServiceModal={this.props.toggleDeleteServiceModal}
                     />
             )
         });
