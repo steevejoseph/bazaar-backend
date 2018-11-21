@@ -18,6 +18,12 @@ var userSchema = new mongoose.Schema({
          ref: "Service"
       }
     ],
+
+   photos: {
+      type:[String], 
+      default: []
+   },
+
     passwordHash: String,
     email:String,
     passwordHash: String, 
