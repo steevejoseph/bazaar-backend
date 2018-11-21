@@ -34,7 +34,11 @@ var serviceSchema = new mongoose.Schema({
     // if reported, won't be shown (in theory).
     reported: {type: Boolean, default: false},
     
-    price: {type: Number, default: 1}
+    price: {type: Number, default: 1},
+    photos: {
+        type:[String], 
+        default: []
+    }
 });
 
 serviceSchema.index({

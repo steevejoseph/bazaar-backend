@@ -18,6 +18,10 @@ var servicesRouter = require('./routes/services');
 const userAPI = require('./api/routes/usersapi');
 var servicesAPI = require('./api/routes/servicesapi');
 
+
+var photosAPI = require('./api/routes/photosapi');
+
+
 var app = express();
 const jwt = require('jsonwebtoken');
 
@@ -76,6 +80,8 @@ app.use('/users', usersRouter);
 app.use('/services', servicesRouter);
 app.use('/api/users', userAPI);
 app.use('/api/services', servicesAPI);
+app.use('/api/photos', photosAPI);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
