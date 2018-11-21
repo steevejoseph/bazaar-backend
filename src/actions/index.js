@@ -54,7 +54,7 @@ export function createUser(values, callback) {
 export function createService(values, callback) {
     const data = {
         name: values.serviceName,
-        //tags: values.category,
+        tags: values.category,
         description: values.description,
         owner: values.user._id,
         price: values.price
@@ -73,7 +73,7 @@ export function createService(values, callback) {
 export function editService(values, callback) {
     const data = {
         name: values.serviceName,
-        //tags: values.category,
+        tags: values.category,
         description: values.description,
         price: values.price,
         id: values.id

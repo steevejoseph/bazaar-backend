@@ -32,7 +32,7 @@ class EditService extends Component {
     componentDidMount() {
         this.props.initialize({ 
             serviceName: this.props.service.name,
-            //category: this.props.tags,
+            category: this.props.service.tags,
             description: this.props.service.description,
             price: this.props.service.price
         });
