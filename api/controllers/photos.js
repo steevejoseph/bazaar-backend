@@ -9,7 +9,7 @@ const Service = require('../../models/service.js');
 mongoose.connect('mongodb://team7:ABC123@ds263832.mlab.com:63832/largo-dev', {useNewUrlParser: true});
 
 // POSTS to ${ROOT_URL}/photos/service/:serviceId/create
-exports.photo_create = (req, res, next) => {
+exports.photo_create_service = (req, res, next) => {
     console.log(JSON.stringify(req.file));
     const file = (req.file.path);
 

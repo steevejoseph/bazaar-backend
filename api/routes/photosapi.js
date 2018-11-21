@@ -27,7 +27,7 @@ var upload = multer({storage: storage});
 
 // routes ======================================================================
 // POSTS to ${ROOT_URL}/photos/service/:serviceId/create
-router.post('/service/:serviceId/create', checkAuth, upload.single('image'), photoCon.photo_create);
+router.post('/service/:serviceId/create', checkAuth, upload.single('image'), photoCon.photo_create_service);
 
 
 module.exports = router;
