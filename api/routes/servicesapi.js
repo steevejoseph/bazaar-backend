@@ -16,6 +16,9 @@ router.get('/', serviceCon.service_index);
 //search for a service
 router.post('/search', serviceCon.service_search);
 
+//search using tags
+router.post('/searchtags', serviceCon.service_search_tags);
+
 //edit service
 router.post('/edit', checkAuth, serviceCon.service_edit);
 
