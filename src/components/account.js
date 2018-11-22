@@ -85,7 +85,14 @@ class Account extends Component {
 
         return (
             <div className="container account">
-                <h1>Account - {this.props.user.lastName}</h1>
+                {/* <h1>Account - {this.props.user.lastName}</h1> */}
+                <ServiceCardListRow 
+                    header="My Services" 
+                    services={this.props.services} 
+                    ableToEdit={true} 
+                    toggleEditServiceModal={this.toggleEditServiceModal}
+                    toggleDeleteServiceModal={this.toggleDeleteServiceModal}
+                    />
                 <ServiceCardListRow 
                     header="My Services" 
                     services={this.props.services} 
@@ -103,7 +110,7 @@ class Account extends Component {
 function mapStateToProps(state) {
     return { 
         user: state.user.user, 
-        services: state.services.services 
+        services: state.services.accountServices
     };
 }
 

@@ -4,23 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { editService, fetchUsersServices } from '../actions';
-
-const CATEGORIES = [
-    'Category',
-    'Graphics & Design',
-    'Digital Marketing',
-    'Writing & Translation',
-    'Video & Animation',
-    'Music & Audio',
-    'Programming & Tech',
-    'Business',
-    'Fun & Lifestyle',
-    'Lessons/Tutoring',
-    'Event Management',
-    'Beauty',
-    'E-Commerce',
-    'Photography'
-];
+import { CREATE_EDIT_CATEGORIES as CATEGORIES } from '../constants';
 
 class EditService extends Component {    
     constructor(props) {

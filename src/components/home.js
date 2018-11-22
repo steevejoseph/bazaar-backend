@@ -1,22 +1,39 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
+import Loader from 'react-loaders'
 import ServiceCardListRow from './service_card_list_row';
 import Search from './search';
 import { connect } from 'react-redux';
-import { fetchServices } from '../actions';
-
-const samplesServices = ['Pancake Lessons', 'Frog Taming', 'Cereal Pouring Basics', 'Greek Life Initiation', 'Chick-fil-A Line Holder', 'Yeet'];
+import { fetchServicesByTag } from '../actions';
+import { EXPLORE_CATEGORIES } from '../constants';
 
 class Home extends Component {
-    componentDidMount() {
-        this.props.fetchServices();
+    componentDidMount() {      
+        _.map(EXPLORE_CATEGORIES, category => {
+            this.props.fetchServicesByTag(category);
+        });
+    }
+
+    renderServiceCategories() {
+        return _.map(EXPLORE_CATEGORIES, category => {
+            if (!this.props.services[category] || this.props.services[category].length == 0)
+                return '';
+
+            return (
+                <ServiceCardListRow header={category} services={this.props.services[category]} ableToEdit={false} />
+            );
+        });
     }
 
     render() {
+        if (!this.props.services)
+            return <Loader type="ball-pulse" />
+
         return (
             <div>
-                <Search />
+                {/* <Search /> */}
                 <div className="home container">
-                    <ServiceCardListRow header="Services" services={this.props.services} ableToEdit={false} />
+                    {this.renderServiceCategories()}
                 </div>
             </div>
         );
@@ -24,7 +41,7 @@ class Home extends Component {
 }
 
 function mapStateToProps(state) {
-    return { services: state.services.services };
+    return { services: state.services.exploreServices };
 }
 
-export default connect(mapStateToProps, { fetchServices })(Home);
+export default connect(mapStateToProps, { fetchServicesByTag })(Home);

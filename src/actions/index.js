@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import axios from 'axios';
 
 export const ROOT_URL = 'https://bazaar-backend.herokuapp.com/api';
@@ -14,6 +15,7 @@ export const FETCH_USERS_SERVICES = 'fetch_users_services';
 export const GET_USER_FROM_LOCAL_STORAGE = 'get_local_from_storage';
 export const LOG_OUT_USER = 'log_out';
 export const SET_SERVICE_TO_EDIT = 'set_service_to_edit';
+export const SERVICE_SEARCH_TAG = 'service_search_tag';
 
 axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem('token'))}`;
 
@@ -109,6 +111,20 @@ export function fetchServices() {
         type: FETCH_ALL_SERVICES,
         payload: axios.get(`${ROOT_URL}/services`)
     }
+}
+
+export function fetchServicesByTag(tag) {
+    const data = {
+        query: tag
+    }
+    
+    return axios.post(`${ROOT_URL}/services/search`, data).then((req) => {
+        return {
+            type: SERVICE_SEARCH_TAG,
+            tag: tag,
+            payload: req
+        };
+    });
 }
 
 export function fetchUsersServices(userID){
