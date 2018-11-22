@@ -21,6 +21,7 @@ export default class ServiceCardListRow extends Component {
         return (
             <div className="p-2">
                 <h1 className="list-category">{this.props.header}</h1>
+                <h6 className="list-description">Short line about this really great category that will help you.</h6>
                 <div className="row flex-row">
                     { this.renderCardList() }
                 </div>

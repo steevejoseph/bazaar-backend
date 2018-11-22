@@ -31,6 +31,12 @@ body {
   margin: 12px;
   min-height: 200px;
   position: relative;
+  border-width: 0; 
+}
+
+.card img {
+    
+  border-radius: 5px;
 }
 
 .search-component {
@@ -66,5 +72,26 @@ body {
 }
 
 .list-category {
-  font-weight: medium;
+  font-weight: bolder;
+  font-size: 35px;
+}
+
+.card-info {
+  margin-top: 10px;
+}
+
+.card-info .tag {
+  font-size: 15px;
+  margin-top: -5px;
+}
+
+.card-info .title {
+  margin-top: -7px;
+  font-weight: bold;
+}
+
+.card-info .price {
+  font-size: 15px;
+  margin-top: -8px;
+  font-weight: bold;
 }

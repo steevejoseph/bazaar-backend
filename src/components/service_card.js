@@ -31,6 +31,7 @@ class ServiceCard extends Component {
             return (
                 <div>
                     <div className="card">
+                    <img class="card-img-top" src="https://dummyimage.com/640x360/ffb/aab" alt="Card image" />
                         <div className="card-body">
                             <div onClick={this.openServiceView}>
                                 <h5 className="card-title">{this.props.service.name}</h5>
@@ -50,10 +51,12 @@ class ServiceCard extends Component {
             return (
                 <div>
                      <div className="card" onClick={this.openServiceView}>
-                        <div className="card-body">
-                            <h5 className="card-title">{this.props.service.name}</h5>
-                            <h6 className="card-subtitle mb-2 text-success">Starting at ${this.props.service.price}/service</h6>
-                            <p className="card-text">{this.props.service.description}</p>
+                        <img class="card-img-top" src="https://dummyimage.com/600x390/bfb/aab" alt="Card image" />
+                        <div className="card-info">
+                            <h6 className="tag card-subtitle mb-2 text-muted">{this.props.service.tags[0].toUpperCase()}</h6>
+                            <h5 className="title card-title">{this.props.service.name}</h5>
+                            <h6 className="price card-subtitle mb-2 text-success">${this.props.service.price} per service</h6>
+                            {/* <p className="card-text">{this.props.service.description}</p> */}
                         </div>
                     </div>
                 </div>
