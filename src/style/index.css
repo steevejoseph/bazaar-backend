@@ -12,6 +12,10 @@
   padding-top: 15px;
 }
 
+.service-view {
+  padding-top: 15px;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -63,4 +67,14 @@ code {
 
 .delete button {
   margin-left: 10px;
+}
+
+.clear { 
+  clear: both;
+  height: 100px; 
+}
+
+.textarea-review {
+  margin-top: 20px;
+  width: 100%; 
 }
