@@ -71,10 +71,33 @@ exports.service_index = (req, res, next) => {
      });
 }
 
+//search by tag
+exports.service_search_tags = (req, res, next) => {
+    var toSearch = req.body.query;
+    var query = Service.where({tags: req.body.tags});
+    var regex = {'$regex': toSearch, '$options': 'i'};
+    query.find({
+        '$or': [{name: regex},
+                {description: regex}
+                ]}, function(err, services) {
+                    if(err){
+                        console.log(err)
+                        return res.status(500).json({
+                            error: err
+                        })
+                    }
+                    else {
+                        return res.status(500).json({
+                            results: services
+                        })
+                    }
+                })
+}
+
 //made search boi
 exports.service_search = (req, res, next) => {
-    const query = req.body.query;
-    const regex = {'$regex': query, '$options': 'i'};
+    var query = req.body.query;
+    var regex = {'$regex': query, '$options': 'i'};
 
     Service.find({
         '$or': [{name: regex},
@@ -228,6 +251,8 @@ exports.service_get_user_service = (req, res, next) => {
         }
     })   
 }
+
+
 
 exports.service_create_comment = (req, res, next) => {
     
