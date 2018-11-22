@@ -27,15 +27,13 @@ body {
 }
 
 .card {
-  width: 16rem;
-  margin: 12px;
+  margin: 10px;
   min-height: 200px;
   position: relative;
   border-width: 0; 
 }
 
 .card img {
-    
   border-radius: 5px;
 }
 
@@ -58,8 +56,8 @@ body {
   margin-top: 5px;
   font-size: 20px;
   position: absolute;
-  bottom: 22px;
-  right: 22px;
+  bottom: 0px;
+  right: 0;
 }
 
 .gearbox i {
@@ -69,6 +67,10 @@ body {
 
 .delete button {
   margin-left: 10px;
+}
+
+.list-row {
+  padding-bottom: 25px !important;
 }
 
 .list-category {

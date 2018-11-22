@@ -20,7 +20,7 @@ class Home extends Component {
                 return '';
 
             return (
-                <ServiceCardListRow header={category} services={this.props.services[category]} ableToEdit={false} />
+                <ServiceCardListRow key={category} header={category} services={this.props.services[category]} ableToEdit={false} />
             );
         });
     }

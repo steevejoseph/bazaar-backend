@@ -19,15 +19,18 @@ export default class ServiceCardListRow extends Component {
 
     render() {
         return (
-            <div className="p-2">
+            <div className="list-row p-2">
                 <h1 className="list-category">{this.props.header}</h1>
                 <h6 className="list-description">Short line about this really great category that will help you.</h6>
-                <div className="row flex-row">
+                <div className="row">
                     { this.renderCardList() }
                 </div>
-                <a href="#" className="list-show-all">
-                    Show all <i className="fa fa-lg fa-angle-right" />
-                </a>
+                <div className="list-show-all">
+                    <a href="#">
+                        Show all <i className="fa fa-lg fa-angle-right" />
+                    </a>
+                </div>
+                
             </div>
         );
     }
