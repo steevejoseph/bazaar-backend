@@ -25,6 +25,9 @@ export default class ServiceCardListRow extends Component {
                 <div className="row flex-row">
                     { this.renderCardList() }
                 </div>
+                <a href="#" className="list-show-all">
+                    Show all <i className="fa fa-lg fa-angle-right" />
+                </a>
             </div>
         );
     }

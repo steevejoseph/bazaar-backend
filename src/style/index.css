@@ -74,6 +74,16 @@ body {
 .list-category {
   font-weight: bolder;
   font-size: 35px;
+  margin-left: -5px;
+}
+
+.list-description {
+  margin-left: -5px;
+}
+
+.list-show-all {
+  margin-left: -5px;
+  font-weight: bold;
 }
 
 .card-info {
