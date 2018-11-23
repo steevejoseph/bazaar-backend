@@ -24,8 +24,16 @@ a {
   padding-top: 15px;
 }
 
+.service-view {
+  padding-top: 15px;
+}
+
+.service-view li {
+  padding-left: 0;
+}
+
 .search {
-  /* padding-top: 20px; */
+
 }
 
 body {
@@ -77,6 +85,25 @@ body {
 
 .delete button {
   margin-left: 10px;
+}
+
+.clear { 
+  clear: both;
+  height: 100px; 
+}
+
+.textarea-review {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%; 
+}
+
+.create-review {
+  margin-top: 25px;
+}
+
+.create-review li {
+  padding-left: 0;
 }
 
 .list-row {

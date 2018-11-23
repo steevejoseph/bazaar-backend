@@ -15,6 +15,7 @@ export const GET_USER_FROM_LOCAL_STORAGE = 'get_local_from_storage';
 export const LOG_OUT_USER = 'log_out';
 export const SET_SERVICE_TO_EDIT = 'set_service_to_edit';
 export const SERVICE_SEARCH_TAG = 'service_search_tag';
+export const CREATE_REVIEW = 'create_review';
 
 export function login(values, callback) {
     const data = {
@@ -175,4 +176,21 @@ export function setServiceToEdit(service) {
         type: SET_SERVICE_TO_EDIT,
         payload: service
     }
+}
+
+export function createReview(id, comment, rating, callback = {}) {
+    const data = {
+        rateing: rating,
+        comment: comment,
+        serviceId: id,
+    }
+
+    return axios.post(`${ROOT_URL}/services/createComment`, data).then((req) => {
+        callback();
+        
+        return {
+            type: CREATE_REVIEW,
+            payload: req
+        };
+    });
 }
