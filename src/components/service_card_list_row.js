@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import ServiceCard from './service_card';
+import { Link } from 'react-router-dom';
 
 export default class ServiceCardListRow extends Component {  
     renderCardList() {
@@ -17,6 +18,16 @@ export default class ServiceCardListRow extends Component {
         });
     }
 
+    renderShowAll() {
+        return (
+            <div className="list-show-all">
+                <Link to={`/category/${this.props.header}`}>
+                    Show all <i className="fa fa-lg fa-angle-right" />
+                </Link>
+            </div>
+        );
+    }
+
     render() {
         return (
             <div className="list-row p-2">
@@ -25,12 +36,7 @@ export default class ServiceCardListRow extends Component {
                 <div className="row">
                     { this.renderCardList() }
                 </div>
-                <div className="list-show-all">
-                    <a href="#">
-                        Show all <i className="fa fa-lg fa-angle-right" />
-                    </a>
-                </div>
-                
+                {this.props.isHome ? this.renderShowAll() : ''}
             </div>
         );
     }

@@ -37,7 +37,7 @@ class ServiceCard extends Component {
 
     render() {
             return (
-                <div className="col-lg-3 col-md-6 col-6 p-0">
+                <div className="col-lg-3 col-md-6 col-sm-6 col-12 p-0">
                      <div className="card">
                         <img className="card-img-top" onClick={this.openServiceView} src="https://dummyimage.com/600x390/bfb/aab" alt="Card image" />
                         <div className="card-info" onClick={this.openServiceView}>

@@ -16,11 +16,17 @@ class Home extends Component {
 
     renderServiceCategories() {
         return _.map(EXPLORE_CATEGORIES, category => {
-            if (!this.props.services[category] || this.props.services[category].length == 0)
+            if (!this.props.services[category] || this.props.services[category].length < 1)
                 return '';
 
             return (
-                <ServiceCardListRow key={category} header={category} services={this.props.services[category]} ableToEdit={false} />
+                <ServiceCardListRow 
+                    key={category} 
+                    header={category} 
+                    services={this.props.services[category]} 
+                    ableToEdit={false} 
+                    isHome={true}
+                    />
             );
         });
     }

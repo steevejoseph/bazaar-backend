@@ -25,7 +25,7 @@ export function login(values, callback) {
 
     return axios.post(`${ROOT_URL}/users/login`, data).then((req) => {
         callback();
-
+        
         axios.defaults.headers.common['Authorization'] = `Bearer ${req.data.token}`;
         return {
             type: LOGIN,
@@ -153,10 +153,11 @@ export function serviceView(id) {
 }
 
 export function getUserFromLocalStorage() {
-        return {
-            type: GET_USER_FROM_LOCAL_STORAGE,
-            payload: JSON.parse(localStorage.getItem('loggedInUser'))
-        };
+    axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem('token'))}`;
+    return {
+        type: GET_USER_FROM_LOCAL_STORAGE,
+        payload: JSON.parse(localStorage.getItem('loggedInUser'))
+    };
 }
 
 export function logOutUser() {

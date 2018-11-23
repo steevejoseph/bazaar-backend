@@ -4,6 +4,10 @@
   --highlighter-color: #FCFC99;
 }
 
+a {
+  color: rgb(0, 132, 137);
+}
+
 .home {
   padding-top: 15px;
 }
@@ -107,3 +111,5 @@ body {
   margin-top: -8px;
   font-weight: bold;
 }
+
+
