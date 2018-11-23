@@ -4,6 +4,7 @@ import { serviceView } from '../actions/index';
 import ServiceDescription from './service_description';
 import Rating from './service_rating';
 import CreateReview from './create_review';
+import ServiceReviewsList from './service_reviews_list';
 
 class ServiceView extends Component {
     componentDidMount() {
@@ -11,14 +12,28 @@ class ServiceView extends Component {
         this.props.serviceView(id);
     }
 
+    overallRating (){
+        var sum = 0, i;
+
+        if(!this.props.comments)
+            return 0;
+
+        for (i = 0; i < this.props.comments.length; i++){
+            sum += this.props.comments[i].rateing;
+        }
+
+        return sum/this.props.comments.length;
+    }
+
     render() {
         if(!this.props.service)
             return <div>Sorry, this service does not exist</div>;
+        
 
         return ( 
             <div className="container service-view">
                 <div><h1>{this.props.service.name}</h1></div>
-                <Rating />
+                <Rating overallRating={this.overallRating()} />
                 <div><h4>{this.props.service.description}</h4></div>
 
                 <div><p><i className="fa fa-user-circle fa-3x"></i></p>
@@ -26,7 +41,14 @@ class ServiceView extends Component {
                     <h6>Seller email</h6>
                 </div>
                 
-                <CreateReview serviceName={this.props.service.name} />
+                <div className="review-box container">
+                    <div className="review-list col-md-4">
+                        <ServiceReviewsList comments={this.props.comments} overallRating={this.overallRating()}/>
+                    </div>
+                    <div className="review-create col">
+                        <CreateReview serviceId={this.props.service._id} />
+                    </div>
+                </div>
 
                 <div className="clear">
                     <ServiceDescription service={this.props.service} />
@@ -38,7 +60,10 @@ class ServiceView extends Component {
 }
 
 function mapStateToProps( state ) {
-    return { service: state.services.service };
+    return { 
+        service: state.services.service,
+        comments: state.services.comments 
+    };
 }
 
 export default connect(mapStateToProps, { serviceView })(ServiceView);

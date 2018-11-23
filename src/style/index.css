@@ -76,5 +76,11 @@ code {
 
 .textarea-review {
   margin-top: 20px;
+  margin-bottom: 20px;
   width: 100%; 
 }
+
+.create-review {
+  margin-top: 100px;
+}
+

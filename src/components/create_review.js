@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Ratings from 'react-ratings-declarative';
+import { createReview } from '../actions/index'
+import { connect } from 'react-redux';
 
 class CreateReview extends Component {
 
@@ -7,24 +9,34 @@ class CreateReview extends Component {
         super(props);
 
         this.state = {
-            rating: 0
+            rating: 0,
+            comment: ''
         }
 
         this.changeRating = this.changeRating.bind(this);
-       
+        this.onInputChange = this.onInputChange.bind(this);
+        this.sendReview = this.sendReview.bind(this);
     }
 
     changeRating(newRating){
         this.setState({ rating: newRating });
     }
 
+    onInputChange(comment){
+        this.setState({ comment });
+    }
+
+    sendReview(){
+        this.props.createReview(this.props.serviceId, this.state.comment, this.state.rating);
+        this.setState({ comment: '' })
+    }
+
     render(){
         return (
-            <div>
-                <ul className="col-md-4 list-group list-group-flush">
+            <div className="col-md-4 create-review">
+                <ul className="list-group list-group-flush">
                     <li className="list-group-item">
                         <h3>Create Review</h3>
-                        
                     </li>
                     <li className="list-group-item">
                         <div>
@@ -33,6 +45,8 @@ class CreateReview extends Component {
                                 rating={this.state.rating}
                                 widgetRatedColors="red"
                                 changeRating={this.changeRating}
+                                widgetDimensions="20px"
+                                widgetSpacings="2px"
                             >
                                 <Ratings.Widget />
                                 <Ratings.Widget />
@@ -41,13 +55,19 @@ class CreateReview extends Component {
                                 <Ratings.Widget />
                             </Ratings>
                         </div>
+
                         <div className="textarea-review">
                             <textarea 
                                 className="form-control"
                                 type="text" 
                                 autoComplete="off"
                                 placeholder="What did you like or dislike?"
+                                onChange={(event) => this.onInputChange(event.target.value)}
                             />
+                        </div>
+                        
+                        <div onClick={this.sendReview}>
+                            <button type="button" className="btn btn-danger">Submit</button>
                         </div>
                     </li>  
                 </ul>
@@ -56,4 +76,10 @@ class CreateReview extends Component {
     }
 }
 
-export default CreateReview;
+function mapStateToProps(state) {
+    return { 
+        
+    };
+}
+
+export default connect(mapStateToProps, { createReview })(CreateReview);

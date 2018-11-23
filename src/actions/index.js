@@ -14,6 +14,7 @@ export const FETCH_USERS_SERVICES = 'fetch_users_services';
 export const GET_USER_FROM_LOCAL_STORAGE = 'get_local_from_storage';
 export const LOG_OUT_USER = 'log_out';
 export const SET_SERVICE_TO_EDIT = 'set_service_to_edit';
+export const CREATE_REVIEW = 'create_review';
 
 axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem('token'))}`;
 
@@ -156,4 +157,20 @@ export function setServiceToEdit(service) {
         type: SET_SERVICE_TO_EDIT,
         payload: service
     }
+}
+
+export function createReview(id, comment, rating) {
+    console.log("rating is   ", rating);
+    console.log("comment is   ", comment);
+    console.log("serviceId is   ", id);
+    const data = {
+        rateing: rating,
+        comment: comment,
+        serviceId: id,
+    }
+    return {
+        type: CREATE_REVIEW,
+        payload: axios.post(`${ROOT_URL}/services/createComment`, data)
+    };
+    
 }
