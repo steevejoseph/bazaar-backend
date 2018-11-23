@@ -111,22 +111,26 @@ class Navbar extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
-                                <Link to="/" className="nav-link">Home</Link>
+                                <Link to="/" className="nav-link">
+                                    <i className="fa fa-lg fa-home" /> Home
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#" onClick={this.handleCreateServiceClickEvent}>Create Service</a>
+                                <a className="nav-link" href="#" onClick={this.handleCreateServiceClickEvent}>
+                                    <i className="fa fa-lg fa-plus" /> Create Service
+                                </a>
                             </li>
                             
                             {this.props.loggedIn ? 
 
                                 <li className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Account
+                                        <i className="fa fa-lg fa-user-circle" /> Account
                                     </a>
 
                                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                         <Link to="/account" className="dropdown-item">Account</Link>
-                                        <div className="dropdown-divider"></div>
+                                        <div className="dropdown-divider" />
                                         <a onClick={this.logOut} className="dropdown-item">Log out</a>
                                     </div>
                                 </li>

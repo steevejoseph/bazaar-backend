@@ -23,7 +23,7 @@ export default function(state = {}, action) {
         case SERVICE_SEARCH:
             return { 
                 ...state,
-                services: action.payload.data.results
+                searchResults: action.payload.data.results
              };
         case SERVICE_VIEW:
              if(action.payload.data.comments == 0){
@@ -40,17 +40,35 @@ export default function(state = {}, action) {
                     comments: action.payload.data.comments
                 };
             }
-       case FETCH_USERS_SERVICES:
+        case SERVICE_SEARCH_TAG:
+            if (action.payload.status == 200) {
+                return { 
+                    ...state,
+                    servicesByCategory: { 
+                        ...state.servicesByCategory,
+                        [action.tag]: action.payload.data.results
+                    }
+                };
+            }
+            else
+                return {
+                    ...state,
+                    servicesByCategory: {
+                        ...state.servicesByCategory, 
+                        [action.tag]: null
+                    }
+                };
+        case FETCH_USERS_SERVICES:
             if (action.payload.status == 200){
                 return { 
                     ...state,
-                    services: action.payload.data.userServices
+                    accountServices: action.payload.data.userServices
                  };
             }
             else
                 return {
                     ...state,
-                    services: null
+                    accountServices: null
                 };
         case SET_SERVICE_TO_EDIT:
             return {

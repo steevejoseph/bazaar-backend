@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { setServiceToEdit } from '../actions';
+import PhotoInput from './photo_input';
 
 class ServiceCard extends Component {
     constructor(props) {
@@ -26,38 +27,33 @@ class ServiceCard extends Component {
         this.props.toggleDeleteServiceModal();
     }
 
-    render() {
-        if(this.props.ableToEdit)
-            return (
-                <div>
-                    <div className="card">
-                        <div className="card-body">
-                            <div onClick={this.openServiceView}>
-                                <h5 className="card-title">{this.props.service.name}</h5>
-                                <h6 className="card-subtitle mb-2 text-success">Starting at ${this.props.service.price}/service</h6>
-                                <p className="card-text">{this.props.service.description}</p>
-                            </div>
-                            <div className="gearbox text-right">
-                                <i onClick={this.handleEditServiceClickEvent} className="fa fa-gear text-muted" />
-                                <i onClick={this.handleDeleteServiceClickEvent} className="fa fa-trash-o text-danger" />
-                            </div>   
-                        </div>
-                    </div>
-                </div>
-            );
+    renderGearbox() {
+        return (
+            <div className="gearbox text-right">
+                <PhotoInput resource={"service"} resourceId={this.props.service._id}/>
+                <i onClick={this.handleEditServiceClickEvent} className="fa fa-gear text-muted" />
+                <i onClick={this.handleDeleteServiceClickEvent} className="fa fa-trash-o text-danger" />
+            </div>
+        );
+    }
 
-        else if (!this.props.ableToEdit)
-            return (
-                <div>
-                     <div className="card" onClick={this.openServiceView}>
-                        <div className="card-body">
-                            <h5 className="card-title">{this.props.service.name}</h5>
-                            <h6 className="card-subtitle mb-2 text-success">Starting at ${this.props.service.price}/service</h6>
-                            <p className="card-text">{this.props.service.description}</p>
-                        </div>
+    render() {
+        if(!this.props.service)
+            return '';
+
+        return (
+            <div className="col-lg-3 col-md-6 col-sm-6 col-12 p-0">
+                    <div className="card">
+                    <img className="card-img-top cursor" onClick={this.openServiceView} src="https://dummyimage.com/600x390/bfb/aab" alt="Card image" />
+                    <div className="card-info cursor" onClick={this.openServiceView}>
+                        <h6 className="tag card-subtitle mb-2 text-muted">{this.props.service.tags.length > 0 ? this.props.service.tags[0].toUpperCase() : ''}</h6>
+                        <h5 className="title card-title">{this.props.service.name}</h5>
+                        <h6 className="price card-subtitle mb-2 text-success">${this.props.service.price} per service</h6>
                     </div>
+                    {this.props.ableToEdit ? this.renderGearbox() : ''}
                 </div>
-            );
+            </div>
+        );
     }
 }
 

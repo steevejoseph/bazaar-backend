@@ -1,11 +1,23 @@
-@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan|K2D');
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Raleway|Work+Sans');
 
 :root {
   --highlighter-color: #FCFC99;
 }
 
+a {
+  color: rgb(0, 132, 137);
+}
+
+.cursor {
+  cursor: pointer;
+}
+
 .home {
-  padding-top: 15px;
+  padding-top: 0px;
+}
+
+.category-view {
+  padding-top: 0px;
 }
 
 .account {
@@ -16,19 +28,18 @@
   padding-top: 15px;
 }
 
+.search {
+
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  font-family: -apple-system, "Work Sans", Montserrat, Raleway, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }
 
 ::selection {
@@ -36,14 +47,14 @@ code {
 }
 
 .card {
-  width: 16rem;
-  margin: 12px;
+  margin: 10px;
+  min-height: 200px;
+  position: relative;
+  border-width: 0; 
 }
 
-.search-component {
-  height: 50vh;
-  background-position: center;
-  background-size: cover;
+.card img {
+  border-radius: 5px;
 }
 
 .dropdown-menu-right {
@@ -58,6 +69,9 @@ code {
   margin-bottom: -10px;
   margin-top: 5px;
   font-size: 20px;
+  position: absolute;
+  bottom: 0px;
+  right: 0;
 }
 
 .gearbox i {
@@ -82,4 +96,64 @@ code {
 
 .create-review {
   margin-top: 100px;
+}
+
+.list-row {
+  padding-bottom: 25px !important;
+}
+
+.list-category {
+  font-weight: bolder;
+  font-size: 35px;
+  margin-left: -5px;
+}
+
+.list-description {
+  margin-left: -5px;
+}
+
+.list-show-all {
+  margin-left: -5px;
+  font-weight: bold;
+}
+
+.card-info {
+  margin-top: 10px;
+}
+
+.card-info .tag {
+  font-size: 15px;
+  margin-top: -5px;
+}
+
+.card-info .title {
+  margin-top: -7px;
+  font-weight: bold;
+}
+
+.card-info .price {
+  font-size: 15px;
+  margin-top: -8px;
+  font-weight: bold;
+}
+
+.file-input-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.file-input-wrapper > input[type="file"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  width: 20px;
+}
+
+.upload {
+  background-color: Transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  padding-left: 5px;
 }
