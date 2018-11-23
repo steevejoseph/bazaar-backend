@@ -32,9 +32,7 @@ class ServiceReviewsList extends Component {
             <div>
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item">
-                            <h3>
-                                Reviews ({this.props.comments.length})
-                            </h3>
+                        <h3>Reviews ({this.props.comments.length})</h3>
                     </li>
                     {this.renderReviewList()}
                 </ul>

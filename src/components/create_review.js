@@ -77,9 +77,7 @@ class CreateReview extends Component {
 }
 
 function mapStateToProps(state) {
-    return { 
-        
-    };
+    return {};
 }
 
 export default connect(mapStateToProps, { createReview })(CreateReview);

@@ -160,9 +160,6 @@ export function setServiceToEdit(service) {
 }
 
 export function createReview(id, comment, rating) {
-    console.log("rating is   ", rating);
-    console.log("comment is   ", comment);
-    console.log("serviceId is   ", id);
     const data = {
         rateing: rating,
         comment: comment,
@@ -172,5 +169,4 @@ export function createReview(id, comment, rating) {
         type: CREATE_REVIEW,
         payload: axios.post(`${ROOT_URL}/services/createComment`, data)
     };
-    
 }

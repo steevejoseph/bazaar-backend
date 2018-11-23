@@ -5,19 +5,17 @@ class Rating extends Component {
     render(){
         return (
             <div>
-                <div>
-                    <Ratings
-                        rating={this.props.overallRating}
-                        widgetDimensions="20px"
-                        widgetSpacings="2px"
-                    >
-                        <Ratings.Widget widgetRatedColor="red" />
-                        <Ratings.Widget widgetRatedColor="red" />
-                        <Ratings.Widget widgetRatedColor="red" />
-                        <Ratings.Widget widgetRatedColor="red" />
-                        <Ratings.Widget widgetRatedColor="red" />
-                    </Ratings>
-                </div>
+                <Ratings
+                    rating={this.props.overallRating}
+                    widgetDimensions="20px"
+                    widgetSpacings="2px"
+                >
+                    <Ratings.Widget widgetRatedColor="red" />
+                    <Ratings.Widget widgetRatedColor="red" />
+                    <Ratings.Widget widgetRatedColor="red" />
+                    <Ratings.Widget widgetRatedColor="red" />
+                    <Ratings.Widget widgetRatedColor="red" />
+                </Ratings>
             </div>
         );
     }

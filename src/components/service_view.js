@@ -28,10 +28,10 @@ class ServiceView extends Component {
     render() {
         if(!this.props.service)
             return <div>Sorry, this service does not exist</div>;
-        
 
         return ( 
             <div className="container service-view">
+
                 <div><h1>{this.props.service.name}</h1></div>
                 <Rating overallRating={this.overallRating()} />
                 <div><h4>{this.props.service.description}</h4></div>
@@ -53,7 +53,6 @@ class ServiceView extends Component {
                 <div className="clear">
                     <ServiceDescription service={this.props.service} />
                 </div>
-                
             </div>
         );
     }
