@@ -23,7 +23,7 @@ export default function(state = {}, action) {
         case SERVICE_SEARCH:
             return { 
                 ...state,
-                services: action.payload.data.results
+                searchResults: action.payload.data.results
              };
         case SERVICE_VIEW:
             return { 
@@ -31,7 +31,7 @@ export default function(state = {}, action) {
                 service: action.payload.data.service
              };
         case SERVICE_SEARCH_TAG:
-            if (action.payload.status == 200){
+            if (action.payload.status == 200) {
                 return { 
                     ...state,
                     servicesByCategory: { 

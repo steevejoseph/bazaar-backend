@@ -13,11 +13,19 @@ a {
 }
 
 .home {
-  padding-top: 15px;
+  padding-top: 0px;
+}
+
+.category-view {
+  padding-top: 0px;
 }
 
 .account {
   padding-top: 15px;
+}
+
+.search {
+  /* padding-top: 20px; */
 }
 
 body {
@@ -43,12 +51,6 @@ body {
 
 .card img {
   border-radius: 5px;
-}
-
-.search-component {
-  height: 50vh;
-  background-position: center;
-  background-size: cover;
 }
 
 .dropdown-menu-right {

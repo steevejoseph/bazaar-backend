@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import Loader from 'react-loaders'
 import ServiceCardListRow from './service_card_list_row';
 import { connect } from 'react-redux';
 import { fetchServicesByTag } from '../actions';
 import { CATEGORIES } from '../constants';
+import Search from './search';
 
 class CategoryView extends Component {
     constructor(props) {
@@ -44,14 +44,17 @@ class CategoryView extends Component {
             return <div>This ({category}) isn't a category.</div>
 
         return (
-            <div className="home container">
-                <ServiceCardListRow 
-                    key={this.state.categoryObject.category} 
-                    header={this.state.categoryObject.category} 
-                    description={this.state.categoryObject.description}
-                    services={this.props.services[this.state.categoryObject.category]} 
-                    ableToEdit={false} 
-                    />
+            <div>
+                <Search category={this.state.categoryObject.category} />                
+                <div className="category-view container">
+                    <ServiceCardListRow 
+                        key={this.state.categoryObject.category} 
+                        header={this.state.categoryObject.category} 
+                        description={this.state.categoryObject.description}
+                        services={this.props.services[this.state.categoryObject.category]} 
+                        ableToEdit={false} 
+                        />
+                </div>
             </div>
         );
     }

@@ -1,16 +1,34 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import Loader from 'react-loaders'
 import ServiceCardListRow from './service_card_list_row';
 import Search from './search';
 import { connect } from 'react-redux';
 import { fetchServicesByTag } from '../actions';
 import { CATEGORIES } from '../constants';
+import SearchResults from './search_results';
 
 class Home extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            searchHasTerm: false
+        }
+
+        this.setSearchHasTerm = this.setSearchHasTerm.bind(this);
+    }
+
     componentDidMount() {      
         _.map(CATEGORIES, categoryObject => {
             this.props.fetchServicesByTag(categoryObject.category);
+        });
+    }
+
+    setSearchHasTerm(searchHasTerm) {
+        console.log(searchHasTerm);
+        
+        this.setState({
+            searchHasTerm: searchHasTerm
         });
     }
 
@@ -34,14 +52,17 @@ class Home extends Component {
 
     render() {
         if (!this.props.services)
-            return <Loader type="ball-pulse" />
+            return <div>Loading</div>
 
         return (
             <div>
-                {/* <Search /> */}
-                <div className="home container">
-                    {this.renderServiceCategories()}
-                </div>
+                <Search inputHasTerm={this.setSearchHasTerm} />
+                {this.state.searchHasTerm ? <SearchResults /> : 
+                    <div className="home container">
+                        {this.renderServiceCategories()}
+                    </div>
+                }
+
                 <div className="p-5" />
             </div>
         );
@@ -49,7 +70,9 @@ class Home extends Component {
 }
 
 function mapStateToProps(state) {
-    return { services: state.services.servicesByCategory };
+    return { 
+        services: state.services.servicesByCategory
+     };
 }
 
 export default connect(mapStateToProps, { fetchServicesByTag })(Home);

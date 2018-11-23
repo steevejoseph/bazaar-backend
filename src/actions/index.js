@@ -113,12 +113,13 @@ export function fetchServices() {
     }
 }
 
-export function fetchServicesByTag(tag) {
+export function fetchServicesByTag(tag, query = '') {
     const data = {
-        query: tag
-    }
-    
-    return axios.post(`${ROOT_URL}/services/search`, data).then((req) => {
+        query: query,
+        tags: [tag]
+    }    
+
+    return axios.post(`${ROOT_URL}/services/searchtags`, data).then((req) => {
         return {
             type: SERVICE_SEARCH_TAG,
             tag: tag,
@@ -139,10 +140,13 @@ export function serviceSearch(term){
         query: term
     }
 
-    return {
-        type: SERVICE_SEARCH,
-        payload: axios.post(`${ROOT_URL}/services/search`, data)
-    };
+    return axios.post(`${ROOT_URL}/services/search`, data).then((req) => {
+        return {
+            type: SERVICE_SEARCH,
+            payload: req
+        };
+    });
+
 }
 
 export function serviceView(id) {
