@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { setServiceToEdit } from '../actions';
+import PhotoInput from './photo_input';
 
 class ServiceCard extends Component {
     constructor(props) {
@@ -29,9 +30,10 @@ class ServiceCard extends Component {
     renderGearbox() {
         return (
             <div className="gearbox text-right">
+                <PhotoInput resource={"service"} resourceId={this.props.service._id}/>
                 <i onClick={this.handleEditServiceClickEvent} className="fa fa-gear text-muted" />
                 <i onClick={this.handleDeleteServiceClickEvent} className="fa fa-trash-o text-danger" />
-            </div>   
+            </div>
         );
     }
 

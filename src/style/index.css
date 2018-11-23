@@ -118,4 +118,23 @@ body {
   font-weight: bold;
 }
 
+.file-input-wrapper {
+  overflow: hidden;
+  position: relative;
+}
 
+.file-input-wrapper > input[type="file"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  width: 20px;
+}
+
+.upload {
+  background-color: Transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  padding-left: 5px;
+}
