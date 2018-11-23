@@ -36,19 +36,22 @@ class ServiceCard extends Component {
     }
 
     render() {
-            return (
-                <div className="col-lg-3 col-md-6 col-sm-6 col-12 p-0">
-                     <div className="card">
-                        <img className="card-img-top" onClick={this.openServiceView} src="https://dummyimage.com/600x390/bfb/aab" alt="Card image" />
-                        <div className="card-info" onClick={this.openServiceView}>
-                            <h6 className="tag card-subtitle mb-2 text-muted">{this.props.service.tags[0].toUpperCase()}</h6>
-                            <h5 className="title card-title">{this.props.service.name}</h5>
-                            <h6 className="price card-subtitle mb-2 text-success">${this.props.service.price} per service</h6>
-                        </div>
-                        {this.props.ableToEdit ? this.renderGearbox() : ''}
+        if(!this.props.service)
+            return '';
+
+        return (
+            <div className="col-lg-3 col-md-6 col-sm-6 col-12 p-0">
+                    <div className="card">
+                    <img className="card-img-top cursor" onClick={this.openServiceView} src="https://dummyimage.com/600x390/bfb/aab" alt="Card image" />
+                    <div className="card-info cursor" onClick={this.openServiceView}>
+                        <h6 className="tag card-subtitle mb-2 text-muted">{this.props.service.tags[0].toUpperCase()}</h6>
+                        <h5 className="title card-title">{this.props.service.name}</h5>
+                        <h6 className="price card-subtitle mb-2 text-success">${this.props.service.price} per service</h6>
                     </div>
+                    {this.props.ableToEdit ? this.renderGearbox() : ''}
                 </div>
-            );
+            </div>
+        );
     }
 }
 

@@ -8,6 +8,10 @@ a {
   color: rgb(0, 132, 137);
 }
 
+.cursor {
+  cursor: pointer;
+}
+
 .home {
   padding-top: 15px;
 }

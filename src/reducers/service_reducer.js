@@ -34,8 +34,8 @@ export default function(state = {}, action) {
             if (action.payload.status == 200){
                 return { 
                     ...state,
-                    exploreServices: { 
-                        ...state.exploreServices,
+                    servicesByCategory: { 
+                        ...state.servicesByCategory,
                         [action.tag]: action.payload.data.results
                     }
                 };
@@ -43,8 +43,8 @@ export default function(state = {}, action) {
             else
                 return {
                     ...state,
-                    exploreServices: {
-                        ...state.exploreServices, 
+                    servicesByCategory: {
+                        ...state.servicesByCategory, 
                         [action.tag]: null
                     }
                 };

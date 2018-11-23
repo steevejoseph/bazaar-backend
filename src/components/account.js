@@ -91,13 +91,6 @@ class Account extends Component {
                     toggleEditServiceModal={this.toggleEditServiceModal}
                     toggleDeleteServiceModal={this.toggleDeleteServiceModal}
                     />
-                <ServiceCardListRow 
-                    header="My Services" 
-                    services={this.props.services} 
-                    ableToEdit={true} 
-                    toggleEditServiceModal={this.toggleEditServiceModal}
-                    toggleDeleteServiceModal={this.toggleDeleteServiceModal}
-                    />
                 {this.renderEditModal()}
                 {this.renderDeleteModal()}
             </div>

@@ -4,49 +4,61 @@ import Loader from 'react-loaders'
 import ServiceCardListRow from './service_card_list_row';
 import { connect } from 'react-redux';
 import { fetchServicesByTag } from '../actions';
+import { CATEGORIES } from '../constants';
 
 class CategoryView extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            category: null
+            categoryObject: null
         }
 
-
+        this.getCategory = this.getCategory.bind(this);
     }
 
-    
+    getCategory(category) {
+        category = category.toLowerCase();
+
+        for (var i = 0; i < CATEGORIES.length; i++)
+            if (CATEGORIES[i].category.toLowerCase() === category)
+                return CATEGORIES[i];
+
+        return null;
+    }
 
     componentDidMount() {
-        const { category } = this.props.match.params;
-        this.props.fetchServicesByTag(category);
+        const categoryFromURL = this.props.match.params.category;
+        const categoryObject = this.getCategory(categoryFromURL);
+        
+        this.setState({ categoryObject: categoryObject });
+
+        if(categoryObject)
+            this.props.fetchServicesByTag(categoryObject.category);
     }
 
     render() {
         const { category } = this.props.match.params;
-        console.log(category);
-        
-        if (!this.props.services)
-            return <Loader type="ball-pulse" />
+
+        if (!this.props.services || !this.state.categoryObject)
+            return <div>This ({category}) isn't a category.</div>
 
         return (
-            <div>
-                <div className="home container">
+            <div className="home container">
                 <ServiceCardListRow 
-                    key={this.props.category} 
-                    header={category} 
-                    services={this.props.services[category]} 
+                    key={this.state.categoryObject.category} 
+                    header={this.state.categoryObject.category} 
+                    description={this.state.categoryObject.description}
+                    services={this.props.services[this.state.categoryObject.category]} 
                     ableToEdit={false} 
                     />
-                </div>
             </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    return { services: state.services.exploreServices };
+    return { services: state.services.servicesByCategory };
 }
 
 export default connect(mapStateToProps, { fetchServicesByTag })(CategoryView);
