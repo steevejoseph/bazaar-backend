@@ -178,14 +178,19 @@ export function setServiceToEdit(service) {
     }
 }
 
-export function createReview(id, comment, rating) {
+export function createReview(id, comment, rating, callback = {}) {
     const data = {
         rateing: rating,
         comment: comment,
         serviceId: id,
     }
-    return {
-        type: CREATE_REVIEW,
-        payload: axios.post(`${ROOT_URL}/services/createComment`, data)
-    };
+
+    return axios.post(`${ROOT_URL}/services/createComment`, data).then((req) => {
+        callback();
+        
+        return {
+            type: CREATE_REVIEW,
+            payload: req
+        };
+    });
 }

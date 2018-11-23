@@ -28,6 +28,10 @@ a {
   padding-top: 15px;
 }
 
+.service-view li {
+  padding-left: 0;
+}
+
 .search {
 
 }
@@ -95,7 +99,11 @@ body {
 }
 
 .create-review {
-  margin-top: 100px;
+  margin-top: 25px;
+}
+
+.create-review li {
+  padding-left: 0;
 }
 
 .list-row {

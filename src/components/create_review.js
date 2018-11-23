@@ -16,6 +16,7 @@ class CreateReview extends Component {
         this.changeRating = this.changeRating.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
         this.sendReview = this.sendReview.bind(this);
+        this.onSuccess = this.onSuccess.bind(this);
     }
 
     changeRating(newRating){
@@ -26,14 +27,21 @@ class CreateReview extends Component {
         this.setState({ comment });
     }
 
+    onSuccess() {
+        this.props.successCallback();
+        this.setState({ 
+            rating: 0,
+            comment: ''
+         });
+    }
+
     sendReview(){
-        this.props.createReview(this.props.serviceId, this.state.comment, this.state.rating);
-        this.setState({ comment: '' })
+        this.props.createReview(this.props.serviceId, this.state.comment, this.state.rating, this.onSuccess);
     }
 
     render(){
         return (
-            <div className="col-md-4 create-review">
+            <div className="create-review">
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item">
                         <h3>Create Review</h3>
@@ -62,6 +70,7 @@ class CreateReview extends Component {
                                 type="text" 
                                 autoComplete="off"
                                 placeholder="What did you like or dislike?"
+                                value={this.state.comment}
                                 onChange={(event) => this.onInputChange(event.target.value)}
                             />
                         </div>

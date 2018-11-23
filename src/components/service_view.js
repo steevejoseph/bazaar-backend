@@ -7,7 +7,18 @@ import CreateReview from './create_review';
 import ServiceReviewsList from './service_reviews_list';
 
 class ServiceView extends Component {
+    constructor(props) {
+        super(props);
+
+        this.createReviewSuccessCallback = this.createReviewSuccessCallback.bind(this);
+    }
+
     componentDidMount() {
+        const { id } = this.props.match.params;
+        this.props.serviceView(id);
+    }
+
+    createReviewSuccessCallback() {
         const { id } = this.props.match.params;
         this.props.serviceView(id);
     }
@@ -30,7 +41,7 @@ class ServiceView extends Component {
             return <div>Sorry, this service does not exist</div>;
 
         return ( 
-            <div className="container service-view">
+            <div className="service-view container">
 
                 <div><h1>{this.props.service.name}</h1></div>
                 <Rating overallRating={this.overallRating()} />
@@ -41,12 +52,12 @@ class ServiceView extends Component {
                     <h6>Seller email</h6>
                 </div>
                 
-                <div className="review-box container">
-                    <div className="review-list col-md-4">
+                <div className="review-box p-0 col-md-8">
+                    <div className="review-list">
                         <ServiceReviewsList comments={this.props.comments} overallRating={this.overallRating()}/>
                     </div>
-                    <div className="review-create col">
-                        <CreateReview serviceId={this.props.service._id} />
+                    <div className="review-create">
+                        <CreateReview successCallback={this.createReviewSuccessCallback} serviceId={this.props.service._id} />
                     </div>
                 </div>
 
