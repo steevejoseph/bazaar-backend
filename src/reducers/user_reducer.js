@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { CREATE_USER, LOGIN, GET_USER_FROM_LOCAL_STORAGE, LOG_OUT_USER } from '../actions';
 
-export default function(state = {}, action) {   
+export default function(state = {}, action) {  
     switch (action.type) {
         case CREATE_USER: 
             if (action.payload.status === 201) {

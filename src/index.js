@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import promise from 'redux-promise';
 
 import './style/index.css';
 import 'font-awesome/css/font-awesome.min.css';
+//import 'loaders.css/src/animations/ball-pulse.scss';
 
 import App from './components/app';
 

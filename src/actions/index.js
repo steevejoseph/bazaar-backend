@@ -14,6 +14,7 @@ export const FETCH_USERS_SERVICES = 'fetch_users_services';
 export const GET_USER_FROM_LOCAL_STORAGE = 'get_local_from_storage';
 export const LOG_OUT_USER = 'log_out';
 export const SET_SERVICE_TO_EDIT = 'set_service_to_edit';
+export const SERVICE_SEARCH_TAG = 'service_search_tag';
 
 export function login(values, callback) {
     const data = {
@@ -23,7 +24,7 @@ export function login(values, callback) {
 
     return axios.post(`${ROOT_URL}/users/login`, data).then((req) => {
         callback();
-
+        
         axios.defaults.headers.common['Authorization'] = `Bearer ${req.data.token}`;
         return {
             type: LOGIN,
@@ -54,7 +55,7 @@ export function createUser(values, callback) {
 export function createService(values, callback) {
     const data = {
         name: values.serviceName,
-        //tags: values.category,
+        tags: values.category,
         description: values.description,
         owner: values.user._id,
         price: values.price
@@ -73,7 +74,7 @@ export function createService(values, callback) {
 export function editService(values, callback) {
     const data = {
         name: values.serviceName,
-        //tags: values.category,
+        tags: values.category,
         description: values.description,
         price: values.price,
         id: values.id
@@ -111,6 +112,21 @@ export function fetchServices() {
     }
 }
 
+export function fetchServicesByTag(tag, query = '') {
+    const data = {
+        query: query,
+        tags: [tag]
+    }    
+
+    return axios.post(`${ROOT_URL}/services/searchtags`, data).then((req) => {
+        return {
+            type: SERVICE_SEARCH_TAG,
+            tag: tag,
+            payload: req
+        };
+    });
+}
+
 export function fetchUsersServices(userID){
     return {
         type: FETCH_USERS_SERVICES, 
@@ -123,10 +139,12 @@ export function serviceSearch(term){
         query: term
     }
 
-    return {
-        type: SERVICE_SEARCH,
-        payload: axios.post(`${ROOT_URL}/services/search`, data)
-    };
+    return axios.post(`${ROOT_URL}/services/search`, data).then((req) => {
+        return {
+            type: SERVICE_SEARCH,
+            payload: req
+        };
+    });
 }
 
 export function serviceView(id) {
@@ -137,10 +155,11 @@ export function serviceView(id) {
 }
 
 export function getUserFromLocalStorage() {
-        return {
-            type: GET_USER_FROM_LOCAL_STORAGE,
-            payload: JSON.parse(localStorage.getItem('loggedInUser'))
-        };
+    axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem('token'))}`;
+    return {
+        type: GET_USER_FROM_LOCAL_STORAGE,
+        payload: JSON.parse(localStorage.getItem('loggedInUser'))
+    };
 }
 
 export function logOutUser() {
