@@ -17,8 +17,6 @@ export const LOG_OUT_USER = 'log_out';
 export const SET_SERVICE_TO_EDIT = 'set_service_to_edit';
 export const SERVICE_SEARCH_TAG = 'service_search_tag';
 
-axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem('token'))}`;
-
 export function login(values, callback) {
     const data = {
         email: values.email,
@@ -28,6 +26,7 @@ export function login(values, callback) {
     return axios.post(`${ROOT_URL}/users/login`, data).then((req) => {
         callback();
 
+        axios.defaults.headers.common['Authorization'] = `Bearer ${req.data.token}`;
         return {
             type: LOGIN,
             payload: req
@@ -46,6 +45,7 @@ export function createUser(values, callback) {
     return axios.post(`${ROOT_URL}/users/signup`, data).then((req) => {
         callback();
 
+        axios.defaults.headers.common['Authorization'] = `Bearer ${req.data.token}`;
         return {
             type: CREATE_USER,
             payload: req
