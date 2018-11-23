@@ -25,8 +25,6 @@ class Home extends Component {
     }
 
     setSearchHasTerm(searchHasTerm) {
-        console.log(searchHasTerm);
-        
         this.setState({
             searchHasTerm: searchHasTerm
         });

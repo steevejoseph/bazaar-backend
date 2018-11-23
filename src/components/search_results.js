@@ -12,7 +12,7 @@ class SearchResults extends Component {
                     <ServiceCardListRow 
                         key="Results" 
                         header="Search Results" 
-                        description={this.state}
+                        description={this.props.services ? `Showing ${this.props.services.length} results` : ''}
                         services={this.props.services} 
                         />
                 </div>

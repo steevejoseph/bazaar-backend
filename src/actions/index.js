@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import axios from 'axios';
 
 export const ROOT_URL = 'https://bazaar-backend.herokuapp.com/api';
@@ -146,7 +145,6 @@ export function serviceSearch(term){
             payload: req
         };
     });
-
 }
 
 export function serviceView(id) {
