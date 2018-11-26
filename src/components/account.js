@@ -100,7 +100,7 @@ class Account extends Component {
 
 function mapStateToProps(state) {
     return { 
-        user: state.user.user, 
+        user: state.user.user,
         services: state.services.accountServices
     };
 }

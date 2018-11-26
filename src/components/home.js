@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { fetchServicesByTag } from '../actions';
 import { CATEGORIES } from '../constants';
 import SearchResults from './search_results';
+import { SyncLoader } from 'react-spinners';
 
 class Home extends Component {
     constructor(props) {
@@ -50,7 +51,16 @@ class Home extends Component {
 
     render() {
         if (!this.props.services)
-            return <div>Loading</div>
+            return (
+                <div className="home container text-center">
+                    <SyncLoader 
+                        sizeUnit={"px"}
+                        size={15}
+                        margin={'5px'}
+                        color={'#bfbbbb'}
+                        />
+                </div>
+            );
 
         return (
             <div>

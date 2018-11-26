@@ -6,7 +6,6 @@ import promise from 'redux-promise';
 
 import './style/index.css';
 import 'font-awesome/css/font-awesome.min.css';
-//import 'loaders.css/src/animations/ball-pulse.scss';
 
 import App from './components/app';
 
