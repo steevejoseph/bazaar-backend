@@ -286,9 +286,29 @@ exports.service_create_comment = (req, res, next) => {
                     })
                 }
                 else if(foundC.length > 0) {
-                    return res.status(400).json({
-                        msg: 'you can not make multiple ratings for the same service'
+                    //if a coment/rating already exists edit the existing one
+                    Comment.findOneAndUpdate({_id: foundC[0]._id}, {
+                        owner: req.userData.userId,
+                        serviceId: req.body.serviceId,
+                        comment: req.body.comment,
+                        rateing: req.body.rateing
+                            
+                    }, {'new': true})
+                    .exec().then(result => {
+                        res.status(200).json({
+                            msg: 'previous comment/rating edited',
+                            result : result        
+                        });
                     })
+                    .catch(err => {
+                        console.log(err);
+                        return res.status(500).json({
+                            error: err
+                        });
+                    });
+                        
+                        
+                        
                 } else {
                     if(req.body.rateing != null && req.body.rateing >= 0 && req.body.rateing <= 5) {
                         var newComment = new Comment({
