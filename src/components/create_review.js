@@ -51,22 +51,22 @@ class CreateReview extends Component {
                             <h6>Overall Rating</h6>
                             <Ratings
                                 rating={this.state.rating}
-                                widgetRatedColors="red"
+                                widgetRatedColors={this.props.starColor}
                                 changeRating={this.changeRating}
                                 widgetDimensions="20px"
                                 widgetSpacings="2px"
-                            >
-                                <Ratings.Widget />
-                                <Ratings.Widget />
-                                <Ratings.Widget />
-                                <Ratings.Widget />
-                                <Ratings.Widget />
+                                >
+                                <Ratings.Widget widgetHoverColor={this.props.starColor}/>
+                                <Ratings.Widget widgetHoverColor={this.props.starColor}/>
+                                <Ratings.Widget widgetHoverColor={this.props.starColor}/>
+                                <Ratings.Widget widgetHoverColor={this.props.starColor}/>
+                                <Ratings.Widget widgetHoverColor={this.props.starColor}/>
                             </Ratings>
                         </div>
 
                         <div className="textarea-review">
                             <textarea 
-                                className="form-control"
+                                className="form-control form-control-lg"
                                 type="text" 
                                 autoComplete="off"
                                 placeholder="What did you like or dislike?"

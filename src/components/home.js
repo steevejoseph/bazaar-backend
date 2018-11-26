@@ -42,7 +42,6 @@ class Home extends Component {
                     header={categoryObject.category} 
                     description={categoryObject.description}
                     services={this.props.services[categoryObject.category]} 
-                    ableToEdit={false} 
                     isHome={true}
                     />
             );
@@ -53,11 +52,13 @@ class Home extends Component {
         if (!this.props.services)
             return (
                 <div className="home container text-center">
+                    <Search inputHasTerm={this.setSearchHasTerm} />
                     <SyncLoader 
+                        className="p-4"
                         sizeUnit={"px"}
                         size={15}
                         margin={'5px'}
-                        color={'#bfbbbb'}
+                        color={'rgb(0, 132, 137)'}
                         />
                 </div>
             );

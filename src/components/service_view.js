@@ -6,6 +6,8 @@ import Rating from './service_rating';
 import CreateReview from './create_review';
 import ServiceReviewsList from './service_reviews_list';
 import Markdown from 'markdown-to-jsx';
+import { SyncLoader } from 'react-spinners';
+
 
 class ServiceView extends Component {
     constructor(props) {
@@ -38,7 +40,11 @@ class ServiceView extends Component {
     renderServiceReviews() {
         return(
             <div className="review-list">
-                <ServiceReviewsList comments={this.props.comments} overallRating={this.overallRating()}/>
+                <ServiceReviewsList 
+                    comments={this.props.comments} 
+                    overallRating={this.overallRating()}
+                    starColor={'rgb(0, 132, 137)'}
+                    />
             </div>
         );
     }
@@ -46,16 +52,50 @@ class ServiceView extends Component {
     renderCreateReview() {
         return (
             <div className="review-create">
-                <CreateReview successCallback={this.createReviewSuccessCallback} serviceId={this.props.service._id} />
+                <CreateReview 
+                    successCallback={this.createReviewSuccessCallback} 
+                    serviceId={this.props.service._id} 
+                    starColor={'rgb(0, 132, 137)'}
+                    />
+            </div>
+        );
+    }
+
+    renderOptions() {
+        return(
+            <div className="owner-box text-center text-muted p-3">
+                <p><i className="fa fa-user-circle fa-3x"></i></p>
+                <p>{`${this.props.serviceOwner.firstName} ${this.props.serviceOwner.lastName}`}</p>
+                <h6>{this.props.serviceOwner.email}</h6>
+            </div>
+        );
+    }
+
+    renderOwner() {
+        return(
+            <div className="owner-box text-center text-muted p-3">
+                <p><i className="fa fa-user-circle fa-3x"></i></p>
+                <p>{`${this.props.serviceOwner.firstName} ${this.props.serviceOwner.lastName}`}</p>
+                <h6>{this.props.serviceOwner.email}</h6>
             </div>
         );
     }
 
     render() {
-        console.log(this.props.service);
-        
-        if (!this.props.service)
-            return <div>Sorry, this service does not exist</div>;
+        const { id } = this.props.match.params;
+
+        if (!this.props.service || this.props.service._id != id)         
+            return (
+                <div className="service-view container text-center">
+                    <SyncLoader 
+                        className="p-5"
+                        sizeUnit={"px"}
+                        size={15}
+                        margin={'5px'}
+                        color={'rgb(0, 132, 137)'}
+                        />
+                </div>
+            );
 
         const serviceOwner = this.props.service.owner;
         const loggedInUserIsOwner = this.props.user && (serviceOwner === this.props.user._id);
@@ -63,15 +103,14 @@ class ServiceView extends Component {
         return ( 
             <div className="service-view container">
 
-                <div className="row">
-
                     <div className="row">
                         <div className="col-lg-8 col-md-12">
                             <div className="service-info">
                                 <img className="card-img-top cursor" onClick={this.openServiceView} src="https://dummyimage.com/1200x780/bfb/aab" alt="Card image" />
                                 <div className="service-header">
-                                    <h1 className="service-title">{this.props.service.name}</h1>                            
-                                    <h6 className="service-category mb-2 text-muted">{this.props.service.tags.length > 0 ? this.props.service.tags[0].toUpperCase() : ''}</h6>
+                                    <h1 className="title">{this.props.service.name}</h1>                            
+                                    <h6 className="category mb-2 text-muted">{this.props.service.tags.length > 0 ? this.props.service.tags[0].toUpperCase() : ''}</h6>
+                                    <h6 className="price card-subtitle mb-2 text-success ">${this.props.service.price} per service</h6>
                                 </div>
                                 <Markdown className="service-description py-3">
                                     {this.props.service.description}
@@ -81,22 +120,24 @@ class ServiceView extends Component {
 
                         </div>
 
-                        <div className="options-and-owner col-md-4">
-                            <div className="owner-box sticky-top">
-                                <p><i className="fa fa-user-circle fa-3x"></i></p>
-                                <p>{`${this.props.serviceOwner.firstName} ${this.props.serviceOwner.lastName}`}</p>
-                                <h6>{this.props.serviceOwner.email}</h6>
+                        <div className="col">
+                            <div className="options-and-owner sticky-top px-2">
+                                {this.renderOptions()}
+                                <div className="p-3" />
+                                {this.renderOwner()}
                             </div>
                         </div>
                     </div>
 
                     
-                    <div className="review-box col-md-8 p-0">
-                        <Rating overallRating={this.overallRating()} />
+                    <div className="review-box col-md-8 p-0 pt-5">
+                        <Rating 
+                            starColor={'rgb(0, 132, 137)'}
+                            overallRating={this.overallRating()} 
+                            />
                         {this.renderServiceReviews()}
                         {this.props.loggedIn && !loggedInUserIsOwner && this.renderCreateReview()}
                     </div>
-                </div>
 
                 {/* <div className="clear">
                     <ServiceDescription service={this.props.service} />

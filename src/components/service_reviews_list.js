@@ -6,11 +6,18 @@ class ServiceReviewsList extends Component {
 
     renderReviewList(){
         return _.map(this.props.comments, comment => {
+            console.log(comment);
+            
             return (
                 <li className="list-group-item" key={comment._id}>
                     <h6>
-                        <Rating overallRating={comment.rateing} />
+                        <Rating 
+                            starColor={'rgb(0, 132, 137)'} 
+                            overallRating={comment.rateing} 
+                            />
+                        <div className="p-1"/>
                         {comment.comment}
+                        <div className=""></div>
                     </h6>
                 </li>
             )

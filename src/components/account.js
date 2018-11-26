@@ -5,6 +5,7 @@ import ServiceCardListRow from './service_card_list_row.js';
 import Modal from './modal';
 import EditService from './edit_service';
 import DeleteService from './delete_service';
+import { SyncLoader } from 'react-spinners';
 
 class Account extends Component {
     constructor(props) {
@@ -72,8 +73,18 @@ class Account extends Component {
     }
 
     render() {
-        if (!this.props.user)
-            return <div>loading</div>
+        if (!this.props.user && !this.props.services)       
+            return (
+                <div className="account container text-center">
+                    <SyncLoader 
+                        className="p-5"
+                        sizeUnit={"px"}
+                        size={15}
+                        margin={'5px'}
+                        color={'rgb(0, 132, 137)'}
+                        />
+                </div>
+            );
 
         if(!this.props.services)
             return (
