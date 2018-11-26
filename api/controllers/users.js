@@ -8,6 +8,7 @@ mongoose.connect('mongodb://team7:ABC123@ds263832.mlab.com:63832/largo-dev', {us
 const saltRounds = 10; //number of times to salt password hash
 
 const User = require('../../models/user.js'); //require the user schema
+const Service = require('../../models/service.js');
 
 exports.user_signup = (req, res, next) => {
     var userEmail = req.body.email.toLowerCase()
@@ -123,17 +124,58 @@ exports.user_delete = (req, res, next) => {
 }
 
 exports.user_get = (req, res, next) => {
+  var num = 0
+  //ar favServiceList = []
+ // var listTest
   User.findById(req.params.userId).exec()
   .then(user => {
-    res.status(200).json({
-      user: user
-    });
-  })
-  .catch(err => {
-    console.log(err);
-    return res.status(500).json({
-      message:'Cannot get specified user.'
-    });
+    var promises = []
+    var favServiceList = []
+      
+      
+      user.favorites.forEach((favServiceId) => {
+        const promise = new Promise((resolve) => {
+          var id = mongoose.Types.ObjectId(favServiceId);
+          var favService = Service.where({_id: id});
+          favService.findOne((err, found) => {
+          if(err) {
+             req.status(500).json({
+             error: err
+             })
+           }
+          if(found != null) {
+             //console.log(found)
+             favServiceList.push(found);
+             num++;
+             resolve();
+            console.log(favServiceList);
+           }
+           //console.log(favServiceList);
+         })
+        });
+        
+          //var favService = "apple pie";
+          //console.log(favServiceList);
+          promises.push(promise);
+      })
+    
+    
+    
+    Promise.all(promises).then(() => {
+      console.log("list of favs");
+      console.log(promises);
+      return res.status(200).json({
+        user: user,
+        favoriteServices: favServiceList,
+        number: num
+      });
+      
+      
+    }).catch((err) => {
+      return res.response(500).json({
+        error: err
+      })
+    })
   })
 }
 
@@ -159,6 +201,32 @@ exports.user_edit = (req, res, next) => {
   
 }
 
+exports.user_add_favorite = (req, res, next) => {
+  var toFavorite = req.body.newFavoriteId
+  var newFavList = User.findOne({_id: req.userData.userId}).favorites
+  if(newFavList == null){
+    newFavList = [];
+    newFavList[0] = toFavorite;
+  } else {
+    newFavList.push(toFavorite);
+  }
+  
+  User.findOneAndUpdate({_id: req.userData.userId}, {
+    favorites: newFavList
+  }, {'new' : true})
+            .exec().then(result => {
+                res.status(200).json({
+                    result : result        
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                return res.status(500).json({
+                    error: err
+                });
+            });
+  
+}
 
 
 
