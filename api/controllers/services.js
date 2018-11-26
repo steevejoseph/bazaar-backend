@@ -153,6 +153,7 @@ exports.service_edit = (req, res, next) => {
     
 }
 
+//delete service
 exports.service_delete = (req, res, next) => {
     var serviceId = mongoose.Types.ObjectId(req.body.id);
     var query = Service.where({_id : serviceId});
@@ -258,6 +259,7 @@ exports.service_create_comment = (req, res, next) => {
     
     var servId = mongoose.Types.ObjectId(req.body.serviceId)
     var query = Service.where({_id: servId});
+    var ownerId = mongoose.Types.ObjectId(req.userData.userId)
     query.findOne((err, found) => {
         if(err){
             return res.status(500).json({
@@ -267,28 +269,67 @@ exports.service_create_comment = (req, res, next) => {
             return res.status(404).json({
                 msg: 'sevice not found'
             })
-        } else if(found.owner == req.userData.userId) {
+        } else if(found.owner == ownerId) {
             return res.status(403).json({
                 msg: 'you can not rate your own service'
             })
         } else {
-            if(req.body.rateing != null && req.body.rateing >= 0 && req.body.rateing <= 5) {
-                var newComment = new Comment({
-                    owner: req.userData.userId,
-                    serviceId: req.body.serviceId,
-                    comment: req.body.comment,
-                    rateing: req.body.rateing
-                
-                    })
-                    newComment.save();
-                    return res.status(200).json({
-                        createdComment: newComment
-                    })
-                } else {
-                    return res.status(400).json({
-                        msg: 'rateing must be a value from 0 to 5'
+            
+            var cquery = Comment.where({
+                owner: ownerId,
+                serviceId: servId
+            })
+            cquery.find((err, foundC) => {
+                if(err){
+                    return res.status(500).json({
+                        error: err
                     })
                 }
+                else if(foundC.length > 0) {
+                    //if a coment/rating already exists edit the existing one
+                    Comment.findOneAndUpdate({_id: foundC[0]._id}, {
+                        owner: req.userData.userId,
+                        serviceId: req.body.serviceId,
+                        comment: req.body.comment,
+                        rateing: req.body.rateing
+                            
+                    }, {'new': true})
+                    .exec().then(result => {
+                        res.status(200).json({
+                            msg: 'previous comment/rating edited',
+                            result : result        
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        return res.status(500).json({
+                            error: err
+                        });
+                    });
+                        
+                        
+                        
+                } else {
+                    if(req.body.rateing != null && req.body.rateing >= 0 && req.body.rateing <= 5) {
+                        var newComment = new Comment({
+                            owner: req.userData.userId,
+                            serviceId: req.body.serviceId,
+                            comment: req.body.comment,
+                            rateing: req.body.rateing
+                        
+                            })
+                            newComment.save();
+                            return res.status(200).json({
+                                createdComment: newComment
+                            })
+                        } else {
+                            return res.status(400).json({
+                                msg: 'rating must be a value from 0 to 5'
+                            })
+                        }
+                }
+            })
+            
         }
         
     })
