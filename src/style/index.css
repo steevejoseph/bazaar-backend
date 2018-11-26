@@ -169,7 +169,7 @@ img {
 .service-header .title {
   font-weight: bolder;
   font-size: 35px;
-  padding-top: 25px;
+  padding-top: 20px;
 }
 
 .service-header .category {
@@ -179,7 +179,6 @@ img {
 
 .service-header .price {
   font-weight: bold;
-  /* font-size: 15px; */
 }
 
 .service-view .service-info {
@@ -189,7 +188,26 @@ img {
 .service-view .options-and-owner {
   padding-top: 40px;
 }
-.service-view .owner-box {
-  border: 1px solid grey;
+
+.service-view .options {
   border-radius: 3px;
+}
+
+.service-view .option-info {
+  border: 1px solid #dee2e6;
+  border-top-width: 0;
+  border-radius: 3px;
+}
+
+.service-view .owner {
+  border: 1px solid #dee2e6;
+  border-radius: 3px;
+}
+
+.service-view .owner .ownerName {
+  margin: 0;
+}
+
+.service-view .owner .email {
+
 }
