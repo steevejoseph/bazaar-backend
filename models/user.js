@@ -23,11 +23,12 @@ var userSchema = new mongoose.Schema({
       type:[String], 
       default: []
    },
-
+    
     passwordHash: String,
-    email:String,
+    //email: String, //commenting out/deleting extra email
     passwordHash: String, 
-    type:String
+    type:String,
+    favorites: [{type: mongoose.Schema.ObjectId, ref:"User"}]
 });
 
 // After we've defined the schema, use passport

@@ -159,6 +159,32 @@ exports.user_edit = (req, res, next) => {
   
 }
 
+exports.user_add_favorite = (req, res, next) => {
+  var toFavorite = req.body.newFavoriteId
+  var newFavList = User.findOne({_id: req.userData.userId}).favorites
+  if(newFavList == null){
+    newFavList = [];
+    newFavList[0] = toFavorite;
+  } else {
+    newFavList.push(toFavorite);
+  }
+  
+  User.findOneAndUpdate({_id: req.userData.userId}, {
+    favorites: newFavList
+  }, {'new' : true})
+            .exec().then(result => {
+                res.status(200).json({
+                    result : result        
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                return res.status(500).json({
+                    error: err
+                });
+            });
+  
+}
 
 
 

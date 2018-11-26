@@ -20,4 +20,9 @@ router.delete('/delete/:userID', checkAuth, userCon.user_delete); //delete user 
 //should possibly addd  an edit to user
 router.patch('/edit/:userID', checkAuth, userCon.user_edit);
 
+//route for adding a favorite service
+router.post('/addFavorite', checkAuth, userCon.user_add_favorite);
+
+
+
 module.exports = router;
