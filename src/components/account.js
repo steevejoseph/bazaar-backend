@@ -78,14 +78,12 @@ class Account extends Component {
         if(!this.props.services)
             return (
                 <div className="container account">
-                    <h1>Account - {this.props.user.lastName}</h1>
                     <h5>You do not own any services</h5>
                 </div>
             );
 
         return (
             <div className="container account">
-                <h1>Account - {this.props.user.lastName}</h1>
                 <ServiceCardListRow 
                     header="My Services" 
                     services={this.props.services} 
@@ -103,7 +101,7 @@ class Account extends Component {
 function mapStateToProps(state) {
     return { 
         user: state.user.user, 
-        services: state.services.services 
+        services: state.services.accountServices
     };
 }
 

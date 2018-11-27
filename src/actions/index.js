@@ -3,12 +3,8 @@ import axios from 'axios';
 export const ROOT_URL = 'https://bazaar-backend.herokuapp.com/api';
 export const CREATE_USER = 'create_user';
 export const CREATE_SERVICE = 'create_service';
-<<<<<<< HEAD
-export const EDIT_SERVICE = 'editservice';
-=======
 export const EDIT_SERVICE = 'edit-service';
 export const DELETE_SERVICE = 'delete_service';
->>>>>>> 0bb1362e3bf3199b3d3b71406f75f5aaa0e56dff
 export const LOGIN = 'login';
 export const SERVICE_SEARCH = 'service_search';
 export const SERVICE_VIEW = 'service_view';
@@ -18,8 +14,8 @@ export const FETCH_USERS_SERVICES = 'fetch_users_services';
 export const GET_USER_FROM_LOCAL_STORAGE = 'get_local_from_storage';
 export const LOG_OUT_USER = 'log_out';
 export const SET_SERVICE_TO_EDIT = 'set_service_to_edit';
-
-axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem('token'))}`;
+export const SERVICE_SEARCH_TAG = 'service_search_tag';
+export const CREATE_REVIEW = 'create_review';
 
 export function login(values, callback) {
     const data = {
@@ -29,7 +25,8 @@ export function login(values, callback) {
 
     return axios.post(`${ROOT_URL}/users/login`, data).then((req) => {
         callback();
-
+        
+        axios.defaults.headers.common['Authorization'] = `Bearer ${req.data.token}`;
         return {
             type: LOGIN,
             payload: req
@@ -48,6 +45,7 @@ export function createUser(values, callback) {
     return axios.post(`${ROOT_URL}/users/signup`, data).then((req) => {
         callback();
 
+        axios.defaults.headers.common['Authorization'] = `Bearer ${req.data.token}`;
         return {
             type: CREATE_USER,
             payload: req
@@ -58,7 +56,7 @@ export function createUser(values, callback) {
 export function createService(values, callback) {
     const data = {
         name: values.serviceName,
-        //tags: values.category,
+        tags: values.category,
         description: values.description,
         owner: values.user._id,
         price: values.price
@@ -77,7 +75,7 @@ export function createService(values, callback) {
 export function editService(values, callback) {
     const data = {
         name: values.serviceName,
-        //tags: values.category,
+        tags: values.category,
         description: values.description,
         price: values.price,
         id: values.id
@@ -108,18 +106,26 @@ export function deleteService(id, callback) {
     });
 }
 
-export function editservice(values, callback) {
-    const data = {
-        name: values.name,
-        tags: values.tags,
-        description: values.description
-    };
-
 export function fetchServices() {
     return {
         type: FETCH_ALL_SERVICES,
         payload: axios.get(`${ROOT_URL}/services`)
     }
+}
+
+export function fetchServicesByTag(tag, query = '') {
+    const data = {
+        query: query,
+        tags: [tag]
+    }    
+
+    return axios.post(`${ROOT_URL}/services/searchtags`, data).then((req) => {
+        return {
+            type: SERVICE_SEARCH_TAG,
+            tag: tag,
+            payload: req
+        };
+    });
 }
 
 export function fetchUsersServices(userID){
@@ -134,10 +140,12 @@ export function serviceSearch(term){
         query: term
     }
 
-    return {
-        type: SERVICE_SEARCH,
-        payload: axios.post(`${ROOT_URL}/services/search`, data)
-    };
+    return axios.post(`${ROOT_URL}/services/search`, data).then((req) => {
+        return {
+            type: SERVICE_SEARCH,
+            payload: req
+        };
+    });
 }
 
 export function serviceView(id) {
@@ -148,10 +156,11 @@ export function serviceView(id) {
 }
 
 export function getUserFromLocalStorage() {
-        return {
-            type: GET_USER_FROM_LOCAL_STORAGE,
-            payload: JSON.parse(localStorage.getItem('loggedInUser'))
-        };
+    axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem('token'))}`;
+    return {
+        type: GET_USER_FROM_LOCAL_STORAGE,
+        payload: JSON.parse(localStorage.getItem('loggedInUser'))
+    };
 }
 
 export function logOutUser() {
@@ -167,4 +176,21 @@ export function setServiceToEdit(service) {
         type: SET_SERVICE_TO_EDIT,
         payload: service
     }
+}
+
+export function createReview(id, comment, rating, callback = {}) {
+    const data = {
+        rateing: rating,
+        comment: comment,
+        serviceId: id,
+    }
+
+    return axios.post(`${ROOT_URL}/services/createComment`, data).then((req) => {
+        callback();
+        
+        return {
+            type: CREATE_REVIEW,
+            payload: req
+        };
+    });
 }
