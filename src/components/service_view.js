@@ -1,25 +1,50 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchServiceAndOwner } from '../actions/index';
+import { fetchServiceAndOwner, getUserFromLocalStorage } from '../actions/index';
 import ServiceDescription from './service_description';
 import Rating from './service_rating';
 import CreateReview from './create_review';
 import ServiceReviewsList from './service_reviews_list';
+import { instanceLocator, tokenUrl } from './direct_message_config';
+import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
 import Markdown from 'markdown-to-jsx';
 import { SyncLoader } from 'react-spinners';
 import { MARKDOWN_OPTIONS } from '../constants';
 
-
 class ServiceView extends Component {
     constructor(props) {
         super(props);
+        this.props.getUserFromLocalStorage();
+
+        this.state = {
+            currentUser: null,
+            roomId: null,
+            joinedRooms: [],
+            roomExists: false
+        }
 
         this.createReviewSuccessCallback = this.createReviewSuccessCallback.bind(this);
+        this.handleChatClick = this.handleChatClick.bind(this);
     }
 
     componentDidMount() {
         const { id } = this.props.match.params;
+
         this.props.fetchServiceAndOwner(id);
+
+        const chatManager = new ChatManager({
+            instanceLocator: instanceLocator,
+            userId: this.props.user._id,
+            tokenProvider: new TokenProvider({
+                url: tokenUrl
+            })
+        });
+        
+        chatManager.connect().then(currentUser => {
+            this.setState({ currentUser });
+            this.getRooms();
+        })
+        .catch(err => console.log('error on connecting', err));
     }
 
     createReviewSuccessCallback() {
@@ -36,6 +61,47 @@ class ServiceView extends Component {
             sum += this.props.comments[i].rateing;
 
         return sum/this.props.comments.length;
+    }
+
+    createRoom(user1, user2, roomName){
+        this.state.currentUser.createRoom({
+            name: roomName,
+            private: true,
+            addUserIds: [`${user1}`, `${user2}`]
+        })
+        .then(room => {
+            this.props.history.push(`/messages/${room.id}`);
+        })
+        .catch(err => {
+            if(err.status === 400){
+                console.log("User needs to be added to chatkit");
+            }
+        })
+    }
+
+    getRooms(){
+        this.state.currentUser.getJoinableRooms().then(joinableRooms => {
+            this.setState({
+                joinableRooms: joinableRooms,
+                joinedRooms: this.state.currentUser.rooms
+            });
+        })
+        .catch(err => console.log('error on joinableRooms: ', err));
+    }
+
+    handleChatClick(){
+        
+        const roomName = `${this.props.user.firstName} - ${this.props.service.name}`;
+
+        for(var i = 0; i < this.state.joinedRooms.length; i++){
+            if(this.state.joinedRooms[i].name == roomName){
+                this.state.roomExists = true;
+                this.props.history.push(`/messages/${this.state.joinedRooms[i].id}`);
+                return;
+            }   
+        }
+
+        this.createRoom(this.props.user._id, this.props.service.owner, roomName);
     }
 
     renderServiceReviews() {
@@ -87,8 +153,13 @@ class ServiceView extends Component {
                 <p className="av"><i className="fa fa-user-circle fa-3x"></i></p>
                 <p className="ownerName">{`${this.props.serviceOwner.firstName} ${this.props.serviceOwner.lastName}`}</p>
                 <a className="email" href={`mailto:${this.props.serviceOwner.email}`}>{this.props.serviceOwner.email}</a>
+                <div>
+                    <button onClick={this.handleChatClick} type="button" className="btn btn-lg btn-primary">Message Seller</button>
+                </div>
+
             </div>
         );
+
     }
 
     render() {
@@ -129,8 +200,6 @@ class ServiceView extends Component {
                                     {this.props.service.description}
                                 </Markdown>
                             </div>
-
-
                         </div>
 
                         <div className="col px-1">
@@ -163,9 +232,11 @@ function mapStateToProps( state ) {
         user: state.user.user,
         loggedIn: state.user.loggedIn,
         service: state.services.service,
+        comments: state.services.comments,
+        user: state.user.user,
         serviceOwner: state.user.serviceOwner,
-        comments: state.services.comments 
     };
 }
 
-export default connect(mapStateToProps, { fetchServiceAndOwner })(ServiceView);
+export default connect(mapStateToProps, { fetchServiceAndOwner, getUserFromLocalStorage })(ServiceView);
+
