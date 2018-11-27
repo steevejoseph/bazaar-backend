@@ -131,6 +131,8 @@ class Navbar extends Component {
                                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                         <Link to="/account" className="dropdown-item">Account</Link>
                                         <div className="dropdown-divider" />
+                                        <Link to="/messages" className="dropdown-item">Messages</Link>
+                                        <div className="dropdown-divider" />
                                         <a onClick={this.logOut} className="dropdown-item">Log out</a>
                                     </div>
                                 </li>

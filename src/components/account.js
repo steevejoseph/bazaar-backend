@@ -5,6 +5,7 @@ import ServiceCardListRow from './service_card_list_row.js';
 import Modal from './modal';
 import EditService from './edit_service';
 import DeleteService from './delete_service';
+import DirectMessages from './direct_messages'
 
 class Account extends Component {
     constructor(props) {

@@ -165,3 +165,83 @@ body {
   padding: 0;
   padding-left: 5px;
 }
+
+.rooms-list {
+  box-sizing: border-box;
+  padding: 10px;
+  height: 100%;
+}
+
+.rooms-list {
+  background-color:#F8F8F8;
+}
+
+.rooms-list ul {
+  list-style-type: none;    
+  padding: 0;
+}
+
+.rooms-list li {
+  margin: 10px 0;
+}
+
+.rooms-list h4 {
+  margin: 5px 0;
+  color: black;
+}
+
+.rooms-list .room a {
+  color: #788792;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.rooms-list .room.active a {
+  color: #363232;
+}
+
+.message {
+  margin: 15px;
+}
+
+.message .message-username {
+  font-size: 11px;
+  color: #3e5869;
+  margin-bottom: 6px;
+}
+
+.message .message-text {
+  background: #5ea3d0;
+  color: white;
+  display: inline;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.message-list {
+  box-sizing: border-box;
+  padding-left: 6px;
+  width: 100%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 34px;
+  font-weight: 300;
+}
+
+.send-message-form {
+  margin-bottom: 20px;
+}
+
+.send-message-form input {
+  width: 100%;
+  padding: 15px 10px;
+  margin: 0;
+  border-style: none;
+  background: #eceaea;
+}
+
+.send-message-form input:focus {
+  outline-width: 0;
+}
