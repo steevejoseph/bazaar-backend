@@ -4,11 +4,22 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs'); //normal bcrypt has issues with heroku thus the use of bcryptjs need to change to use same thing as last project (passport)
 const jwt = require('jsonwebtoken'); //for creation of tokens to authentication
 mongoose.connect('mongodb://team7:ABC123@ds263832.mlab.com:63832/largo-dev', {useNewUrlParser: true});
+const Chatkit = require('@pusher/chatkit-server');
 
 const saltRounds = 10; //number of times to salt password hash
 
 const User = require('../../models/user.js'); //require the user schema
 const Service = require('../../models/service.js');
+
+
+ // init chatkit
+    const chatkit = new Chatkit.default({
+      instanceLocator: 'v1:us1:b90a149b-4af4-4243-9831-b133bff9a54e',
+      key: 'fadcb22d-249f-46f4-8845-033e54dff6b0:dpARnzZfmp8Wt05149mHGY/1Gh+jQY3KF9PsxK721ws=',
+    })
+
+
+
 
 exports.user_signup = (req, res, next) => {
     var userEmail = req.body.email.toLowerCase()
@@ -23,6 +34,10 @@ exports.user_signup = (req, res, next) => {
             })
             //email has not been used good to create an account
           }else {
+            
+             
+            
+            
             //hashes the users password before storeing it can be moved in a pre save function in the schema
             bcrypt.hash(req.body.password, saltRounds, (err, hash) => { 
               if(err) {
@@ -37,6 +52,18 @@ exports.user_signup = (req, res, next) => {
                   passwordHash: hash
                 });
                 user.save();
+                
+                // init chatkit
+                const chatkit = new Chatkit.default({
+                  instanceLocator: 'v1:us1:b90a149b-4af4-4243-9831-b133bff9a54e',
+                  key: 'fadcb22d-249f-46f4-8845-033e54dff6b0:dpARnzZfmp8Wt05149mHGY/1Gh+jQY3KF9PsxK721ws=',
+                })
+                
+                chatkit.createUser({ 
+                  id: user._id, 
+                  name: user.firstName 
+                 })
+                 
                 const token = jwt.sign({
                   email: user.email,
                   userId: user._id
