@@ -25,6 +25,11 @@ class DirectMessages extends Component {
     }
 
     componentDidMount(){
+
+        const { roomId } = this.props.match.params;
+        if(roomId)
+            this.setState({ roomId });
+
         const chatManager = new ChatManager({
             instanceLocator: instanceLocator,
             userId: this.props.user._id,
@@ -37,7 +42,7 @@ class DirectMessages extends Component {
             this.setState({ currentUser });
             this.getRooms();
         })
-        .catch(err => console.log('error on connecting', err));        
+        .catch(err => console.log('error on connecting', err)); 
     }
 
     getRooms(){
@@ -49,9 +54,6 @@ class DirectMessages extends Component {
         })
         .catch(err => console.log('error on joinableRooms: ', err));
     }
-
-   // createRoom(user1, user2){
-   // }
 
     subscribeToRoom(roomId){
         this.setState({messages:[]});
@@ -83,6 +85,7 @@ class DirectMessages extends Component {
     }
 
     render(){
+
         return (
             <div className="direct-messages container account">
                 <RoomList 

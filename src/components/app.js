@@ -24,7 +24,8 @@ class App extends Component {
                         <Route path="/category/:category" component={CategoryView} />
                         <Route path="/services/:id" component={ServiceView} />
                         <Route path="/account" component={Account} />
-                        <Route path="/messages" component={DirectMessages} />
+                        <Route path="/messages/" component={DirectMessages} />
+                        <Route path="/messages/:roomId" component={DirectMessages} />
                         <Route path="/" component={Home} />
                     </Switch>
                 </div>

@@ -16,6 +16,8 @@ class ServiceView extends Component {
         this.state = {
             currentUser: null,
             roomId: null,
+            joinedRooms: [],
+            roomExists: false
         }
 
         this.createReviewSuccessCallback = this.createReviewSuccessCallback.bind(this);
@@ -36,6 +38,7 @@ class ServiceView extends Component {
         
         chatManager.connect().then(currentUser => {
             this.setState({ currentUser });
+            this.getRooms();
         })
         .catch(err => console.log('error on connecting', err));
     }
@@ -48,24 +51,22 @@ class ServiceView extends Component {
     overallRating (){
         var sum = 0, i;
 
-        if(!this.props.comments)
-            return 0;
+        if(!this.props.comments) return 0;
 
-        for (i = 0; i < this.props.comments.length; i++){
+        for (i = 0; i < this.props.comments.length; i++)
             sum += this.props.comments[i].rateing;
-        }
 
         return sum/this.props.comments.length;
     }
 
-    createRoom(user1, user2){
+    createRoom(user1, user2, roomName){
         this.state.currentUser.createRoom({
-            name: `${this.props.user.firstName} - ${this.props.service.name}`,
+            name: roomName,
             private: true,
             addUserIds: [`${user1}`, `${user2}`]
         })
         .then(room => {
-            this.props.history.push('/messages');
+            this.props.history.push(`/messages/${room.id}`);
         })
         .catch(err => {
             if(err.status === 400){
@@ -74,8 +75,29 @@ class ServiceView extends Component {
         })
     }
 
+    getRooms(){
+        this.state.currentUser.getJoinableRooms().then(joinableRooms => {
+            this.setState({
+                joinableRooms: joinableRooms,
+                joinedRooms: this.state.currentUser.rooms
+            });
+        })
+        .catch(err => console.log('error on joinableRooms: ', err));
+    }
+
     handleChatClick(){
-        this.createRoom(this.props.user._id, this.props.service.owner);
+        
+        const roomName = `${this.props.user.firstName} - ${this.props.service.name}`;
+
+        for(var i = 0; i < this.state.joinedRooms.length; i++){
+            if(this.state.joinedRooms[i].name == roomName){
+                this.state.roomExists = true;
+                this.props.history.push(`/messages/${this.state.joinedRooms[i].id}`);
+                return;
+            }   
+        }
+
+        this.createRoom(this.props.user._id, this.props.service.owner, roomName);
     }
 
     render() {
