@@ -73,7 +73,7 @@ class Account extends Component {
     }
 
     render() {
-        if (!this.props.user && !this.props.services)       
+        if (!this.props.services)       
             return (
                 <div className="account container text-center">
                     <SyncLoader 
