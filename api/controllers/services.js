@@ -335,3 +335,34 @@ exports.service_create_comment = (req, res, next) => {
     })
     
 }
+
+exports.service_report = (req, res, next) => {
+    var serviceId = mongoose.Types.ObjectId(req.body.id);
+    var toReport = Service.findOne({_id :serviceId});
+    if(toReport == null) {
+        return res.status(404).json({
+            msg: "service to report was not found"
+        })
+    }
+    var query = Service.where({_id : serviceId})
+    
+    if(toReport.reported == true) {
+        query.findOneAndRemove((err) => {
+            if(err) {
+                return res.status(500).json({
+                    error: err
+                })
+            } else {
+                return res.status(200).json({
+                    msg: "service deleted for multiple reports"
+                })
+            }
+        });
+    } else {
+        Service.findOneandUpdate({_id: serviceId}, {
+            reported: true
+        })
+        }
+    
+    
+}
