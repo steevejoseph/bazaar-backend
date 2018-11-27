@@ -33,6 +33,7 @@ var serviceSchema = new mongoose.Schema({
     
     // if reported, won't be shown (in theory).
     reported: {type: Boolean, default: false},
+    reportedBy: {type: mongoose.Schema.Types.ObjectId, ref:"User"},
     
     price: {type: Number, default: 1},
     photos: {
