@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { SERVICE_SEARCH_TAG, SET_SERVICE_TO_EDIT, FETCH_ALL_SERVICES, CREATE_SERVICE, SERVICE_SEARCH, SERVICE_VIEW, FETCH_USERS_SERVICES, EDIT_SERVICE, DELETE_SERVICE, CREATE_REVIEW } from '../actions';
+import { SERVICE_SEARCH_TAG, SET_SERVICE_TO_EDIT, FETCH_ALL_SERVICES, CREATE_SERVICE, SERVICE_SEARCH, SERVICE_VIEW, FETCH_USERS_SERVICES, EDIT_SERVICE, DELETE_SERVICE, CREATE_REVIEW, FETCH_SERVICE_AND_OWNER } from '../actions';
 
 export default function(state = {}, action) {   
     switch (action.type) {
@@ -25,7 +25,7 @@ export default function(state = {}, action) {
                 ...state,
                 searchResults: action.payload.data.results
              };
-        case SERVICE_VIEW:
+        case FETCH_SERVICE_AND_OWNER:
              if(action.payload.data.comments == 0){
                 return { 
                     ...state,
@@ -68,7 +68,7 @@ export default function(state = {}, action) {
             else
                 return {
                     ...state,
-                    accountServices: null
+                    accountServices: []
                 };
         case SET_SERVICE_TO_EDIT:
             return {

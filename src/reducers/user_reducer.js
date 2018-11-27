@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { CREATE_USER, LOGIN, GET_USER_FROM_LOCAL_STORAGE, LOG_OUT_USER } from '../actions';
+import { CREATE_USER, LOGIN, GET_USER_FROM_LOCAL_STORAGE, LOG_OUT_USER, FETCH_SERVICE_AND_OWNER } from '../actions';
 
 export default function(state = {}, action) {  
     switch (action.type) {
@@ -35,6 +35,11 @@ export default function(state = {}, action) {
             return {
                 ...state,
                 loggedIn: false,
+            }
+        case FETCH_SERVICE_AND_OWNER:
+            return {
+                ...state,
+                serviceOwner: action.payload.data.owner
             }
         default:
             return state;

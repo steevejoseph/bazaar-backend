@@ -16,6 +16,8 @@ export const LOG_OUT_USER = 'log_out';
 export const SET_SERVICE_TO_EDIT = 'set_service_to_edit';
 export const SERVICE_SEARCH_TAG = 'service_search_tag';
 export const CREATE_REVIEW = 'create_review';
+export const FETCH_SERVICE_OWNER = 'fetch_service_owner';
+export const FETCH_SERVICE_AND_OWNER = 'fetch_service_and_owner';
 
 export function login(values, callback) {
     const data = {
@@ -148,11 +150,17 @@ export function serviceSearch(term){
     });
 }
 
-export function serviceView(id) {
-    return {
-        type: SERVICE_VIEW,
-        payload: axios.get(`${ROOT_URL}/services/${id}`)
-    };
+export function fetchServiceAndOwner(serviceID) {
+    return axios.get(`${ROOT_URL}/services/${serviceID}`).then((req) => {
+        return fetchServiceOwner(req.data.service.owner).then((owner) => {
+            req.data.owner = owner.payload.data.user;
+            
+            return {
+                type: FETCH_SERVICE_AND_OWNER,
+                payload: req
+            };
+        });
+    });
 }
 
 export function getUserFromLocalStorage() {
@@ -190,6 +198,15 @@ export function createReview(id, comment, rating, callback = {}) {
         
         return {
             type: CREATE_REVIEW,
+            payload: req
+        };
+    });
+}
+
+export function fetchServiceOwner(id) {
+    return axios.get(`${ROOT_URL}/users/${id}`).then((req) => {
+        return {
+            type: FETCH_SERVICE_OWNER,
             payload: req
         };
     });

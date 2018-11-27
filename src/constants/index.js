@@ -31,3 +31,37 @@ export const CATEGORIES = [
     { category: 'Photography',  description: 'Short line about this really great category that will help you.' }
 ];
 
+export const MARKDOWN_OPTIONS = {
+    overrides: {
+        h1: {
+            props: {
+                className: 'h3',
+            },
+        },
+        h2: {
+            props: {
+                className: 'h4',
+            },
+        },
+        h3: {
+            props: {
+                className: 'h5',
+            },
+        },
+        h4: {
+            props: {
+                className: 'h6',
+            },
+        },
+        h5: {
+            props: {
+                className: 'h6',
+            },
+        },
+        h6: {
+            props: {
+                className: 'h6',
+            },
+        },
+    },
+};
