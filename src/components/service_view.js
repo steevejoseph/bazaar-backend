@@ -153,7 +153,10 @@ class ServiceView extends Component {
                 <p className="av"><i className="fa fa-user-circle fa-3x"></i></p>
                 <p className="ownerName">{`${this.props.serviceOwner.firstName} ${this.props.serviceOwner.lastName}`}</p>
                 <a className="email" href={`mailto:${this.props.serviceOwner.email}`}>{this.props.serviceOwner.email}</a>
-                <button onClick={this.handleChatClick} type="button" className="btn btn-lg btn-primary">Message Seller</button>
+                <div>
+                    <button onClick={this.handleChatClick} type="button" className="btn btn-lg btn-primary">Message Seller</button>
+                </div>
+
             </div>
         );
 
@@ -230,7 +233,7 @@ function mapStateToProps( state ) {
         loggedIn: state.user.loggedIn,
         service: state.services.service,
         comments: state.services.comments,
-        user: state.user.user
+        user: state.user.user,
         serviceOwner: state.user.serviceOwner,
     };
 }
