@@ -68,7 +68,7 @@ export default function(state = {}, action) {
             else
                 return {
                     ...state,
-                    accountServices: null
+                    accountServices: []
                 };
         case SET_SERVICE_TO_EDIT:
             return {

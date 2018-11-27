@@ -22,8 +22,13 @@ class Account extends Component {
         this.deleteSuccessCallback = this.deleteSuccessCallback.bind(this);
     }
 
+    componentWillMount() {
+        if (!this.props.user)
+            this.props.history.push('/');
+    }
+
     componentDidMount() {
-        if(this.props.user)
+        if (this.props.user)
             this.props.fetchUsersServices(this.props.user._id);
     }
 
@@ -86,7 +91,7 @@ class Account extends Component {
                 </div>
             );
 
-        if(!this.props.services)
+        if(this.props.services.length == 0)
             return (
                 <div className="container account">
                     <h5>You do not own any services</h5>
