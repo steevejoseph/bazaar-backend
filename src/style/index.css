@@ -24,14 +24,6 @@ a {
   padding-top: 15px;
 }
 
-.service-view {
-  padding-top: 15px;
-}
-
-.service-view li {
-  padding-left: 0;
-}
-
 .search {
 
 }
@@ -57,7 +49,7 @@ body {
   border-width: 0; 
 }
 
-.card img {
+img {
   border-radius: 5px;
 }
 
@@ -244,4 +236,57 @@ body {
 
 .send-message-form input:focus {
   outline-width: 0;
+
+.service-view {
+
+}
+
+.service-view li {
+  padding-left: 0;
+}
+
+.service-header .title {
+  font-weight: bolder;
+  font-size: 35px;
+  padding-top: 20px;
+}
+
+.service-header .category {
+  padding-bottom: 5px;
+  font-size: 18px;
+}
+
+.service-header .price {
+  font-weight: bold;
+}
+
+.service-view .service-info {
+  padding-top: 40px;
+}
+
+.service-view .options-and-owner {
+  padding-top: 40px;
+}
+
+.service-view .options {
+  border-radius: 3px;
+}
+
+.service-view .option-info {
+  border: 1px solid #dee2e6;
+  border-top-width: 0;
+  border-radius: 3px;
+}
+
+.service-view .owner {
+  border: 1px solid #dee2e6;
+  border-radius: 3px;
+}
+
+.service-view .owner .ownerName {
+  margin: 0;
+}
+
+.service-view .owner .email {
+
 }

@@ -9,12 +9,12 @@ class Rating extends Component {
                     rating={this.props.overallRating}
                     widgetDimensions="20px"
                     widgetSpacings="2px"
-                >
-                    <Ratings.Widget widgetRatedColor="red" />
-                    <Ratings.Widget widgetRatedColor="red" />
-                    <Ratings.Widget widgetRatedColor="red" />
-                    <Ratings.Widget widgetRatedColor="red" />
-                    <Ratings.Widget widgetRatedColor="red" />
+                    >
+                    <Ratings.Widget widgetRatedColor={this.props.starColor} />
+                    <Ratings.Widget widgetRatedColor={this.props.starColor} />
+                    <Ratings.Widget widgetRatedColor={this.props.starColor} />
+                    <Ratings.Widget widgetRatedColor={this.props.starColor} />
+                    <Ratings.Widget widgetRatedColor={this.props.starColor} />
                 </Ratings>
             </div>
         );

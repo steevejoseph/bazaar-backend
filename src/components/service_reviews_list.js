@@ -9,8 +9,13 @@ class ServiceReviewsList extends Component {
             return (
                 <li className="list-group-item" key={comment._id}>
                     <h6>
-                        <Rating overallRating={comment.rateing} />
+                        <Rating 
+                            starColor={'rgb(0, 132, 137)'} 
+                            overallRating={comment.rateing} 
+                            />
+                        <div className="p-2"/>
                         {comment.comment}
+                        <div className=""></div>
                     </h6>
                 </li>
             )
