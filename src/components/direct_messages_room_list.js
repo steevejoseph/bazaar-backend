@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class RoomList extends Component {
     render(){
         return (
-            <div className="rooms-list">
+            <div className="rooms-list account">
                 <ul>
                     <h4 className="font-weight-bold">Direct Messages</h4>
 

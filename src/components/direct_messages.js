@@ -87,14 +87,14 @@ class DirectMessages extends Component {
     render(){
 
         return (
-            <div className="direct-messages container account">
+            <div className="direct-messages container account row">
                 <RoomList 
-                    className="room-list-c"
+                    className="room-list-c col"
                     roomId={this.state.roomId}
                     subscribeToRoom={this.subscribeToRoom}
                     rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]} 
                 />
-                <div className="message-send-part">
+                <div className="message-send-part col">
                     <MessageList messages={this.state.messages} />
                     <SendMessage 
                         sendMessage={this.sendMessage}
