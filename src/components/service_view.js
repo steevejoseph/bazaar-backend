@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchServiceAndOwner, getUserFromLocalStorage } from '../actions/index';
@@ -10,6 +11,24 @@ import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
 import Markdown from 'markdown-to-jsx';
 import { SyncLoader } from 'react-spinners';
 import { MARKDOWN_OPTIONS } from '../constants';
+
+const OPTIONS = [
+    {
+        name: "Premium",
+        description: "Option's description... yeahhhhhhhhhhh cool.",
+        price: 15
+    },
+    {
+        name: "Standard",
+        description: "Option's description... yeahhhhhhhhhhh cool.",
+        price: 10
+    },
+    {
+        name: "Basic",
+        description: "Option's description... yeahhhhhhhhhhh cool.",
+        price: 5
+    }
+]
 
 class ServiceView extends Component {
     constructor(props) {
@@ -25,6 +44,8 @@ class ServiceView extends Component {
 
         this.createReviewSuccessCallback = this.createReviewSuccessCallback.bind(this);
         this.handleChatClick = this.handleChatClick.bind(this);
+        this.renderOptionTabs = this.renderOptionTabs.bind(this);
+        this.renderOptionContent = this.renderOptionContent.bind(this);
     }
 
     componentDidMount() {
@@ -90,7 +111,6 @@ class ServiceView extends Component {
     }
 
     handleChatClick(){
-        
         const roomName = `${this.props.user.firstName} - ${this.props.service.name}`;
 
         for(var i = 0; i < this.state.joinedRooms.length; i++){
@@ -128,36 +148,54 @@ class ServiceView extends Component {
         );
     }
 
+    renderOptionTabs() {
+        return _.map(OPTIONS, option => {
+            return (
+                <a className="nav-item nav-link" id={'nav-' + option.name + '-tab'} data-toggle="tab" role="tab" aria-controls={'nav' + option.name} aria-selected="true" href={'#'+option.name+'-tab'}>{option.name}</a>
+            );
+        });
+    }
+
+    renderOptionContent() {
+        return _.map(OPTIONS, option => {
+            return (
+                <div className="tab-pane fade show active" id={'nav-'+option.name} role="tabpanel" aria-labelledby={option.name + option.price}>
+                    {option.description}
+                </div>
+            );
+        });
+    }
+
     renderOptions() {
         return(
             <div className="options text-center text-muted p-0">
                 <nav>
                     <div className="option-tabs nav nav-tabs text-center nav-justified" id="nav-tab" role="tablist">
-                        <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Option</a>
-                        <a className="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Option</a>
-                        <a className="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Option</a>
+                        {this.renderOptionTabs()}
                     </div>
                 </nav>
                 <div className="option-info tab-content p-3" id="nav-tabContent">
-                    <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">Option 1</div>
-                    <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Option 2</div>
-                    <div className="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">Option 3</div>
+                    {this.renderOptionContent()}
                 </div>
             </div>
         );
     }
 
     renderOwner() {
+        const serviceOwner = this.props.service.owner;
+        const loggedInUserIsOwner = this.props.user && (serviceOwner === this.props.user._id);
+
         return(
             <div className="owner text-center text-muted p-3">
                 <p className="av"><i className="fa fa-user-circle fa-3x"></i></p>
                 <p className="ownerName">{`${this.props.serviceOwner.firstName} ${this.props.serviceOwner.lastName}`}</p>
                 <a className="email" href={`mailto:${this.props.serviceOwner.email}`}>{this.props.serviceOwner.email}</a>
                 <div>
-                    <button onClick={this.handleChatClick} type="button" className="btn btn-lg btn-primary">Message Seller</button>
+                    {this.props.loggedIn && !loggedInUserIsOwner && 
+                        <button onClick={this.handleChatClick} type="button" className="btn btn-outline-primary btn-sm">Message Seller</button>
+                    }
                 </div>
-
-            </div>
+                </div>
         );
 
     }
