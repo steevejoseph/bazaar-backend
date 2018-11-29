@@ -149,18 +149,38 @@ class ServiceView extends Component {
     }
 
     renderOptionTabs() {
+        var i = 0;
+
         return _.map(OPTIONS, option => {
             return (
-                <a className="nav-item nav-link" id={'nav-' + option.name + '-tab'} data-toggle="tab" role="tab" aria-controls={'nav' + option.name} aria-selected="true" href={'#'+option.name+'-tab'}>{option.name}</a>
+                <a 
+                    className={`nav-item nav-link ${i++ == 0 ? 'active' : ''}`} 
+                    id={`tab-${option.name}`} 
+                    data-toggle="tab" 
+                    role="tab" 
+                    aria-controls={`${option.name}`} 
+                    aria-selected={`nav-item nav-link ${i++ == 0 ? 'true' : 'false'}`} 
+                    href={`#${option.name}`}
+                    >
+                    {option.name}
+                </a>
             );
         });
     }
 
     renderOptionContent() {
+        var i = 0;
+
         return _.map(OPTIONS, option => {
             return (
-                <div className="tab-pane fade show active" id={'nav-'+option.name} role="tabpanel" aria-labelledby={option.name + option.price}>
+                <div 
+                    className={`tab-pane ${i++ == 0 ? 'show active' : ''}`} 
+                    id={option.name} 
+                    role="tabpanel" 
+                    aria-labelledby={`tab-${option.name}`} 
+                    >
                     {option.description}
+                    {option.price}
                 </div>
             );
         });
@@ -187,15 +207,27 @@ class ServiceView extends Component {
 
         return(
             <div className="owner text-center text-muted p-3">
-                <p className="av"><i className="fa fa-user-circle fa-3x"></i></p>
-                <p className="ownerName">{`${this.props.serviceOwner.firstName} ${this.props.serviceOwner.lastName}`}</p>
-                <a className="email" href={`mailto:${this.props.serviceOwner.email}`}>{this.props.serviceOwner.email}</a>
+                <p className="av">
+                    <i className="fa fa-user-circle fa-3x"></i>
+                </p>
+                <p className="ownerName">
+                    {`${this.props.serviceOwner.firstName} ${this.props.serviceOwner.lastName}`}
+                </p>
+                <a className="email" href={`mailto:${this.props.serviceOwner.email}`}>
+                    {this.props.serviceOwner.email}
+                </a>
                 <div>
                     {this.props.loggedIn && !loggedInUserIsOwner && 
-                        <button onClick={this.handleChatClick} type="button" className="btn btn-outline-primary btn-sm">Message Seller</button>
+                        <button 
+                            onClick={this.handleChatClick} 
+                            type="button" 
+                            className="btn btn-outline-primary btn-sm"
+                            >
+                            Message Seller
+                        </button>
                     }
                 </div>
-                </div>
+            </div>
         );
 
     }
@@ -203,7 +235,7 @@ class ServiceView extends Component {
     render() {
         const { id } = this.props.match.params;
 
-        if (!this.props.service || this.props.service._id != id)         
+        if (!this.props.service || !this.props.serviceOwner || this.props.service._id != id)         
             return (
                 <div className="service-view container text-center">
                     <SyncLoader 
@@ -244,7 +276,7 @@ class ServiceView extends Component {
                             <div className="options-and-owner sticky-top px-2">
                                 {this.renderOptions()}
                                 <div className="p-3" />
-                                {this.props.serviceOwner && this.renderOwner()}
+                                {this.renderOwner()}
                             </div>
                         </div>
                     </div>
