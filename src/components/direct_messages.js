@@ -2,10 +2,10 @@ import React, { Component} from 'react';
 import MessageList from './direct_messages_message_list';
 import { connect } from 'react-redux';
 import SendMessage from './direct_messages_send_message';
-import { getUserFromLocalStorage } from '../actions/index';
 import RoomList from './direct_messages_room_list';
 import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
-import { instanceLocator, tokenUrl } from './direct_message_config';
+import { connectChat, fetchJoinableRooms} from '../actions/index';
+import { SyncLoader } from 'react-spinners';
 
 class DirectMessages extends Component {
 
@@ -13,11 +13,8 @@ class DirectMessages extends Component {
         super(props);
 
         this.state = {
-            currentUser: null,
             roomId: null,
-            messages:[],
-            joinableRooms: [],
-            joinedRooms: []
+            messages:[]
         }
 
         this.sendMessage = this.sendMessage.bind(this);
@@ -27,38 +24,16 @@ class DirectMessages extends Component {
     componentDidMount(){
 
         const { roomId } = this.props.match.params;
-        if(roomId)
+        if (roomId)
             this.setState({ roomId });
 
-        const chatManager = new ChatManager({
-            instanceLocator: instanceLocator,
-            userId: this.props.user._id,
-            tokenProvider: new TokenProvider({
-                url: tokenUrl
-            })
-        });
-        
-        chatManager.connect().then(currentUser => {
-            this.setState({ currentUser });
-            this.getRooms();
-        })
-        .catch(err => console.log('error on connecting', err)); 
-    }
-
-    getRooms(){
-        this.state.currentUser.getJoinableRooms().then(joinableRooms => {
-            this.setState({
-                joinableRooms: joinableRooms,
-                joinedRooms: this.state.currentUser.rooms
-            });
-        })
-        .catch(err => console.log('error on joinableRooms: ', err));
+        this.props.connectChat(this.props.user._id);
     }
 
     subscribeToRoom(roomId){
         this.setState({messages:[]});
 
-        this.state.currentUser.subscribeToRoom({
+        this.props.currentUser.subscribeToRoom({
             roomId: roomId,
             hooks: {
                 onMessage: message => {
@@ -69,16 +44,13 @@ class DirectMessages extends Component {
             }
         })
         .then(room => {
-            this.setState({
-                roomId: room.id
-            })
-            this.getRooms()
+            this.setState({ roomId: room.id })
         })
         .catch(err => console.log('error on subscribing to room', err));
     }
 
     sendMessage(text) {
-        this.state.currentUser.sendMessage({
+        this.props.currentUser.sendMessage({
             text: text,
             roomId: this.state.roomId
         });
@@ -86,18 +58,33 @@ class DirectMessages extends Component {
 
     render(){
 
+        if(!this.props.currentUser)
+            return (
+                <div className="service-view container text-center">
+                    <SyncLoader
+                        className="p-5"
+                        sizeUnit={"px"}
+                        size={15}
+                        margin={'5px'}
+                        color={'rgb(0, 132, 137)'}
+                        />
+                </div>
+            );
+
         return (
             <div className="direct-messages container account row">
-                <RoomList 
+                <RoomList
                     className="room-list-c col"
                     roomId={this.state.roomId}
                     subscribeToRoom={this.subscribeToRoom}
-                    rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]} 
+                    rooms={this.props.currentUser.rooms}
                 />
                 <div className="message-send-part col">
                     <MessageList messages={this.state.messages} />
-                    <SendMessage 
+                    <SendMessage
                         sendMessage={this.sendMessage}
+                        currentUser={this.props.currentUser}
+                        roomId={this.state.roomId}
                         disabled={!this.state.roomId}/>
                 </div>
             </div>
@@ -106,9 +93,11 @@ class DirectMessages extends Component {
 }
 
 function mapStateToProps( state ) {
-    return { 
-        user: state.user.user
+    return {
+        user: state.user.user,
+        currentUser: state.user.currentUser,
+        joinableRooms: state.user.joinableRooms
     };
 }
 
-export default connect(mapStateToProps, { getUserFromLocalStorage })(DirectMessages);
+export default connect(mapStateToProps, { connectChat })(DirectMessages);
