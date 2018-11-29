@@ -8,6 +8,11 @@ a {
   color: rgb(0, 132, 137);
 }
 
+.modal-body {
+  padding-bottom: 5px;
+  padding-top: 10px;
+}
+
 .cursor {
   cursor: pointer;
 }
