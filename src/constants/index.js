@@ -16,19 +16,19 @@ export const CREATE_EDIT_CATEGORIES = [
 ];
 
 export const CATEGORIES = [
-    { category: 'Graphics & Design',  description: 'Short line about this really great category that will help you.' },
-    { category: 'Digital Marketing',  description: 'Short line about this really great category that will help you.' },
-    { category: 'Writing & Translation',  description: 'Short line about this really great category that will help you.' },
-    { category: 'Video & Animation',  description: 'Short line about this really great category that will help you.' },
-    { category: 'Music & Audio',  description: 'Short line about this really great category that will help you.' },
-    { category: 'Programming & Tech',  description: 'Short line about this really great category that will help you.' },
-    { category: 'Business',  description: 'Short line about this really great category that will help you.' },
-    { category: 'Fun & Lifestyle',  description: 'Short line about this really great category that will help you.' },
-    { category: 'Lessons/Tutoring',  description: 'Short line about this really great category that will help you.' },
-    { category: 'Event Management',  description: 'Short line about this really great category that will help you.' },
-    { category: 'Beauty',  description: 'Short line about this really great category that will help you.' },
-    { category: 'E-Commerce',  description: 'Short line about this really great category that will help you.' },
-    { category: 'Photography',  description: 'Short line about this really great category that will help you.' }
+    { category: 'Graphics & Design',  description: 'Bring art to your product or service with Graphics and Designs.' },
+    { category: 'Digital Marketing',  description: 'Help push your marketing message further with Digital Marketing.' },
+    { category: 'Writing & Translation',  description: 'Get copy done and anything translated for your needs.' },
+    { category: 'Video & Animation',  description: "Produce your message with video or bring your art to life wih animation." },
+    { category: 'Music & Audio',  description: "Develop your sound and let it be heard." },
+    { category: 'Programming & Tech',  description: "Need technical help? We've got coders and technologists waiting to build." },
+    { category: 'Business',  description: "Outsource your business needs and get things done." },
+    { category: 'Fun & Lifestyle',  description: "Services to shake things up and have some fun." },
+    { category: 'Lessons/Tutoring',  description: "Force = Mass x Acceleration. Get help with a course." },
+    { category: 'Event Management',  description: "Hosting a big gig? Outsource help with Event Management." },
+    { category: 'Beauty',  description: "You're beautiful. Make yourself look like a snack with Beauty." },
+    { category: 'E-Commerce',  description: "Business is booming. E-Commerce pro's and experts ready to help." },
+    { category: 'Photography',  description: "Capture that perfect moment with photography services." }
 ];
 
 export const MARKDOWN_OPTIONS = {
