@@ -171,6 +171,8 @@ class ServiceView extends Component {
 
     renderOptionContent() {
         var i = 0;
+        const serviceOwner = this.props.service.owner;
+        const loggedInUserIsOwner = this.props.user && (serviceOwner === this.props.user._id);
 
         return _.map(OPTIONS, option => {
             return (
@@ -181,7 +183,7 @@ class ServiceView extends Component {
                     aria-labelledby={`tab-${option.name}`} 
                     >
                         <p>{option.description}</p>
-                        {this.props.loggedIn ? (
+                        {this.props.loggedIn && !loggedInUserIsOwner ? (
                             <button 
                             onClick={this.handleChatClick} 
                             type="button" 
