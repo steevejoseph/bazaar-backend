@@ -180,15 +180,26 @@ class ServiceView extends Component {
                     role="tabpanel" 
                     aria-labelledby={`tab-${option.name}`} 
                     >
-                        {/* <p className="price p-0">{`$${option.price}`}</p> */}
                         <p>{option.description}</p>
-                        <button 
-                        onClick={this.handleChatClick} 
-                        type="button" 
-                        className="btn btn-outline-success btn-block"
-                        >
-                            Continue (${option.price})
-                        </button>
+                        {this.props.loggedIn ? (
+                            <button 
+                            onClick={this.handleChatClick} 
+                            type="button" 
+                            className="btn btn-outline-success btn-block"
+                            >
+                                Continue (${option.price})
+                            </button>
+                        ) : (
+                            <button 
+                            onClick={this.handleChatClick} 
+                            type="button" 
+                            className="btn btn-outline-success btn-block"
+                            disabled
+                            >
+                                Continue (${option.price})
+                            </button>
+                        )}
+
                 </div>
             );
         });
@@ -226,13 +237,24 @@ class ServiceView extends Component {
                         </a>
                 <div>
                     {this.props.loggedIn && !loggedInUserIsOwner && 
-                        <button 
+                        this.props.loggedIn ? (
+                            <button 
+                                onClick={this.handleChatClick} 
+                                type="button" 
+                                className="btn btn-outline-primary btn-block mt-2"
+                                >
+                                Message Seller
+                            </button>
+                        ) : (
+                            <button 
                             onClick={this.handleChatClick} 
                             type="button" 
                             className="btn btn-outline-primary btn-block mt-2"
+                            disabled
                             >
-                            Message Seller
-                        </button>
+                                Message Seller
+                            </button>
+                        )
                     }
                 </div>
             </div>
