@@ -283,12 +283,22 @@ img {
   border-radius: 3px;
 }
 
+.service-view .option-info .price {
+  font-weight: bold;
+  font-size: 25px;
+  margin-top: -5px;
+}
+
 .service-view .owner {
   border: 1px solid #dee2e6;
   border-radius: 3px;
 }
 
-.service-view .owner .ownerName {
+.service-view .owner .owner-info{
+  padding-left: 30px;
+}
+
+.service-view .owner .owner-name {
   margin: 0;
 }
 
