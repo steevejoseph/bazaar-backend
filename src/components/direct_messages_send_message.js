@@ -14,9 +14,7 @@ class SendMessage extends Component {
     }
 
     onInputChange(message){
-        console.log("1");
         this.setState({ message });
-        console.log("2");
     }
 
     handleSubmit(values){
@@ -24,10 +22,7 @@ class SendMessage extends Component {
 
         values.preventDefault();
         this.props.sendMessage(this.state.message);
-        console.log("3");
         this.setState({ message: ''});
-
-        console.log("4");
     }
 
     render() {

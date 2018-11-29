@@ -63,7 +63,7 @@ class ServiceView extends Component {
         }
 
         this.props.createRoom(this.props.currentUser, this.props.service.owner, roomName);
-        this.props.history.push(`/messages/${this.props.currentUser.createdRoom.id}`);
+        this.props.history.push(`/messages`);
     }
 
     renderServiceReviews() {
