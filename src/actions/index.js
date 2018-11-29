@@ -2,7 +2,7 @@ import axios from 'axios';
 import { instanceLocator, tokenUrl } from '../constants';
 import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
 
-export const ROOT_URL = 'https://bazaar-backend.herokuapp.com/api';
+const ROOT_URL = 'https://bazaar-backend.herokuapp.com/api';
 export const CREATE_USER = 'create_user';
 export const CREATE_SERVICE = 'create_service';
 export const EDIT_SERVICE = 'edit-service';

@@ -230,8 +230,8 @@ class ServiceView extends Component {
         if (!this.props.service || !this.props.serviceOwner || this.props.service._id != id)        
             return (
                 <div className="service-view container text-center">
-                    <SyncLoader
-                        className="p-5"
+                    <SyncLoader 
+                        className="loader"
                         sizeUnit={"px"}
                         size={15}
                         margin={'5px'}
