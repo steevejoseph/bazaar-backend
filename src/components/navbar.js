@@ -121,8 +121,7 @@ class Navbar extends Component {
                                 </a>
                             </li>
                             
-                            {this.props.loggedIn ? 
-
+                            {this.props.loggedIn &&
                                 <li className="nav-item dropdown py-md-1">
                                     <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i className="fa fa-lg fa-user-circle" /> Account
@@ -136,26 +135,22 @@ class Navbar extends Component {
                                         <a onClick={this.logOut} className="dropdown-item">Log out</a>
                                     </div>
                                 </li>
-                                :  '' }
+                            }
 
                             
                             {/* Yes, weird, cumbersome use of ternary, but works only this way weirdly. Open to other solutions */}
 
-                            {this.props.loggedIn ? '' :
-                            
-                                <li className="nav-item">
+                            {!this.props.loggedIn &&
+                                <li className="nav-item py-md-1">
                                     <a className="nav-link" href="#" onClick={this.handleSignupClickEvent}>Sign up</a>
                                 </li>
-
                             }
 
-                            {this.props.loggedIn ? '' :
-                            
-                                <li className="nav-item">
+                            {!this.props.loggedIn &&
+                                <li className="nav-item py-md-1">
                                     <a className="nav-link" href="#" onClick={this.handleLoginClickEvent}>Log in</a>
                                 </li>
-
-                                }
+                            }
                         </ul>
                     </div>
                 </nav>
