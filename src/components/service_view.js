@@ -271,7 +271,7 @@ class ServiceView extends Component {
             return (
                 <div className="service-view container text-center">
                     <SyncLoader 
-                        className="p-5"
+                        className="loader"
                         sizeUnit={"px"}
                         size={15}
                         margin={'5px'}

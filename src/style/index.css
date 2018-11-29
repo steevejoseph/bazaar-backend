@@ -13,11 +13,11 @@ a {
 }
 
 .app-body {
-  padding-top: 60px; 
+
 }
 
 .home {
-  padding-top: 0px;
+  padding-top: 65px;
 }
 
 .category-view {
@@ -25,7 +25,7 @@ a {
 }
 
 .account {
-  padding-top: 15px;
+  padding-top: 70px;
 }
 
 .search {
@@ -246,6 +246,10 @@ img {
 
 }
 
+.service-view .loader {
+  padding-top: 95px;
+}
+
 .service-view li {
   padding-left: 0;
 }
@@ -266,11 +270,11 @@ img {
 }
 
 .service-view .service-info {
-  padding-top: 40px;
+  padding-top: 95px;
 }
 
 .service-view .options-and-owner {
-  padding-top: 40px;
+  padding-top: 95px;
 }
 
 .service-view .options {

@@ -64,10 +64,10 @@ class Home extends Component {
             );
 
         return (
-            <div>
+            <div className="home container">
                 <Search inputHasTerm={this.setSearchHasTerm} />
                 {this.state.searchHasTerm ? <SearchResults /> : 
-                    <div className="home container">
+                    <div className="">
                         {this.renderServiceCategories()}
                     </div>
                 }
