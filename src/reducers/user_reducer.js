@@ -34,6 +34,7 @@ export default function(state = {}, action) {
         case LOG_OUT_USER:
             return {
                 ...state,
+                user: null,
                 loggedIn: false,
             }
         case FETCH_SERVICE_AND_OWNER:

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchServiceAndOwner, getUserFromLocalStorage } from '../actions/index';
+import { fetchServiceAndOwner } from '../actions/index';
 import ServiceDescription from './service_description';
 import Rating from './service_rating';
 import CreateReview from './create_review';
@@ -14,26 +14,25 @@ import { MARKDOWN_OPTIONS } from '../constants';
 
 const OPTIONS = [
     {
-        name: "Premium",
-        description: "Option's description... yeahhhhhhhhhhh cool.",
-        price: 15
-    },
-    {
-        name: "Standard",
-        description: "Option's description... yeahhhhhhhhhhh cool.",
+        name: "Starter",
+        description: "2 concepts to choose from with high resolution jpeg simple logos only.",
         price: 10
     },
     {
-        name: "Basic",
-        description: "Option's description... yeahhhhhhhhhhh cool.",
-        price: 5
+        name: "Standard",
+        description: "3 concepts to choose from with HD jpeg and transparent background.",
+        price: 25
+    },
+    {
+        name: "Super",
+        description: "3 concepts to choose from with all files, 3d mockup, unlimited revisions and fast delivery.",
+        price: 50
     }
 ]
 
 class ServiceView extends Component {
     constructor(props) {
         super(props);
-        this.props.getUserFromLocalStorage();
 
         this.state = {
             currentUser: null,
@@ -52,6 +51,8 @@ class ServiceView extends Component {
         const { id } = this.props.match.params;
 
         this.props.fetchServiceAndOwner(id);
+
+        if (!this.props.loggedIn) return;
 
         const chatManager = new ChatManager({
             instanceLocator: instanceLocator,
@@ -179,8 +180,15 @@ class ServiceView extends Component {
                     role="tabpanel" 
                     aria-labelledby={`tab-${option.name}`} 
                     >
-                    {option.description}
-                    {option.price}
+                        {/* <p className="price p-0">{`$${option.price}`}</p> */}
+                        <p>{option.description}</p>
+                        <button 
+                        onClick={this.handleChatClick} 
+                        type="button" 
+                        className="btn btn-outline-success btn-block"
+                        >
+                            Continue (${option.price})
+                        </button>
                 </div>
             );
         });
@@ -188,13 +196,13 @@ class ServiceView extends Component {
 
     renderOptions() {
         return(
-            <div className="options text-center text-muted p-0">
+            <div className="options text-muted">
                 <nav>
                     <div className="option-tabs nav nav-tabs text-center nav-justified" id="nav-tab" role="tablist">
                         {this.renderOptionTabs()}
                     </div>
                 </nav>
-                <div className="option-info tab-content p-3" id="nav-tabContent">
+                <div className="option-info tab-content p-3 px-4" id="nav-tabContent">
                     {this.renderOptionContent()}
                 </div>
             </div>
@@ -206,22 +214,22 @@ class ServiceView extends Component {
         const loggedInUserIsOwner = this.props.user && (serviceOwner === this.props.user._id);
 
         return(
-            <div className="owner text-center text-muted p-3">
-                <p className="av">
-                    <i className="fa fa-user-circle fa-3x"></i>
-                </p>
-                <p className="ownerName">
-                    {`${this.props.serviceOwner.firstName} ${this.props.serviceOwner.lastName}`}
-                </p>
-                <a className="email" href={`mailto:${this.props.serviceOwner.email}`}>
-                    {this.props.serviceOwner.email}
-                </a>
+            <div className="owner text-muted p-3 text-center">
+                        <p className="av">
+                            <i className="fa fa-user-circle fa-3x"></i>
+                        </p>
+                        <p className="owner-name">
+                            {`${this.props.serviceOwner.firstName} ${this.props.serviceOwner.lastName}`}
+                        </p>
+                        <a className="email" href={`mailto:${this.props.serviceOwner.email}`}>
+                            {this.props.serviceOwner.email}
+                        </a>
                 <div>
                     {this.props.loggedIn && !loggedInUserIsOwner && 
                         <button 
                             onClick={this.handleChatClick} 
                             type="button" 
-                            className="btn btn-outline-primary btn-sm"
+                            className="btn btn-outline-primary btn-block mt-2"
                             >
                             Message Seller
                         </button>
@@ -308,5 +316,5 @@ function mapStateToProps( state ) {
     };
 }
 
-export default connect(mapStateToProps, { fetchServiceAndOwner, getUserFromLocalStorage })(ServiceView);
+export default connect(mapStateToProps, { fetchServiceAndOwner })(ServiceView);
 
