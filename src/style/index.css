@@ -12,8 +12,8 @@ a {
   cursor: pointer;
 }
 
-.navbar {
-
+.app-body {
+  padding-top: 60px; 
 }
 
 .home {

@@ -103,7 +103,7 @@ class Navbar extends Component {
     render() {
         return (
             <div>
-                <nav className="navbar fixed-top navbar-expand-sm bg-white shadow-sm">
+                <nav className="navbar navbar-light fixed-top navbar-expand-sm bg-white shadow-sm">
                     <Link to="/" className="navbar-brand mb-0 py-md-1 h1">Bazaar</Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
