@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { instanceLocator, tokenUrl } from '../components/direct_message_config';
+import { instanceLocator, tokenUrl } from '../constants';
 import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
 
 export const ROOT_URL = 'https://bazaar-backend.herokuapp.com/api';

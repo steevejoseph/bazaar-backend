@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import SendMessage from './direct_messages_send_message';
 import RoomList from './direct_messages_room_list';
 import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
-import { instanceLocator, tokenUrl } from './direct_message_config';
 import { connectChat, fetchJoinableRooms} from '../actions/index';
 import { SyncLoader } from 'react-spinners';
 

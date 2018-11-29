@@ -5,7 +5,6 @@ import ServiceDescription from './service_description';
 import Rating from './service_rating';
 import CreateReview from './create_review';
 import ServiceReviewsList from './service_reviews_list';
-import { instanceLocator, tokenUrl } from './direct_message_config';
 import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
 import Markdown from 'markdown-to-jsx';
 import { SyncLoader } from 'react-spinners';
