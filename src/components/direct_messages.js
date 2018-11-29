@@ -15,8 +15,7 @@ class DirectMessages extends Component {
 
         this.state = {
             roomId: null,
-            messages:[],
-            joinedRooms: []
+            messages:[]
         }
 
         this.sendMessage = this.sendMessage.bind(this);
@@ -46,9 +45,7 @@ class DirectMessages extends Component {
             }
         })
         .then(room => {
-            this.setState({
-                roomId: room.id
-            })
+            this.setState({ roomId: room.id })
         })
         .catch(err => console.log('error on subscribing to room', err));
     }
@@ -63,17 +60,17 @@ class DirectMessages extends Component {
     render(){
 
         if(!this.props.currentUser)
-        return (
-            <div className="service-view container text-center">
-                <SyncLoader
-                    className="p-5"
-                    sizeUnit={"px"}
-                    size={15}
-                    margin={'5px'}
-                    color={'rgb(0, 132, 137)'}
-                    />
-            </div>
-        );
+            return (
+                <div className="service-view container text-center">
+                    <SyncLoader
+                        className="p-5"
+                        sizeUnit={"px"}
+                        size={15}
+                        margin={'5px'}
+                        color={'rgb(0, 132, 137)'}
+                        />
+                </div>
+            );
 
         return (
             <div className="direct-messages container account row">

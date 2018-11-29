@@ -24,15 +24,13 @@ class ServiceView extends Component {
 
         this.props.fetchServiceAndOwner(id);
 
-        if(this.props.loggedIn) {
+        if(this.props.loggedIn)
             this.props.connectChat(this.props.user._id);
-        }
     }
 
     componentDidUpdate(){
-        if(this.props.loggedIn) {
+        if(this.props.loggedIn)
             this.props.connectChat(this.props.user._id);
-        }
     }
 
     createReviewSuccessCallback() {
@@ -123,7 +121,6 @@ class ServiceView extends Component {
 
             </div>
         );
-
     }
 
     render() {

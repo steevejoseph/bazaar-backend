@@ -219,7 +219,6 @@ export function fetchServiceOwner(id) {
     });
 }
 
-
 export function connectChat(userId){
     const chatManager = new ChatManager({
         instanceLocator: instanceLocator,
