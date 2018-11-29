@@ -49,7 +49,8 @@ exports.user_signup = (req, res, next) => {
                   email: userEmail,
                   firstName: req.body.firstName,
                   lastName: req.body.lastName,
-                  passwordHash: hash
+                  passwordHash: hash,
+                  favorites: []
                 });
                 user.save();
                 
@@ -150,47 +151,57 @@ exports.user_delete = (req, res, next) => {
     });
 }
 
+var favServiceList = []
 exports.user_get = (req, res, next) => {
   var num = 0
-  //ar favServiceList = []
+  favServiceList = []
  // var listTest
   User.findById(req.params.userId).exec()
   .then(user => {
     var promises = []
-    var favServiceList = []
+    
       
-      
-      user.favorites.forEach((favServiceId) => {
-        const promise = new Promise((resolve) => {
-          var id = mongoose.Types.ObjectId(favServiceId);
-          var favService = Service.where({_id: id});
-          favService.findOne((err, found) => {
-          if(err) {
-             req.status(500).json({
-             error: err
-             })
-           }
-          if(found != null) {
-             //console.log(found)
-             favServiceList.push(found);
-             num++;
-             resolve();
-            console.log(favServiceList);
-           }
-           //console.log(favServiceList);
-         })
+      //if(user.favorites != [] && user.favorites != null){
+        user.favorites.forEach((favServiceId) => {
+          const promise = new Promise((resolve) => {
+            var id = mongoose.Types.ObjectId(favServiceId);
+            var favService = Service.where({_id: id});
+            favService.findOne((err, found) => {
+            if(err) {
+               req.status(500).json({
+               error: err
+               })
+             }
+            if(found != null) {
+               //console.log(found)
+               favServiceList.push(found);
+               num++;
+               resolve();
+              console.log(favServiceList);
+             } else {
+               resolve();
+             }
+             //console.log(favServiceList);
+           })
+          });
+          
+            //var favService = "apple pie";
+            //console.log(favServiceList);
+            promises.push(promise);
+        })
+      /*} else {
+        return res.status(200).json({
+          user: user,
+          favoriteServices: favServiceList,
+          number: num
         });
-        
-          //var favService = "apple pie";
-          //console.log(favServiceList);
-          promises.push(promise);
-      })
+      }*/
     
     
     
     Promise.all(promises).then(() => {
-      console.log("list of favs");
-      console.log(promises);
+      //console.log("list of favs");
+      //console.log(promises);
       return res.status(200).json({
         user: user,
         favoriteServices: favServiceList,
@@ -228,30 +239,41 @@ exports.user_edit = (req, res, next) => {
   
 }
 
+
+
 exports.user_add_favorite = (req, res, next) => {
+  var newFavList = [];
+ 
   var toFavorite = req.body.newFavoriteId
-  var newFavList = User.findOne({_id: req.userData.userId}).favorites
-  if(newFavList == null){
-    newFavList = [];
-    newFavList[0] = toFavorite;
-  } else {
+  User.findOne({_id: req.userData.userId}, (err, found) => {
+    if(err) {
+      return res.status(500).json({
+        error: err
+      })
+    }
+    console.log("found: ", found.favorites);
+    newFavList = newFavList.concat(found.favorites);
+    console.log(toFavorite);
     newFavList.push(toFavorite);
-  }
+    console.log(newFavList);
+    //newFavList.concat(found.favorites);
+    
+    User.findOneAndUpdate({_id: req.userData.userId}, {
+      favorites: newFavList
+    }, {'new' : true})
+              .exec().then(result => {
+                  res.status(200).json({
+                      result : result        
+                  });
+              })
+              .catch(err => {
+                  console.log(err);
+                  return res.status(500).json({
+                      error: err
+                  });
+              });
+  })
   
-  User.findOneAndUpdate({_id: req.userData.userId}, {
-    favorites: newFavList
-  }, {'new' : true})
-            .exec().then(result => {
-                res.status(200).json({
-                    result : result        
-                });
-            })
-            .catch(err => {
-                console.log(err);
-                return res.status(500).json({
-                    error: err
-                });
-            });
   
 }
 
