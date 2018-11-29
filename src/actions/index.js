@@ -21,7 +21,7 @@ export const CREATE_REVIEW = 'create_review';
 export const FETCH_SERVICE_OWNER = 'fetch_service_owner';
 export const FETCH_SERVICE_AND_OWNER = 'fetch_service_and_owner';
 export const CONNECT_USER_TO_CHAT = 'connect_user_to_chat';
-export const FETCH_USERS_ROOMS = 'fetch_user_rooms';
+export const FETCH_USERS_ROOMS = 'fetch_users_rooms';
 export const CREATE_ROOM = 'create_room';
 export const SEND_MESSAGE = 'send_message';
 
