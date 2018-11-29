@@ -26,7 +26,7 @@ export const CATEGORIES = [
     { category: 'Fun & Lifestyle',  description: "Services to shake things up and have some fun." },
     { category: 'Lessons/Tutoring',  description: "Force = Mass x Acceleration. Get help with a course." },
     { category: 'Event Management',  description: "Hosting a big gig? Outsource help with Event Management." },
-    { category: 'Beauty',  description: "Your beautiful. Make yourself look like a snack with Beauty." },
+    { category: 'Beauty',  description: "You're beautiful. Make yourself look like a snack with Beauty." },
     { category: 'E-Commerce',  description: "Business is booming. E-Commerce pro's and experts ready to help." },
     { category: 'Photography',  description: "Capture that perfect moment with photography services." }
 ];
