@@ -6,7 +6,7 @@ class SendMessage extends Component {
 
         super(props);
         this.state = {
-            message: ''
+            message: '',
         }
 
         this.onInputChange = this.onInputChange.bind(this);
@@ -14,18 +14,25 @@ class SendMessage extends Component {
     }
 
     onInputChange(message){
+        console.log("1");
         this.setState({ message });
+        console.log("2");
     }
 
     handleSubmit(values){
+        if(this.state.message == '') return;
+
         values.preventDefault();
-        this.props.sendMessage(this.state.message)
+        this.props.sendMessage(this.state.message);
+        console.log("3");
         this.setState({ message: ''});
+
+        console.log("4");
     }
 
     render() {
         return (
-            <form   
+            <form
                 onSubmit={this.handleSubmit}
                 className="send-message-form">
                 <input

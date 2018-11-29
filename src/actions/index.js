@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { instanceLocator, tokenUrl } from '../components/direct_message_config';
+import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
 
 export const ROOT_URL = 'https://bazaar-backend.herokuapp.com/api';
 export const CREATE_USER = 'create_user';
@@ -18,6 +20,11 @@ export const SERVICE_SEARCH_TAG = 'service_search_tag';
 export const CREATE_REVIEW = 'create_review';
 export const FETCH_SERVICE_OWNER = 'fetch_service_owner';
 export const FETCH_SERVICE_AND_OWNER = 'fetch_service_and_owner';
+export const CONNECT_USER_TO_CHAT = 'connect_user_to_chat';
+export const FETCH_USERS_ROOMS = 'fetch_user_rooms';
+export const CREATE_ROOM = 'create_room';
+export const SEND_MESSAGE = 'send_message';
+
 
 export function login(values, callback) {
     const data = {
@@ -27,7 +34,7 @@ export function login(values, callback) {
 
     return axios.post(`${ROOT_URL}/users/login`, data).then((req) => {
         callback();
-        
+
         axios.defaults.headers.common['Authorization'] = `Bearer ${req.data.token}`;
         return {
             type: LOGIN,
@@ -43,7 +50,7 @@ export function createUser(values, callback) {
         email: values.email,
         password: values.password
     };
-    
+
     return axios.post(`${ROOT_URL}/users/signup`, data).then((req) => {
         callback();
 
@@ -97,7 +104,7 @@ export function deleteService(id, callback) {
     const data = {
         id: id
     };
-    
+
     return axios.post(`${ROOT_URL}/services/delete`, data).then((req) => {
         callback();
 
@@ -119,7 +126,7 @@ export function fetchServicesByTag(tag, query = '') {
     const data = {
         query: query,
         tags: [tag]
-    }    
+    }
 
     return axios.post(`${ROOT_URL}/services/searchtags`, data).then((req) => {
         return {
@@ -132,7 +139,7 @@ export function fetchServicesByTag(tag, query = '') {
 
 export function fetchUsersServices(userID){
     return {
-        type: FETCH_USERS_SERVICES, 
+        type: FETCH_USERS_SERVICES,
         payload: axios.get(`${ROOT_URL}/services/user/${userID}`)
     }
 }
@@ -154,7 +161,7 @@ export function fetchServiceAndOwner(serviceID) {
     return axios.get(`${ROOT_URL}/services/${serviceID}`).then((req) => {
         return fetchServiceOwner(req.data.service.owner).then((owner) => {
             req.data.owner = owner.payload.data.user;
-            
+
             return {
                 type: FETCH_SERVICE_AND_OWNER,
                 payload: req
@@ -195,7 +202,7 @@ export function createReview(id, comment, rating, callback = {}) {
 
     return axios.post(`${ROOT_URL}/services/createComment`, data).then((req) => {
         callback();
-        
+
         return {
             type: CREATE_REVIEW,
             payload: req
@@ -210,4 +217,51 @@ export function fetchServiceOwner(id) {
             payload: req
         };
     });
+}
+
+
+export function connectChat(userId){
+    const chatManager = new ChatManager({
+        instanceLocator: instanceLocator,
+        userId: userId,
+        tokenProvider: new TokenProvider({
+            url: tokenUrl
+        })
+    });
+
+    return chatManager.connect().then((currentUser) => {
+        return {
+            type: CONNECT_USER_TO_CHAT,
+            payload: currentUser
+        };
+    })
+}
+
+export function fetchJoinableRooms(currentUser){
+    currentUser.getJoinableRooms().then(joinableRooms => {
+        return {
+            type: FETCH_USERS_ROOMS,
+            payload: joinableRooms
+        };
+    })
+}
+
+export function createRoom(currentUser, serviceOwner, roomName){
+    const create = currentUser.createRoom({
+        name: roomName,
+        private: true,
+        addUserIds: [`${serviceOwner}`]
+    });
+
+    return create.then((room) => {
+        return {
+            type: CREATE_ROOM,
+            payload: room
+        };
+    })
+    .catch(err => {
+        if(err.statusCode === 400){
+            console.log("User needs to be added to chatkit");
+        }
+    })
 }

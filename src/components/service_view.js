@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchServiceAndOwner, getUserFromLocalStorage } from '../actions/index';
+import { fetchServiceAndOwner, connectChat, sendMessage, createRoom} from '../actions/index';
 import ServiceDescription from './service_description';
 import Rating from './service_rating';
 import CreateReview from './create_review';
@@ -14,14 +14,6 @@ import { MARKDOWN_OPTIONS } from '../constants';
 class ServiceView extends Component {
     constructor(props) {
         super(props);
-        this.props.getUserFromLocalStorage();
-
-        this.state = {
-            currentUser: null,
-            roomId: null,
-            joinedRooms: [],
-            roomExists: false
-        }
 
         this.createReviewSuccessCallback = this.createReviewSuccessCallback.bind(this);
         this.handleChatClick = this.handleChatClick.bind(this);
@@ -32,19 +24,15 @@ class ServiceView extends Component {
 
         this.props.fetchServiceAndOwner(id);
 
-        const chatManager = new ChatManager({
-            instanceLocator: instanceLocator,
-            userId: this.props.user._id,
-            tokenProvider: new TokenProvider({
-                url: tokenUrl
-            })
-        });
-        
-        chatManager.connect().then(currentUser => {
-            this.setState({ currentUser });
-            this.getRooms();
-        })
-        .catch(err => console.log('error on connecting', err));
+        if(this.props.loggedIn) {
+            this.props.connectChat(this.props.user._id);
+        }
+    }
+
+    componentDidUpdate(){
+        if(this.props.loggedIn) {
+            this.props.connectChat(this.props.user._id);
+        }
     }
 
     createReviewSuccessCallback() {
@@ -63,52 +51,28 @@ class ServiceView extends Component {
         return sum/this.props.comments.length;
     }
 
-    createRoom(user1, user2, roomName){
-        this.state.currentUser.createRoom({
-            name: roomName,
-            private: true,
-            addUserIds: [`${user1}`, `${user2}`]
-        })
-        .then(room => {
-            this.props.history.push(`/messages/${room.id}`);
-        })
-        .catch(err => {
-            if(err.status === 400){
-                console.log("User needs to be added to chatkit");
-            }
-        })
-    }
-
-    getRooms(){
-        this.state.currentUser.getJoinableRooms().then(joinableRooms => {
-            this.setState({
-                joinableRooms: joinableRooms,
-                joinedRooms: this.state.currentUser.rooms
-            });
-        })
-        .catch(err => console.log('error on joinableRooms: ', err));
-    }
-
     handleChatClick(){
-        
+
+        if(!this.props.loggedIn) return;
+
         const roomName = `${this.props.user.firstName} - ${this.props.service.name}`;
 
-        for(var i = 0; i < this.state.joinedRooms.length; i++){
-            if(this.state.joinedRooms[i].name == roomName){
-                this.state.roomExists = true;
-                this.props.history.push(`/messages/${this.state.joinedRooms[i].id}`);
+        for(var i = 0; i < this.props.currentUser.rooms.length; i++){
+            if(this.props.currentUser.rooms[i].name == roomName){
+                this.props.history.push(`/messages/${this.props.currentUser.rooms[i].id}`);
                 return;
-            }   
+            }
         }
 
-        this.createRoom(this.props.user._id, this.props.service.owner, roomName);
+        this.props.createRoom(this.props.currentUser, this.props.service.owner, roomName);
+        this.props.history.push(`/messages/${this.props.currentUser.createdRoom.id}`);
     }
 
     renderServiceReviews() {
         return(
             <div className="review-list">
-                <ServiceReviewsList 
-                    comments={this.props.comments} 
+                <ServiceReviewsList
+                    comments={this.props.comments}
                     overallRating={this.overallRating()}
                     starColor={'rgb(0, 132, 137)'}
                     />
@@ -119,9 +83,9 @@ class ServiceView extends Component {
     renderCreateReview() {
         return (
             <div className="review-create">
-                <CreateReview 
-                    successCallback={this.createReviewSuccessCallback} 
-                    serviceId={this.props.service._id} 
+                <CreateReview
+                    successCallback={this.createReviewSuccessCallback}
+                    serviceId={this.props.service._id}
                     starColor={'rgb(0, 132, 137)'}
                     />
             </div>
@@ -165,10 +129,10 @@ class ServiceView extends Component {
     render() {
         const { id } = this.props.match.params;
 
-        if (!this.props.service || this.props.service._id != id)         
+        if (!this.props.service || this.props.service._id != id)
             return (
                 <div className="service-view container text-center">
-                    <SyncLoader 
+                    <SyncLoader
                         className="p-5"
                         sizeUnit={"px"}
                         size={15}
@@ -180,8 +144,8 @@ class ServiceView extends Component {
 
         const serviceOwner = this.props.service.owner;
         const loggedInUserIsOwner = this.props.user && (serviceOwner === this.props.user._id);
-        
-        return ( 
+
+        return (
             <div className="service-view container">
 
                     <div className="row">
@@ -189,11 +153,11 @@ class ServiceView extends Component {
                             <div className="service-info">
                                 <img className="card-img-top cursor" onClick={this.openServiceView} src="https://dummyimage.com/1200x780/bfb/aab" alt="Card image" />
                                 <div className="service-header">
-                                    <h1 className="title">{this.props.service.name}</h1>                            
+                                    <h1 className="title">{this.props.service.name}</h1>
                                     <h6 className="category mb-2 text-muted">{this.props.service.tags.length > 0 ? this.props.service.tags[0].toUpperCase() : ''}</h6>
                                     <h6 className="price card-subtitle mb-2 text-success ">${this.props.service.price} per service</h6>
                                 </div>
-                                <Markdown 
+                                <Markdown
                                     options={MARKDOWN_OPTIONS}
                                     className="service-description py-3"
                                     >
@@ -211,11 +175,11 @@ class ServiceView extends Component {
                         </div>
                     </div>
 
-                    
+
                     <div className="reviews col-md-8 p-0 pt-3">
-                        <Rating 
+                        <Rating
                             starColor={'rgb(0, 132, 137)'}
-                            overallRating={this.overallRating()} 
+                            overallRating={this.overallRating()}
                             />
                         {this.renderServiceReviews()}
                         {this.props.loggedIn && !loggedInUserIsOwner && this.renderCreateReview()}
@@ -228,15 +192,16 @@ class ServiceView extends Component {
 }
 
 function mapStateToProps( state ) {
-    return { 
+    return {
         user: state.user.user,
         loggedIn: state.user.loggedIn,
         service: state.services.service,
         comments: state.services.comments,
-        user: state.user.user,
         serviceOwner: state.user.serviceOwner,
+        currentUser: state.user.currentUser,
+        joinableRooms: state.user.joinableRooms,
+        createdRoom: state.user.createdRoom
     };
 }
 
-export default connect(mapStateToProps, { fetchServiceAndOwner, getUserFromLocalStorage })(ServiceView);
-
+export default connect(mapStateToProps, { fetchServiceAndOwner, connectChat, createRoom})(ServiceView);
