@@ -85,7 +85,6 @@ class UserView extends Component {
     }
 
     render(){
-
         if(!this.props.serviceOwner)
             return (
                 <div className="service-view container text-center">
