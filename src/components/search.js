@@ -30,7 +30,7 @@ class SearchBar extends Component {
 
     render() {
         return (
-            <div className="search container p-3">
+            <div className="search pt-3 px-0">
                 <input 
                     className="form-control form-control-lg" 
                     type="text" 

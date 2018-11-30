@@ -8,12 +8,21 @@ a {
   color: rgb(0, 132, 137);
 }
 
+.modal-body {
+  padding-bottom: 5px;
+  padding-top: 10px;
+}
+
 .cursor {
   cursor: pointer;
 }
 
+.app-body {
+
+}
+
 .home {
-  padding-top: 0px;
+  padding-top: 65px;
 }
 
 .category-view {
@@ -21,7 +30,11 @@ a {
 }
 
 .account {
-  padding-top: 15px;
+  padding-top: 70px;
+}
+
+.search {
+
 }
 
 .service-view {
@@ -57,7 +70,7 @@ body {
   border-width: 0; 
 }
 
-.card img {
+img {
   border-radius: 5px;
 }
 
@@ -164,4 +177,152 @@ body {
   margin: 0;
   padding: 0;
   padding-left: 5px;
+}
+
+.rooms-list {
+  box-sizing: border-box;
+  padding: 10px;
+  height: 100%;
+}
+
+.rooms-list {
+  background-color:#F8F8F8;
+}
+
+.rooms-list ul {
+  list-style-type: none;    
+  padding: 0;
+}
+
+.rooms-list li {
+  margin: 10px 0;
+}
+
+.rooms-list h4 {
+  margin: 5px 0;
+  color: black;
+}
+
+.rooms-list .room a {
+  color: #788792;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.rooms-list .room.active a {
+  color: #363232;
+}
+
+.message {
+  margin: 15px;
+}
+
+.message .message-username {
+  font-size: 11px;
+  color: #3e5869;
+  margin-bottom: 6px;
+}
+
+.message .message-text {
+  background: #5ea3d0;
+  color: white;
+  display: inline;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.message-list {
+  box-sizing: border-box;
+  padding-left: 6px;
+  width: 100%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 34px;
+  font-weight: 300;
+}
+
+.send-message-form {
+  margin-bottom: 20px;
+}
+
+.send-message-form input {
+  width: 100%;
+  padding: 15px 10px;
+  margin: 0;
+  border-style: none;
+  background: #eceaea;
+}
+
+.send-message-form input:focus {
+  outline-width: 0;
+}
+
+.service-view {
+
+}
+
+.service-view .loader {
+  padding-top: 95px;
+}
+
+.service-view li {
+  padding-left: 0;
+}
+
+.service-header .title {
+  font-weight: bolder;
+  font-size: 35px;
+  padding-top: 20px;
+}
+
+.service-header .category {
+  padding-bottom: 5px;
+  font-size: 18px;
+}
+
+.service-header .price {
+  font-weight: bold;
+}
+
+.service-view .service-info {
+  padding-top: 95px;
+}
+
+.service-view .options-and-owner {
+  padding-top: 95px;
+}
+
+.service-view .options {
+  border-radius: 3px;
+}
+
+.service-view .option-info {
+  border: 1px solid #dee2e6;
+  border-top-width: 0;
+  border-radius: 3px;
+}
+
+.service-view .option-info .price {
+  font-weight: bold;
+  font-size: 25px;
+  margin-top: -5px;
+}
+
+.service-view .owner {
+  border: 1px solid #dee2e6;
+  border-radius: 3px;
+}
+
+.service-view .owner .owner-info{
+  padding-left: 30px;
+}
+
+.service-view .owner .owner-name {
+  margin: 0;
+}
+
+.service-view .owner .email {
+
 }

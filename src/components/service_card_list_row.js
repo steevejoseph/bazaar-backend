@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import ServiceCard from './service_card';
+import { SyncLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 
 export default class ServiceCardListRow extends Component {  
@@ -36,7 +37,7 @@ export default class ServiceCardListRow extends Component {
                 <div className="row">
                     { this.renderCardList() }
                 </div>
-                {this.props.isHome ? this.renderShowAll() : ''}
+                {this.props.isHome && this.renderShowAll() }
             </div>
         );
     }

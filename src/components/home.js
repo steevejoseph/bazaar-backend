@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { fetchServicesByTag } from '../actions';
 import { CATEGORIES } from '../constants';
 import SearchResults from './search_results';
+import { SyncLoader } from 'react-spinners';
 
 class Home extends Component {
     constructor(props) {
@@ -41,7 +42,6 @@ class Home extends Component {
                     header={categoryObject.category} 
                     description={categoryObject.description}
                     services={this.props.services[categoryObject.category]} 
-                    ableToEdit={false} 
                     isHome={true}
                     />
             );
@@ -50,13 +50,24 @@ class Home extends Component {
 
     render() {
         if (!this.props.services)
-            return <div>Loading</div>
+            return (
+                <div className="home container text-center">
+                    <Search inputHasTerm={this.setSearchHasTerm} />
+                    <SyncLoader 
+                        className="p-4"
+                        sizeUnit={"px"}
+                        size={15}
+                        margin={'5px'}
+                        color={'rgb(0, 132, 137)'}
+                        />
+                </div>
+            );
 
         return (
-            <div>
+            <div className="home container">
                 <Search inputHasTerm={this.setSearchHasTerm} />
                 {this.state.searchHasTerm ? <SearchResults /> : 
-                    <div className="home container">
+                    <div className="">
                         {this.renderServiceCategories()}
                     </div>
                 }
