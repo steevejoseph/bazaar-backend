@@ -8,7 +8,7 @@ class SearchResults extends Component {
     render() {
         return (
             <div>
-                <div className="results-view container">
+                <div className="results-view">
                     <ServiceCardListRow 
                         key="Results" 
                         header="Search Results" 

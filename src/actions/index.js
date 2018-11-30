@@ -34,7 +34,6 @@ export function login(values, callback) {
 
     return axios.post(`${ROOT_URL}/users/login`, data).then((req) => {
         callback();
-
         axios.defaults.headers.common['Authorization'] = `Bearer ${req.data.token}`;
         return {
             type: LOGIN,
@@ -202,7 +201,6 @@ export function createReview(id, comment, rating, callback = {}) {
 
     return axios.post(`${ROOT_URL}/services/createComment`, data).then((req) => {
         callback();
-
         return {
             type: CREATE_REVIEW,
             payload: req
