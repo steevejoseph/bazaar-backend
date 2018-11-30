@@ -314,3 +314,37 @@ img {
 .service-view .owner .email {
 
 }
+
+.jumbo-greeting {
+  padding-top: 50px;
+  padding-bottom: 25px;
+}
+
+.user-view-rating {
+  padding-top: 14px;
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+.user-view-email {
+  margin-left: 10px;
+  font-size: 15px;
+  padding-top: 12px;
+}
+
+.user-view-counter {
+  padding: 10px;
+  width: 55px;
+  font-size: 25px;
+}
+
+.user-view-hr {
+  padding-bottom: 20px;
+  width: 50%;
+}
+
+.user-view-contact {
+  padding-top: 10px;
+  padding-left: 3px;
+  padding-bottom: 10px;
+}

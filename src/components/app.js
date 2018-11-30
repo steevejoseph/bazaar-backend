@@ -8,6 +8,7 @@ import Home from './home';
 import { getUserFromLocalStorage } from '../actions';
 import CategoryView from './category_view';
 import DirectMessages from './direct_messages';
+import UserView from './user_view';
 
 class App extends Component {
     componentWillMount() {
@@ -25,6 +26,7 @@ class App extends Component {
                             <Route path="/category/:category" component={CategoryView} />
                             <Route path="/services/:id" component={ServiceView} />
                             <Route path="/account" component={Account} />
+                            <Route path="/user/:userId" component={UserView} />
                             <Route path="/messages/" component={DirectMessages} />
                             <Route path="/messages/:roomId" component={DirectMessages} />
                             <Route path="/" component={Home} />

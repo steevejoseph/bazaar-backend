@@ -37,6 +37,7 @@ class ServiceView extends Component {
         this.handleChatClick = this.handleChatClick.bind(this);
         this.renderOptionTabs = this.renderOptionTabs.bind(this);
         this.renderOptionContent = this.renderOptionContent.bind(this);
+        this.handleOwnerClick = this.handleOwnerClick.bind(this);
     }
 
     componentDidMount() {
@@ -67,6 +68,10 @@ class ServiceView extends Component {
             sum += this.props.comments[i].rateing;
 
         return sum/this.props.comments.length;
+    }
+
+    handleOwnerClick(){
+        this.props.history.push(`/user/${this.props.serviceOwner._id}`);
     }
 
     handleChatClick(){
@@ -198,6 +203,13 @@ class ServiceView extends Component {
                         <a className="email" href={`mailto:${this.props.serviceOwner.email}`}>
                             {this.props.serviceOwner.email}
                         </a>
+                        <button 
+                            onClick={this.handleOwnerClick} 
+                            type="button" 
+                            className="btn btn-outline-primary btn-block mt-2"
+                            >
+                            View Profile
+                        </button>
                 <div>
                     {this.props.loggedIn && !loggedInUserIsOwner && 
                         this.props.loggedIn ? (
