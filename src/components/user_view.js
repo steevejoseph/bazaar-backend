@@ -79,7 +79,7 @@ class UserView extends Component {
                 <Jumbotron>
                     <Fade in={this.state.fadeIn} tag="h1" className="mt-6">
                         <h1 className="display-3 text-center">
-                            Hi, I'm {this.props.serviceOwner.firstName}!
+                            {`Hi, I'm ${this.props.serviceOwner.firstName}!`}
                         </h1>
                     
                         <hr />

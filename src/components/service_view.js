@@ -193,7 +193,7 @@ class ServiceView extends Component {
         const loggedInUserIsOwner = this.props.user && (serviceOwner === this.props.user._id);
 
         return(
-            <div className="owner text-muted p-3 text-center" onClick={this.handleOwnerClick}>
+            <div className="owner text-muted p-3 text-center">
                         <p className="av">
                             <i className="fa fa-user-circle fa-3x"></i>
                         </p>
@@ -204,7 +204,7 @@ class ServiceView extends Component {
                             {this.props.serviceOwner.email}
                         </a>
                         <button 
-                                onClick={this.handleChatClick} 
+                                onClick={this.handleOwnerClick} 
                                 type="button" 
                                 className="btn btn-outline-primary btn-block mt-2"
                                 >
