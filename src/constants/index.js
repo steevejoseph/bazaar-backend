@@ -28,7 +28,7 @@ export const CATEGORIES = [
     { category: 'Event Management',  description: "Hosting a big gig? Outsource help with Event Management." },
     { category: 'Beauty',  description: "You're beautiful. Make yourself look like a snack with Beauty." },
     { category: 'E-Commerce',  description: "Business is booming. E-Commerce pros and experts ready to help." },
-    { category: 'Photography',  description: "Capture that perfect moment with photography." }
+    { category: 'Photography',  description: "Capture that perfect moment with Photography." }
 ];
 
 export const MARKDOWN_OPTIONS = {
