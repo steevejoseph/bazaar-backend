@@ -224,24 +224,6 @@ class ServiceView extends Component {
         );
     }
 
-    createReviewSuccessCallback() {
-        const { id } = this.props.match.params;
-        this.props.serviceView(id);
-    }
-
-    overallRating (){
-        var sum = 0, i;
-
-        if(!this.props.comments)
-            return 0;
-
-        for (i = 0; i < this.props.comments.length; i++){
-            sum += this.props.comments[i].rateing;
-        }
-
-        return sum/this.props.comments.length;
-    }
-
     render() {
         const { id } = this.props.match.params;
 

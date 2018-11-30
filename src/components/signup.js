@@ -3,7 +3,6 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { createUser } from '../actions';
 import * as EmailValidator from 'email-validator';
-//import Regex from 'regex';
 
 class Signup extends Component {
     renderField(field) {
@@ -82,14 +81,10 @@ function validate(values) {
         errors.email = "Enter your UCF email.";
 
     if (values.email && !((new RegExp(/(.+)@((.)+.)?ucf.edu/i)).test(values.email)))
+        errors.email = "Enter your UCF email.";    
+    
+    else if (values.email && !EmailValidator.validate(values.email))  
         errors.email = "Email is invlaid.";    
-    //console.log(((new Regex(values.email)).test('/^[(\w|\d)]*@ucf.edu/')));
-    
-    if (values.email && !EmailValidator.validate(values.email))  
-        errors.email = "Email is invlaid.";
-
-    console.log(EmailValidator.validate(values.email), values.email);
-    
     
     if (!values.password) 
         errors.password = "Enter your password";
