@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { createUser } from '../actions';
-import * as EmailValidator from 'email-validator';
 
 class Signup extends Component {
     renderField(field) {
