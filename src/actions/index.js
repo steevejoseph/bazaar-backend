@@ -9,7 +9,6 @@ export const EDIT_SERVICE = 'edit-service';
 export const DELETE_SERVICE = 'delete_service';
 export const LOGIN = 'login';
 export const SERVICE_SEARCH = 'service_search';
-export const SERVICE_VIEW = 'service_view';
 export const FETCH_ALL_SERVICES = 'fetch_services';
 export const FETCH_USER = 'fetch_user';
 export const FETCH_USERS_SERVICES = 'fetch_users_services';

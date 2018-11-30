@@ -314,3 +314,41 @@ img {
 .service-view .owner .email {
 
 }
+
+.display-3 {
+  padding-top: 50px;
+  padding-bottom: 25px;
+}
+
+.avg-rating {
+  padding-top: 14px;
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+.email {
+  margin-left: 10px;
+  font-size: 15px;
+  padding-top: 12px;
+}
+
+.counter {
+  padding: 10px;
+  width: 55px;
+  font-size: 25px;
+}
+
+hr {
+  padding-bottom: 20px;
+  width: 50%;
+}
+
+.owner-info {
+  display: inline-block;
+}
+
+.fa-env {
+  padding-top: 10px;
+  padding-left: 3px;
+  padding-bottom: 10px;
+}
