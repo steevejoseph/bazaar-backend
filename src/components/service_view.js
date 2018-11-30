@@ -204,12 +204,12 @@ class ServiceView extends Component {
                             {this.props.serviceOwner.email}
                         </a>
                         <button 
-                                onClick={this.handleOwnerClick} 
-                                type="button" 
-                                className="btn btn-outline-primary btn-block mt-2"
-                                >
-                                View Profile
-                            </button>
+                            onClick={this.handleOwnerClick} 
+                            type="button" 
+                            className="btn btn-outline-primary btn-block mt-2"
+                            >
+                            View Profile
+                        </button>
                 <div>
                     {this.props.loggedIn && !loggedInUserIsOwner && 
                         this.props.loggedIn ? (

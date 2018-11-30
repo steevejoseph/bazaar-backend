@@ -18,6 +18,7 @@ class UserView extends Component {
 
         // this.overallRating = this.overallRating.bind(this);
         // this.findAverageRating = this.findAverageRating.bind(this);
+        this.renderServices = this.renderServices.bind(this);
     }
 
     componentDidMount(){
@@ -57,6 +58,31 @@ class UserView extends Component {
         return total;
     }
     */
+    renderPopularServices(header, services){
+        return (
+            <div className="container">
+            <ServiceCardListRow 
+                header={'Most Popular'} 
+                description={''}
+                services={[]} 
+                isHome={false}
+            />
+            </div>
+        );
+    }
+
+    renderServices(header, services){
+        return(
+            <div className="container">
+            <ServiceCardListRow 
+                header={header} 
+                description={''}
+                services={services} 
+                isHome={false}
+            />
+            </div>
+        );
+    }
 
     render(){
 
@@ -73,7 +99,6 @@ class UserView extends Component {
                 </div>
             );
 
-
         return (
             <div> 
                 <Jumbotron>
@@ -81,7 +106,6 @@ class UserView extends Component {
                         <h1 className="display-3 text-center">
                             {`Hi, I'm ${this.props.serviceOwner.firstName}!`}
                         </h1>
-                    
                         <hr />
 
                         <div className="owner-info offset-md-5">
@@ -109,24 +133,10 @@ class UserView extends Component {
                         </div>
                     </Fade>
                 </Jumbotron>
-
-                <div className="container">
-                    <ServiceCardListRow 
-                        header={'Most Popular'} 
-                        description={''}
-                        services={[]} 
-                        isHome={false}
-                    />
-                </div>
-                
-                <div className="container">
-                    <ServiceCardListRow 
-                        header={`${this.props.serviceOwner.firstName}'s Services`} 
-                        description={''}
-                        services={this.props.accountServices} 
-                        isHome={false}
-                    />
-                </div>
+ 
+                {this.renderServices('Most Popular', [])}
+                {this.renderServices(`${this.props.serviceOwner.firstName}'s Services`, this.props.accountServices)}
+               
 
             </div>
         );
