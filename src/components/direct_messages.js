@@ -3,8 +3,7 @@ import MessageList from './direct_messages_message_list';
 import { connect } from 'react-redux';
 import SendMessage from './direct_messages_send_message';
 import RoomList from './direct_messages_room_list';
-import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
-import { connectChat, fetchJoinableRooms} from '../actions/index';
+import { connectChat } from '../actions/index';
 import { SyncLoader } from 'react-spinners';
 
 class DirectMessages extends Component {
@@ -95,8 +94,8 @@ class DirectMessages extends Component {
 function mapStateToProps( state ) {
     return {
         user: state.user.user,
-        currentUser: state.user.currentUser,
-        joinableRooms: state.user.joinableRooms
+        currentUser: state.chat.currentUser,
+        joinableRooms: state.chat.joinableRooms
     };
 }
 

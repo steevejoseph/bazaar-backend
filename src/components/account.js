@@ -5,7 +5,6 @@ import ServiceCardListRow from './service_card_list_row.js';
 import Modal from './modal';
 import EditService from './edit_service';
 import DeleteService from './delete_service';
-import DirectMessages from './direct_messages'
 import { SyncLoader } from 'react-spinners';
 
 
@@ -47,7 +46,6 @@ class Account extends Component {
             showDeleteServiceModal: !this.state.showDeleteServiceModal
         });
     }
-
 
     editSuccessCallback() {
         this.props.fetchUsersServices(this.props.user._id);
@@ -93,7 +91,7 @@ class Account extends Component {
                 </div>
             );
 
-        if(this.props.services.length == 0)
+        if(this.props.services.length === 0)
             return (
                 <div className="container account">
                     <h5>You do not own any services</h5>

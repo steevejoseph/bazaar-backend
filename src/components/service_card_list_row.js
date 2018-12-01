@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import ServiceCard from './service_card';
-import { SyncLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 
 export default class ServiceCardListRow extends Component {  

@@ -1,12 +1,10 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchServiceAndOwner, connectChat, sendMessage, createRoom} from '../actions/index';
-import ServiceDescription from './service_description';
+import { fetchServiceAndOwner, connectChat, createRoom} from '../actions/index';
 import Rating from './service_rating';
 import CreateReview from './create_review';
 import ServiceReviewsList from './service_reviews_list';
-import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
 import Markdown from 'markdown-to-jsx';
 import { SyncLoader } from 'react-spinners';
 import { MARKDOWN_OPTIONS } from '../constants';
@@ -308,9 +306,9 @@ function mapStateToProps( state ) {
         service: state.services.service,
         comments: state.services.comments,
         serviceOwner: state.user.serviceOwner,
-        currentUser: state.user.currentUser,
-        joinableRooms: state.user.joinableRooms,
-        createdRoom: state.user.createdRoom
+        currentUser: state.chat.currentUser,
+        joinableRooms: state.chat.joinableRooms,
+        createdRoom: state.chat.createdRoom
     };
 }
 
