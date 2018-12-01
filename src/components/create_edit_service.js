@@ -5,16 +5,23 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createService, editService } from '../actions';
 import { CREATE_EDIT_CATEGORIES as CATEGORIES } from '../constants';
+import Markdown from 'markdown-to-jsx';
+import { MARKDOWN_OPTIONS } from '../constants';
 
 class CreateEditService extends Component {    
     constructor(props) {
         super(props);
 
+        this.state = {
+            description: this.props.isEdit && this.props.service ? this.props.service.description : ''
+        }
+
         this.renderDropdown = this.renderDropdown.bind(this);
+        this.updateDescription = this.updateDescription.bind(this);
     }
 
     componentDidMount() {
-        if (this.props.isEdit && !this.props.service)
+        if ((this.props.isEdit && !this.props.service) || !this.props.user)
             this.props.history.push('/');
         
         else if (this.props.isEdit)
@@ -24,6 +31,12 @@ class CreateEditService extends Component {
                 description: this.props.service.description,
                 price: this.props.service.price
             });
+    }
+
+    updateDescription(event) {
+        this.setState({
+            description: event.target.value
+        });
     }
 
     renderInputField(field) {
@@ -51,10 +64,10 @@ class CreateEditService extends Component {
         const className = `form-control form-control-lg ${touched && error ? 'is-invalid ' : touched && !error ? 'is-valid' : ''}`;
         
         return (
-            <div>
+            <div className="h-100">
                 <textarea 
                     type="text" 
-                    className={className}
+                    className={`${className} h-100`}
                     autoComplete="off"
                     placeholder={field.label}
                     {...field.input} 
@@ -114,6 +127,7 @@ class CreateEditService extends Component {
         const { handleSubmit } = this.props;
         return (
             <div className="create-edit-form container">
+                <h1 className="title pb-2">{this.props.isEdit ? 'Edit your service' : 'Create a new service'}</h1>
                 <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                     <Field 
                         label="Service Name"
@@ -130,13 +144,23 @@ class CreateEditService extends Component {
                         name="category"
                         component={this.renderDropdown}
                     />
-                    <Field 
-                        label="Description"
-                        name="description"
-                        component={this.renderTextarea}
-                    />
-                    <div className="form-group">
-                        <button type="submit" className="btn btn-lg btn-block btn-danger">{this.props.isEdit ? 'Save' : 'Submit'}</button>
+                    <div className="row pb-3">
+                        <div className="col-6">
+                            <Field 
+                                label="Description (Markdown)"
+                                name="description"
+                                component={this.renderTextarea}
+                                onChange={this.updateDescription}
+                            />
+                        </div>
+                        <div className="col-6">
+                            <Markdown options={MARKDOWN_OPTIONS} className={this.state.description.length == '' ? 'text-muted' : ''}>
+                                {this.state.description == '' ? '####Start typing to see a preview...' : this.state.description} 
+                            </Markdown>
+                        </div>
+                    </div>
+                    <div className="form-group pt-3">
+                        <button type="submit" className="btn btn-danger">{this.props.isEdit ? 'Save' : 'Submit'}</button>
                     </div>
                 </form>
             </div>
