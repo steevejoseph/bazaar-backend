@@ -89,7 +89,7 @@ export function editService(values, callback) {
     };
 
     return axios.post(`${ROOT_URL}/services/edit`, data).then((req) => {
-        callback();
+        callback(req.data.result._id);
 
         return {
             type: EDIT_SERVICE,
