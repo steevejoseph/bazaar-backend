@@ -9,6 +9,7 @@ import { getUserFromLocalStorage } from '../actions';
 import CategoryView from './category_view';
 import DirectMessages from './direct_messages';
 import UserView from './user_view';
+import CreateEditService from './create_edit_service';
 
 class App extends Component {
     componentWillMount() {
@@ -25,6 +26,8 @@ class App extends Component {
                         <Switch>
                             <Route path="/category/:category" component={CategoryView} />
                             <Route path="/services/:id" component={ServiceView} />
+                            <Route path="/service/create" component={CreateEditService} />
+                            <Route path="/service/edit" component={() => <CreateEditService isEdit={true} />} />
                             <Route path="/account" component={Account} />
                             <Route path="/user/:userId" component={UserView} />
                             <Route path="/messages/" component={DirectMessages} />

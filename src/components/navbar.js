@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Signup from './signup';
 import Login from './login';
 import Modal from './modal';
-import CreateService from './create_service';
+import CreateEditService from './create_edit_service';
 import { connect } from 'react-redux';
 import { logOutUser } from '../actions';
 
@@ -13,14 +13,12 @@ class Navbar extends Component {
 
         this.state = { 
             isTryingToLogin: false,
-            showCreateServiceModal: false,
             showLoginSignupModal: false
         };
 
         this.toggleLoginIntent = this.toggleLoginIntent.bind(this);
         this.renderLoginSignupModal = this.renderLoginSignupModal.bind(this);
         this.logOut = this.logOut.bind(this);
-        this.toggleCreateServiceModal = this.toggleCreateServiceModal.bind(this);
         this.toggleLoginSignupModal = this.toggleLoginSignupModal.bind(this);
         this.handleLoginClickEvent = this.handleLoginClickEvent.bind(this);
         this.handleSignupClickEvent = this.handleSignupClickEvent.bind(this);
@@ -46,13 +44,6 @@ class Navbar extends Component {
         this.props.history.push('/');
     }
 
-    toggleCreateServiceModal() {
-        this.setState({ 
-            ...this.state,
-            showCreateServiceModal: !this.state.showCreateServiceModal
-        });
-    }
-
     toggleLoginSignupModal() {
         this.setState({ 
             ...this.state,
@@ -60,24 +51,16 @@ class Navbar extends Component {
         });
     }
 
-    renderCreateServiceModal() {
-        return (
-            <Modal 
-                isOpen={this.state.showCreateServiceModal} 
-                toggle={this.toggleCreateServiceModal} 
-                modalBody={<CreateService successCallback={this.toggleCreateServiceModal}/>}
-                />
-        );
-    }
-
     renderLoginSignupModal() {
         return (
             <Modal 
                 isOpen={this.state.showLoginSignupModal} 
                 toggle={this.toggleLoginSignupModal} 
-                modalBody={this.state.isTryingToLogin ?
-                                  <Login switchToSignup={this.toggleLoginIntent} successCallback={this.toggleLoginSignupModal} /> 
-                                : <Signup switchToLogin={this.toggleLoginIntent} successCallback={this.toggleLoginSignupModal} />}
+                modalBody={this.state.isTryingToLogin ? (
+                        <Login switchToSignup={this.toggleLoginIntent} successCallback={this.toggleLoginSignupModal} />
+                    ) : (
+                        <Signup switchToLogin={this.toggleLoginIntent} successCallback={this.toggleLoginSignupModal} />
+                    )}
                 />
         );
     }
@@ -86,10 +69,7 @@ class Navbar extends Component {
         if (!this.props.loggedIn)
             this.setLoginIntent(true, () => this.toggleLoginSignupModal());
         else
-            this.setState({ 
-                ...this.state,
-                showCreateServiceModal: !this.state.showCreateServiceModal
-            });
+            this.props.history.push('/service/create');
     }
 
     handleSignupClickEvent() {
@@ -112,12 +92,12 @@ class Navbar extends Component {
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item py-md-1">
                                 <Link to="/" className="nav-link">
-                                    <i className="fa fa-lg fa-home" /> Home
+                                    Home
                                 </Link>
                             </li>
                             <li className="nav-item py-md-1">
                                 <a className="nav-link" href="#" onClick={this.handleCreateServiceClickEvent}>
-                                    <i className="fa fa-lg fa-plus" /> Create Service
+                                    Create Service
                                 </a>
                             </li>
                             
@@ -137,9 +117,6 @@ class Navbar extends Component {
                                 </li>
                             }
 
-                            
-                            {/* Yes, weird, cumbersome use of ternary, but works only this way weirdly. Open to other solutions */}
-
                             {!this.props.loggedIn &&
                                 <li className="nav-item py-md-1">
                                     <a className="nav-link" href="#" onClick={this.handleSignupClickEvent}>Sign up</a>
@@ -155,7 +132,6 @@ class Navbar extends Component {
                     </div>
                 </nav>
                 {this.renderLoginSignupModal()}
-                {this.renderCreateServiceModal()}
             </div>
         );
     }

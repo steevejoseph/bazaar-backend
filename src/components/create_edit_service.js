@@ -3,32 +3,49 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { editService, fetchUsersServices } from '../actions';
+import { createService, editService } from '../actions';
 import { CREATE_EDIT_CATEGORIES as CATEGORIES } from '../constants';
+import Markdown from 'markdown-to-jsx';
+import { MARKDOWN_OPTIONS } from '../constants';
 
-class EditService extends Component {    
+class CreateEditService extends Component {    
     constructor(props) {
         super(props);
 
+        this.state = {
+            description: this.props.isEdit && this.props.service ? this.props.service.description : ''
+        }
+
         this.renderDropdown = this.renderDropdown.bind(this);
+        this.updateDescription = this.updateDescription.bind(this);
     }
 
     componentDidMount() {
-        this.props.initialize({ 
-            serviceName: this.props.service.name,
-            category: this.props.service.tags,
-            description: this.props.service.description,
-            price: this.props.service.price
+        if ((this.props.isEdit && !this.props.service) || !this.props.user)
+            this.props.history.push('/');
+        
+        else if (this.props.isEdit)
+            this.props.initialize({ 
+                serviceName: this.props.service.name,
+                category: this.props.service.tags,
+                description: this.props.service.description,
+                price: this.props.service.price
+            });
+    }
+
+    updateDescription(event) {
+        this.setState({
+            description: event.target.value
         });
     }
 
     renderInputField(field) {
-        const { meta: {touched, error } } = field;
+        const { meta: {touched, error} } = field;
         const className = `form-control form-control-lg ${touched && error ? 'is-invalid ' : touched && !error ? 'is-valid' : ''}`;
 
         return (
             <div>
-                <input
+                <input 
                     type="text" 
                     className={className}
                     autoComplete="off"
@@ -43,14 +60,14 @@ class EditService extends Component {
     }
 
     renderTextarea(field) {
-        const { meta: {touched, error } } = field;
+        const { meta: {touched, error} } = field;
         const className = `form-control form-control-lg ${touched && error ? 'is-invalid ' : touched && !error ? 'is-valid' : ''}`;
         
         return (
-            <div>
+            <div className="h-100">
                 <textarea 
                     type="text" 
-                    className={className}
+                    className={`${className} h-100`}
                     autoComplete="off"
                     placeholder={field.label}
                     {...field.input} 
@@ -87,19 +104,30 @@ class EditService extends Component {
     }
 
     onSubmit(values) {
-        values = { 
-            ...values, 
-            id: this.props.service._id
+        if (!this.props.isEdit) {
+            values = { 
+                ...values, 
+                user:this.props.user
+            }
+            this.props.createService(values, (id) => {
+                this.props.history.push(`/services/${id}`);
+            });
+        } else {
+            values = {
+                ...values, 
+                id: this.props.service._id
+            }
+            this.props.editService(values, (id) => {
+                this.props.history.push(`/services/${id}`);
+            });
         }
-        this.props.editService(values, () => {
-            this.props.successCallback();
-        });
     }
 
     render() {
         const { handleSubmit } = this.props;
         return (
-            <div className="modal-body">
+            <div className="create-edit-form container">
+                <h1 className="title pb-2">{this.props.isEdit ? 'Edit your service' : 'Create a new service'}</h1>
                 <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                     <Field 
                         label="Service Name"
@@ -116,13 +144,23 @@ class EditService extends Component {
                         name="category"
                         component={this.renderDropdown}
                     />
-                    <Field 
-                        label="Description"
-                        name="description"
-                        component={this.renderTextarea}
-                    />
-                    <div className="form-group">
-                        <button type="submit" className="btn btn-lg btn-block btn-danger">Save</button>
+                    <div className="row pb-3">
+                        <div className="col-6">
+                            <Field 
+                                label="Description (Markdown)"
+                                name="description"
+                                component={this.renderTextarea}
+                                onChange={this.updateDescription}
+                            />
+                        </div>
+                        <div className="col-6">
+                            <Markdown options={MARKDOWN_OPTIONS} className={this.state.description == '' ? 'text-muted' : ''}>
+                                {this.state.description == '' ? '####Start typing to see a preview...' : this.state.description} 
+                            </Markdown>
+                        </div>
+                    </div>
+                    <div className="form-group pt-3">
+                        <button type="submit" className="btn btn-danger">{this.props.isEdit ? 'Save' : 'Submit'}</button>
                     </div>
                 </form>
             </div>
@@ -136,9 +174,11 @@ function validate(values) {
     if (!values.serviceName) 
         errors.serviceName = "Enter a service name.";
 
+    if (values.serviceName && values.serviceName.length > 60) 
+        errors.serviceName = "Try making your service name shorter.";
+
     if (!values.category) 
         errors.category = "Choose a category.";
-    
     else if (values.category == "Category") 
         errors.category = "Choose a category.";
 
@@ -163,14 +203,14 @@ function validate(values) {
 
 function mapStateToProps(state) {
     return {
-        user: state.user.user,
+        user:state.user.user,
         service: state.services.serviceToEdit
     };
 }
 
 export default reduxForm({
     validate,
-    form: 'EditServiceForm'
+    form: 'CreateEditServiceForm'
 })(
-    withRouter(connect(mapStateToProps, {editService, fetchUsersServices})(EditService))
+    withRouter(connect(mapStateToProps, {createService, editService})(CreateEditService))
 );

@@ -8,11 +8,11 @@ class Signup extends Component {
     renderField(field) {
         const { meta: {touched, error } } = field;
         const className = `form-control form-control-lg ${touched && error ? 'is-invalid ' : ''}`;
-
+        
         return (
             <div>
                 <input 
-                    type="text" 
+                    type={field.input.name === "password" || field.input.name === "confirmPassword" ? "password" : "text"}
                     className={className}
                     autoComplete="off"
                     placeholder={field.label}
@@ -56,6 +56,11 @@ class Signup extends Component {
                         name="password"
                         component={this.renderField}
                     />
+                    <Field 
+                        label="Confirm Password"
+                        name="confirmPassword"
+                        component={this.renderField}
+                    />
                     <div className="form-group">
                         <button type="submit" className="btn btn-lg btn-block btn-danger">Sign up</button>
                     </div>
@@ -80,14 +85,20 @@ function validate(values) {
     if (!values.email) 
         errors.email = "Enter your UCF email.";
 
-    if (values.email && !((new RegExp(/(.+)@((.)+.)?ucf.edu/i)).test(values.email)))
+    if (values.email && !((new RegExp(/((.+)@((.)+.)?ucf.edu)$/i)).test(values.email)))
         errors.email = "Enter your UCF email.";    
     
     else if (values.email && !EmailValidator.validate(values.email))  
         errors.email = "Email is invlaid.";    
     
     if (!values.password) 
-        errors.password = "Enter your password";
+        errors.password = "Enter your password.";
+
+    if (values.password && values.password.length < 6) 
+        errors.password = "Password must be at least 6 characters long.";
+
+    else if (values.confirmPassword && values.password != values.confirmPassword)
+        errors.confirmPassword = "Passwords don't match.";
     
     return errors;
 }

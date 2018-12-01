@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import ServiceCard from './service_card';
-import { SyncLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 
 export default class ServiceCardListRow extends Component {  
@@ -31,7 +30,7 @@ export default class ServiceCardListRow extends Component {
 
     render() {
         return (
-            <div className="list-row p-2">
+            <div className="list-row py-2 px-1">
                 <h1 className="list-category">{this.props.header}</h1>
                 <h6 className="list-description">{this.props.description}</h6>
                 <div className="row">

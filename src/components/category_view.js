@@ -41,13 +41,13 @@ class CategoryView extends Component {
         const { category } = this.props.match.params;
 
         if (!this.props.services || !this.state.categoryObject)
-            return <div>This ({category}) isn't a category.</div>
+            return <div className="category-view container">This ({category}) isn't a category.</div>
 
         return (
-            <div>
+            <div className="category-view container">
                 <Search category={this.state.categoryObject.category} />                
-                <div className="category-view container">
-                    <ServiceCardListRow 
+                <div>
+                    <ServiceCardListRow
                         key={this.state.categoryObject.category} 
                         header={this.state.categoryObject.category} 
                         description={this.state.categoryObject.description}

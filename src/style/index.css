@@ -26,7 +26,29 @@ a {
 }
 
 .category-view {
-  padding-top: 0px;
+  padding-top: 65px;
+}
+
+.create-edit-form {
+  padding-top: 85px;
+}
+
+.create-edit-form .title {
+  font-weight: bolder;
+}
+
+.create-edit-form .description {
+  
+}
+
+.create-edit-form .textarea {
+  height: 100% !important;
+}
+
+.create-edit-form .preview {
+  border: 1px solid #dee2e6;
+  border-radius: 3px;
+  height: 100%;
 }
 
 .account {

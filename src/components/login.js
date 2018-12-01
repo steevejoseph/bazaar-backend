@@ -11,7 +11,7 @@ class Login extends Component {
         return (
             <div>
                 <input 
-                    type="text" 
+                    type={field.input.name === "password" ? "password" : "text"}
                     className={className}
                     autoComplete="off"
                     placeholder={field.label}
