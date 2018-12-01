@@ -19,7 +19,7 @@ class ServiceCard extends Component {
 
     handleEditServiceClickEvent() {
         this.props.setServiceToEdit(this.props.service);
-        this.props.toggleEditServiceModal();
+        this.props.history.push('/service/edit');
     }
 
     handleDeleteServiceClickEvent() {
@@ -50,7 +50,7 @@ class ServiceCard extends Component {
                         <h5 className="title card-title">{this.props.service.name}</h5>
                         <h6 className="price card-subtitle mb-2 text-success">${this.props.service.price} per service</h6>
                     </div>
-                    {this.props.ableToEdit ? this.renderGearbox() : ''}
+                    {this.props.ableToEdit && this.renderGearbox()}
                 </div>
             </div>
         );

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Signup from './signup';
 import Login from './login';
 import Modal from './modal';
-import CreateService from './create_service';
+import CreateEditService from './create_edit_service';
 import { connect } from 'react-redux';
 import { logOutUser } from '../actions';
 
@@ -65,7 +65,7 @@ class Navbar extends Component {
             <Modal 
                 isOpen={this.state.showCreateServiceModal} 
                 toggle={this.toggleCreateServiceModal} 
-                modalBody={<CreateService successCallback={this.toggleCreateServiceModal}/>}
+                modalBody={<CreateEditService successCallback={this.toggleCreateServiceModal}/>}
                 />
         );
     }
@@ -86,10 +86,7 @@ class Navbar extends Component {
         if (!this.props.loggedIn)
             this.setLoginIntent(true, () => this.toggleLoginSignupModal());
         else
-            this.setState({ 
-                ...this.state,
-                showCreateServiceModal: !this.state.showCreateServiceModal
-            });
+            this.props.history.push('/service/create');
     }
 
     handleSignupClickEvent() {

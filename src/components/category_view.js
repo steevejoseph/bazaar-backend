@@ -44,9 +44,9 @@ class CategoryView extends Component {
             return <div>This ({category}) isn't a category.</div>
 
         return (
-            <div>
+            <div className="category-view container">
                 <Search category={this.state.categoryObject.category} />                
-                <div className="category-view container">
+                <div className="">
                     <ServiceCardListRow 
                         key={this.state.categoryObject.category} 
                         header={this.state.categoryObject.category} 

@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import { fetchUsersServices } from '../actions';
 import ServiceCardListRow from './service_card_list_row.js';
 import Modal from './modal';
-import EditService from './edit_service';
+import CreateEditService from './create_edit_service';
 import DeleteService from './delete_service';
-import DirectMessages from './direct_messages'
 import { SyncLoader } from 'react-spinners';
 
 
@@ -18,9 +17,7 @@ class Account extends Component {
             showDeleteServiceModal: false
         }
 
-        this.toggleEditServiceModal = this.toggleEditServiceModal.bind(this);
         this.toggleDeleteServiceModal = this.toggleDeleteServiceModal.bind(this);
-        this.editSuccessCallback = this.editSuccessCallback.bind(this);
         this.deleteSuccessCallback = this.deleteSuccessCallback.bind(this);
     }
 
@@ -34,24 +31,11 @@ class Account extends Component {
             this.props.fetchUsersServices(this.props.user._id);
     }
 
-    toggleEditServiceModal() {
-        this.setState({ 
-            ...this.state,
-            showEditServiceModal: !this.state.showEditServiceModal
-        });
-    }
-
     toggleDeleteServiceModal() {
         this.setState({ 
             ...this.state,
             showDeleteServiceModal: !this.state.showDeleteServiceModal
         });
-    }
-
-
-    editSuccessCallback() {
-        this.props.fetchUsersServices(this.props.user._id);
-        this.toggleEditServiceModal();
     }
 
     deleteSuccessCallback() {
@@ -64,7 +48,7 @@ class Account extends Component {
             <Modal 
                 isOpen={this.state.showEditServiceModal}
                 toggle={this.toggleEditServiceModal}
-                modalBody={<EditService successCallback={this.editSuccessCallback}/>}
+                modalBody={<CreateEditService isEdit={true} successCallback={this.editSuccessCallback}/>}
             />
         );
     }
