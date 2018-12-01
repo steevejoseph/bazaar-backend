@@ -92,13 +92,11 @@ class Navbar extends Component {
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item py-md-1">
                                 <Link to="/" className="nav-link">
-                                    {/* <i className="fa fa-lg fa-home" /> */}
                                     Home
                                 </Link>
                             </li>
                             <li className="nav-item py-md-1">
                                 <a className="nav-link" href="#" onClick={this.handleCreateServiceClickEvent}>
-                                    {/* <i className="fa fa-lg fa-plus" />  */}
                                     Create Service
                                 </a>
                             </li>
