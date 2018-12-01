@@ -259,7 +259,7 @@ class ServiceView extends Component {
                     <div className="row">
                         <div className="col-lg-8 col-md-12">
                             <div className="service-info">
-                                <img className="card-img-top cursor" onClick={this.openServiceView} src="https://dummyimage.com/1200x780/bfb/aab" alt="Card image" />
+                                <img className="card-img-top cursor" onClick={this.openServiceView} src={"https://picsum.photos/1200/780/?random"} alt="Card image" />
                                 <div className="service-header">
                                     <h1 className="title">{this.props.service.name}</h1>
                                     <h6 className="category mb-2 text-muted">{this.props.service.tags.length > 0 ? this.props.service.tags[0].toUpperCase() : ''}</h6>

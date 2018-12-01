@@ -44,7 +44,7 @@ class ServiceCard extends Component {
         return (
             <div className="col-lg-3 col-md-6 col-sm-6 col-12 p-0">
                     <div className="card">
-                    <img className="card-img-top cursor" onClick={this.openServiceView} src="https://dummyimage.com/600x390/bfb/aab" alt="Card image" />
+                    <img className="card-img-top cursor" onClick={this.openServiceView} src={"https://picsum.photos/600/390/?random"} alt="Card image" />
                     <div className="card-info cursor" onClick={this.openServiceView}>
                         <h6 className="tag card-subtitle mb-2 text-muted">{this.props.service.tags.length > 0 ? this.props.service.tags[0].toUpperCase() : ''}</h6>
                         <h5 className="title card-title">{this.props.service.name}</h5>
