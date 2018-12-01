@@ -35,17 +35,17 @@ export const MARKDOWN_OPTIONS = {
     overrides: {
         h1: {
             props: {
-                className: 'h3',
+                className: 'h4',
             },
         },
         h2: {
             props: {
-                className: 'h4',
+                className: 'h5',
             },
         },
         h3: {
             props: {
-                className: 'h5',
+                className: 'h6',
             },
         },
         h4: {
