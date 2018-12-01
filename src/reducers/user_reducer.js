@@ -1,7 +1,5 @@
 import _ from 'lodash';
-import { CREATE_USER, LOGIN, GET_USER_FROM_LOCAL_STORAGE, LOG_OUT_USER,
-         FETCH_SERVICE_AND_OWNER, CONNECT_USER_TO_CHAT, FETCH_USERS_ROOMS,
-         CREATE_ROOM} from '../actions';
+import { CREATE_USER, LOGIN, GET_USER_FROM_LOCAL_STORAGE, LOG_OUT_USER, FETCH_SERVICE_AND_OWNER} from '../actions';
 
 export default function(state = {}, action) {
     switch (action.type) {
@@ -43,21 +41,6 @@ export default function(state = {}, action) {
             return {
                 ...state,
                 serviceOwner: action.payload.data.owner
-            }
-        case CONNECT_USER_TO_CHAT:
-            return {
-                ...state,
-                currentUser: action.payload
-            }
-        case FETCH_USERS_ROOMS:
-            return {
-                ...state,
-                joinableRooms: action.payload
-            }
-        case CREATE_ROOM:
-            return {
-                ...state,
-                createdRoom: action.payload
             }
         default:
             return state;

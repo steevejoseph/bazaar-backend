@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { fetchUsersServices } from '../actions/index';
+import { fetchUserViewServices } from '../actions/index';
 import { connect } from 'react-redux';
 import { Jumbotron, Fade } from 'reactstrap';
 import { SyncLoader } from 'react-spinners';
@@ -20,7 +20,7 @@ class UserView extends Component {
 
     componentDidMount(){
         const { userId } = this.props.match.params;
-        this.props.fetchUsersServices(userId);
+        this.props.fetchUserViewServices(userId);
     }
 
     renderServices(header, services){
@@ -86,7 +86,7 @@ class UserView extends Component {
                 </Jumbotron>
  
                 {this.renderServices('Most Popular', [])}
-                {this.renderServices(`${this.props.serviceOwner.firstName}'s Services`, this.props.accountServices)}
+                {this.renderServices(`${this.props.serviceOwner.firstName}'s Services`, this.props.profileServices)}
             </div>
         );
     }
@@ -95,9 +95,9 @@ class UserView extends Component {
 function mapStateToProps( state ) {
     return {
         user: state.user.user,
-        accountServices: state.services.accountServices,
+        profileServices: state.services.profileServices,
         serviceOwner: state.user.serviceOwner
     };
 }
 
-export default connect(mapStateToProps, { fetchUsersServices } )(UserView);
+export default connect(mapStateToProps, { fetchUserViewServices } )(UserView);

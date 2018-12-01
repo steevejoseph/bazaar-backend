@@ -23,7 +23,7 @@ export const CONNECT_USER_TO_CHAT = 'connect_user_to_chat';
 export const FETCH_USERS_ROOMS = 'fetch_users_rooms';
 export const CREATE_ROOM = 'create_room';
 export const SEND_MESSAGE = 'send_message';
-
+export const FETCH_USER_VIEW_SERVICES = 'fetch_user_view_services';
 
 export function login(values, callback) {
     const data = {
@@ -138,6 +138,13 @@ export function fetchServicesByTag(tag, query = '') {
 export function fetchUsersServices(userID){
     return {
         type: FETCH_USERS_SERVICES,
+        payload: axios.get(`${ROOT_URL}/services/user/${userID}`)
+    }
+}
+
+export function fetchUserViewServices(userID){
+    return {
+        type: FETCH_USER_VIEW_SERVICES,
         payload: axios.get(`${ROOT_URL}/services/user/${userID}`)
     }
 }

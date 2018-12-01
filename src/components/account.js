@@ -77,7 +77,7 @@ class Account extends Component {
                 </div>
             );
 
-        if(this.props.services.length == 0)
+        if(this.props.services.length === 0)
             return (
                 <div className="container account">
                     <h5>You do not own any services</h5>
