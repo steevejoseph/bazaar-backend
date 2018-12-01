@@ -154,7 +154,7 @@ class CreateEditService extends Component {
                             />
                         </div>
                         <div className="col-6">
-                            <Markdown options={MARKDOWN_OPTIONS} className={this.state.description.length == '' ? 'text-muted' : ''}>
+                            <Markdown options={MARKDOWN_OPTIONS} className={this.state.description == '' ? 'text-muted' : ''}>
                                 {this.state.description == '' ? '####Start typing to see a preview...' : this.state.description} 
                             </Markdown>
                         </div>
