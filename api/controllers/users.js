@@ -10,6 +10,7 @@ const saltRounds = 10; //number of times to salt password hash
 
 const User = require('../../models/user.js'); //require the user schema
 const Service = require('../../models/service.js');
+const Comments = require('../../models/comment.js');
 
 
  // init chatkit
@@ -174,10 +175,32 @@ exports.user_get = (req, res, next) => {
              }
             if(found != null) {
                //console.log(found)
-               favServiceList.push(found);
+              //favServiceList.push(found);
+              var servComments = Comments.find({serviceId: id}, (err, comments) => {
+                if(err) {
+                  return res.response(500).json({
+                    error: err
+                  })
+                }
+                var serv = {
+                  service: found,
+                  comments: comments
+                }
+                favServiceList.push(serv);
+                console.log(favServiceList);
+               // console.log(serv);
+                //console.log("serv and comments")
+                resolve()
+                
+                
+              });
+              
+              //serv.service = found;
+              //serv.comments = servComments
+              //favServiceList.push(serv);
                num++;
-               resolve();
-              console.log(favServiceList);
+               //resolve();
+              
              } else {
                resolve();
              }
@@ -202,6 +225,7 @@ exports.user_get = (req, res, next) => {
     Promise.all(promises).then(() => {
       //console.log("list of favs");
       //console.log(promises);
+      console.log("response")
       return res.status(200).json({
         user: user,
         favoriteServices: favServiceList,
