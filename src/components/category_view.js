@@ -31,6 +31,7 @@ class CategoryView extends Component {
         const categoryFromURL = this.props.match.params.category;
         const categoryObject = this.getCategory(categoryFromURL);
         
+        window.scrollTo(0, 0);
         this.setState({ categoryObject: categoryObject });
 
         if(categoryObject)

@@ -27,6 +27,18 @@ const OPTIONS = [
     }
 ]
 
+const items = [
+    {
+      src: `${"https://picsum.photos/1200/780/?random"}`,
+    },
+    {
+      src: `${"https://picsum.photos/1200/780/?random"}`,
+    },
+    {
+      src: `${"https://picsum.photos/1200/780/?random"}`,
+    }
+  ];
+
 class ServiceView extends Component {
     constructor(props) {
         super(props);
@@ -36,11 +48,13 @@ class ServiceView extends Component {
         this.renderOptionTabs = this.renderOptionTabs.bind(this);
         this.renderOptionContent = this.renderOptionContent.bind(this);
         this.handleOwnerClick = this.handleOwnerClick.bind(this);
+        this.renderCarouselItems = this.renderCarouselItems.bind(this);
     }
 
     componentDidMount() {
         const { id } = this.props.match.params;
-
+        
+        window.scrollTo(0, 0);
         this.props.fetchServiceAndOwner(id);
 
         if(this.props.loggedIn)
@@ -234,6 +248,45 @@ class ServiceView extends Component {
         );
     }
 
+    prepPhotos(photos) {
+        var items = [];
+
+        for (var i = 0; i < photos.length; i++)
+            items.push({ src: photos[i] });
+
+        return items;
+    }
+
+    renderCarouselItems(items) {
+        var i = 0;
+
+        return _.map(items, item => {
+            return (
+                <div class={`carousel-item img ${i++ === 0 ? "active" : ""}`}>
+                    <img class="d-block img-thing" src={item.src} alt="Cute pic of dogs lol" />
+                </div>
+            );
+        });
+    }
+
+    renderCarousel(items) {
+        return (
+            <div id="carousel" class="carousel slide" data-ride="false">
+                <div class="carousel-inner img-container">
+                    {this.renderCarouselItems(items)}
+                </div>
+                <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        );
+    }
+
     render() {
         const { id } = this.props.match.params;
 
@@ -259,7 +312,9 @@ class ServiceView extends Component {
                     <div className="row">
                         <div className="col-lg-8 col-md-12">
                             <div className="service-info">
-                                <img className="card-img-top cursor" onClick={this.openServiceView} src="https://dummyimage.com/1200x780/bfb/aab" alt="Card image" />
+                                <div className="">
+                                    {this.renderCarousel(!this.props.service.photos || this.props.service.photos.length === 0 ? items : this.prepPhotos(this.props.service.photos))}
+                                </div>
                                 <div className="service-header">
                                     <h1 className="title">{this.props.service.name}</h1>
                                     <h6 className="category mb-2 text-muted">{this.props.service.tags.length > 0 ? this.props.service.tags[0].toUpperCase() : ''}</h6>

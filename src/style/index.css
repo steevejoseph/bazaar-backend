@@ -75,9 +75,24 @@ body {
 
 .card {
   margin: 10px;
-  min-height: 200px;
   position: relative;
   border-width: 0; 
+}
+
+.card .img-container {
+  width: 100%;
+  padding-top: 65%;
+  position: relative;
+}
+
+.card .img {
+  object-fit: cover;
+  position: absolute;  
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 img {
@@ -275,6 +290,29 @@ img {
 
 .service-view .loader {
   padding-top: 95px;
+}
+
+.service-info .img-container {
+  width: 100%;
+  padding-top: 65%;
+  position: relative;
+}
+
+.service-info .img-container .img {
+  position: absolute;  
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  object-fit: cover;
+}
+
+.img-thing {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .service-view li {

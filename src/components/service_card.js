@@ -4,6 +4,18 @@ import { withRouter } from 'react-router-dom';
 import { setServiceToEdit } from '../actions';
 import PhotoInput from './photo_input';
 
+const items = [
+    {
+      src: `${"https://picsum.photos/1200/780/?random"}`,
+    },
+    {
+      src: `${"https://picsum.photos/1200/780/?random"}`,
+    },
+    {
+      src: `${"https://picsum.photos/1200/780/?random"}`,
+    }
+  ];
+
 class ServiceCard extends Component {
     constructor(props) {
         super(props);
@@ -40,11 +52,13 @@ class ServiceCard extends Component {
     render() {
         if(!this.props.service)
             return '';
-
+        
         return (
             <div className="col-lg-3 col-md-6 col-sm-6 col-12 p-0">
                     <div className="card">
-                    <img className="card-img-top cursor" onClick={this.openServiceView} src="https://dummyimage.com/600x390/bfb/aab" alt="Card image" />
+                    <div className="img-container">
+                        <img className="card-img-top cursor img" onClick={this.openServiceView} src={!this.props.service.photos || this.props.service.photos.length === 0 ? "https://picsum.photos/600/390/?random" : this.props.service.photos[0]} alt="Card image" />
+                    </div>
                     <div className="card-info cursor" onClick={this.openServiceView}>
                         <h6 className="tag card-subtitle mb-2 text-muted">{this.props.service.tags.length > 0 ? this.props.service.tags[0].toUpperCase() : ''}</h6>
                         <h5 className="title card-title">{this.props.service.name}</h5>
