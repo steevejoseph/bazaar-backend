@@ -2,8 +2,20 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { login } from '../actions';
+import { Alert } from 'reactstrap';
 
 class Login extends Component {
+    
+    constructor(props) {
+        super(props);
+
+        this.state = { 
+            hasError: false
+        };
+
+        this.errorCallback = this.errorCallback.bind(this);
+    }
+    
     renderField(field) {
         const { meta: {touched, error } } = field;
         const className = `form-control form-control-lg ${touched && error ? 'is-invalid ' : ''}`;
@@ -24,16 +36,33 @@ class Login extends Component {
         );
     }
 
+    errorCallback(){
+        this.setState({ 
+            ...this.state,
+            hasError: !this.state.hasError
+        });
+    }
+
     onSubmit(values) {
         this.props.login(values, () => {
             this.props.successCallback();
+        }, () => {
+            this.errorCallback();
         });
     }
 
     render() {
+        console.log("haserror: ", this.state.hasError);
         const { handleSubmit } = this.props;
         return (
             <div className="modal-body">
+                <div>
+                    {this.state.hasError &&
+                        <Alert color="danger">
+                            Invalid Credentials
+                        </Alert>
+                    }
+                </div>
                 <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                     <Field 
                         label="Email"

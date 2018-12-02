@@ -25,7 +25,7 @@ export const CREATE_ROOM = 'create_room';
 export const SEND_MESSAGE = 'send_message';
 export const FETCH_USER_VIEW_SERVICES = 'fetch_user_view_services';
 
-export function login(values, callback) {
+export function login(values, callback, errorCallback) {
     const data = {
         email: values.email,
         password: values.password
@@ -33,15 +33,16 @@ export function login(values, callback) {
 
     return axios.post(`${ROOT_URL}/users/login`, data).then((req) => {
         callback();
+
         axios.defaults.headers.common['Authorization'] = `Bearer ${req.data.token}`;
         return {
             type: LOGIN,
             payload: req
         };
-    });
+    }).catch(errorCallback());
 }
 
-export function createUser(values, callback) {
+export function createUser(values, callback, errorCallback) {
     const data = {
         firstName: values.firstName,
         lastName: values.lastName,
@@ -57,7 +58,7 @@ export function createUser(values, callback) {
             type: CREATE_USER,
             payload: req
         };
-    });
+    }).catch(errorCallback());
 }
 
 export function createService(values, callback) {
