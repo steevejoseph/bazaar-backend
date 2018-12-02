@@ -75,15 +75,24 @@ body {
 
 .card {
   margin: 10px;
-  min-height: 200px;
   position: relative;
   border-width: 0; 
 }
 
+.card .img-container {
+  width: 100%;
+  padding-top: 65%;
+  position: relative;
+}
+
 .card .img {
-  object-fit: cover;  
-  height: 10.5rem;
-  width: auto;
+  object-fit: cover;
+  position: absolute;  
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 img {
@@ -283,6 +292,29 @@ img {
   padding-top: 95px;
 }
 
+.service-info .img-container {
+  width: 100%;
+  padding-top: 65%;
+  position: relative;
+}
+
+.service-info .img-container .img {
+  position: absolute;  
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  object-fit: cover;
+}
+
+.img-thing {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .service-view li {
   padding-left: 0;
 }
@@ -375,22 +407,4 @@ img {
   padding-top: 10px;
   padding-left: 3px;
   padding-bottom: 10px;
-}
-
-.photo-row {
-  height: 70px;
-  padding-top: 20px;
-}
-
-.photo-row .photo {
-  /* height: 50px; */
-  margin: 0;
-  
-}
-
-.photo-row img {
-  border-radius: 5%;
-  height: inherit;
-  width: inherit;
-  object-fit: cover;
 }
