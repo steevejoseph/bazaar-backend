@@ -5,14 +5,14 @@ import { login } from '../actions';
 import { Alert } from 'reactstrap';
 
 class Login extends Component {
-    
+
     constructor(props) {
         super(props);
 
         this.state = { 
             hasError: false
         };
-
+        
         this.errorCallback = this.errorCallback.bind(this);
     }
     
@@ -52,18 +52,17 @@ class Login extends Component {
     }
 
     render() {
-        console.log("haserror: ", this.state.hasError);
         const { handleSubmit } = this.props;
         return (
             <div className="modal-body">
-                <div>
-                    {this.state.hasError &&
+                <div> 
+                    {this.state.hasError && 
                         <Alert color="danger">
                             Invalid Credentials
                         </Alert>
                     }
                 </div>
-                <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                     <Field 
                         label="Email"
                         name="email"

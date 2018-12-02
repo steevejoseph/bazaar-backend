@@ -39,7 +39,7 @@ export function login(values, callback, errorCallback) {
             type: LOGIN,
             payload: req
         };
-    }).catch(errorCallback());
+    }).catch(() => errorCallback());
 }
 
 export function createUser(values, callback, errorCallback) {
@@ -58,7 +58,7 @@ export function createUser(values, callback, errorCallback) {
             type: CREATE_USER,
             payload: req
         };
-    }).catch(errorCallback());
+    }).catch(() =>  errorCallback());
 }
 
 export function createService(values, callback) {
