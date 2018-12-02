@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { setServiceToEdit } from '../actions';
 import PhotoInput from './photo_input';
-import { UncontrolledCarousel } from 'reactstrap';
 
 const items = [
     {

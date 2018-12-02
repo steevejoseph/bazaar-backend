@@ -6,7 +6,6 @@ import Rating from './service_rating';
 import CreateReview from './create_review';
 import ServiceReviewsList from './service_reviews_list';
 import Markdown from 'markdown-to-jsx';
-import { UncontrolledCarousel } from 'reactstrap';
 import { SyncLoader } from 'react-spinners';
 import { MARKDOWN_OPTIONS } from '../constants';
 
