@@ -39,6 +39,7 @@ class Signup extends Component {
 
     errorCallback(){
         this.setState({ 
+            ...this.state,
             hasError: !this.state.hasError
         });
     }
@@ -56,7 +57,7 @@ class Signup extends Component {
         return (
             <div className="modal-body">
                 <div> 
-                    {this.state.hasError && 
+                    {this.state.hasError &&
                         <Alert color="danger">
                             Email is already in use
                         </Alert>

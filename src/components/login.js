@@ -56,7 +56,7 @@ class Login extends Component {
         return (
             <div className="modal-body">
                 <div> 
-                    {this.state.hasError && 
+                    {this.state.hasError &&
                         <Alert color="danger">
                             Invalid Credentials
                         </Alert>
