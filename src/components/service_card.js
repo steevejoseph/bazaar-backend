@@ -52,7 +52,6 @@ class ServiceCard extends Component {
     render() {
         if(!this.props.service)
             return '';
-        console.log(this.props.service);
         
         return (
             <div className="col-lg-3 col-md-6 col-sm-6 col-12 p-0">
