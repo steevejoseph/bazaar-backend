@@ -19,6 +19,7 @@ class UserView extends Component {
     }
 
     componentDidMount(){
+        window.scrollTo(0, 0);
         const { userId } = this.props.match.params;
         this.props.fetchUserViewServices(userId);
     }

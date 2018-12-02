@@ -6,6 +6,7 @@ import Rating from './service_rating';
 import CreateReview from './create_review';
 import ServiceReviewsList from './service_reviews_list';
 import Markdown from 'markdown-to-jsx';
+import { UncontrolledCarousel } from 'reactstrap';
 import { SyncLoader } from 'react-spinners';
 import { MARKDOWN_OPTIONS } from '../constants';
 
@@ -27,6 +28,18 @@ const OPTIONS = [
     }
 ]
 
+const items = [
+    {
+      src: `${"https://picsum.photos/1200/780/?random"}`,
+    },
+    {
+      src: `${"https://picsum.photos/1200/780/?random"}`,
+    },
+    {
+      src: `${"https://picsum.photos/1200/780/?random"}`,
+    }
+  ];
+
 class ServiceView extends Component {
     constructor(props) {
         super(props);
@@ -40,7 +53,8 @@ class ServiceView extends Component {
 
     componentDidMount() {
         const { id } = this.props.match.params;
-
+        
+        window.scrollTo(0, 0);
         this.props.fetchServiceAndOwner(id);
 
         if(this.props.loggedIn)
@@ -234,6 +248,31 @@ class ServiceView extends Component {
         );
     }
 
+    renderPhotoRow() {
+        return (
+            <div className="photo-row row">
+                <div className="photo col-2">
+                    <img className="" onClick={null} src={"https://picsum.photos/300/195/?random"} alt="Card image" />
+                </div>
+                <div className="photo col-2">
+                    <img className="" onClick={null} src={"https://picsum.photos/300/195/?random"} alt="Card image" />
+                </div>
+                <div className="photo col-2">
+                    <img className="" onClick={null} src={"https://picsum.photos/300/195/?random"} alt="Card image" />
+                </div>
+                <div className="photo col-2">
+                    <img className="" onClick={null} src={"https://picsum.photos/300/195/?random"} alt="Card image" />
+                </div>
+                <div className="photo col-2">
+                    <img className="" onClick={null} src={"https://picsum.photos/300/195/?random"} alt="Card image" />
+                </div>
+                <div className="photo col-2">
+                    <img className="" onClick={null} src={"https://picsum.photos/300/195/?random"} alt="Card image" />
+                </div>
+            </div>
+        );
+    }
+
     render() {
         const { id } = this.props.match.params;
 
@@ -259,7 +298,9 @@ class ServiceView extends Component {
                     <div className="row">
                         <div className="col-lg-8 col-md-12">
                             <div className="service-info">
-                                <img className="card-img-top cursor" onClick={this.openServiceView} src={"https://picsum.photos/1200/780/?random"} alt="Card image" />
+                                {/* <img className="card-img-top cursor" onClick={this.openServiceView} src={"https://picsum.photos/1200/780/?random"} alt="Card image" /> */}
+                                {/* {this.renderPhotoRow()} */}
+                                <UncontrolledCarousel className="card-img-top" autoPlay={false} items={items}/>
                                 <div className="service-header">
                                     <h1 className="title">{this.props.service.name}</h1>
                                     <h6 className="category mb-2 text-muted">{this.props.service.tags.length > 0 ? this.props.service.tags[0].toUpperCase() : ''}</h6>
