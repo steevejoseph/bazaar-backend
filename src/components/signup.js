@@ -3,8 +3,20 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { createUser } from '../actions';
 import * as EmailValidator from 'email-validator';
+import { Alert } from 'reactstrap';
 
 class Signup extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = { 
+            hasError: false
+        };
+
+        this.errorCallback = this.errorCallback.bind(this);
+    }
+    
     renderField(field) {
         const { meta: {touched, error } } = field;
         const className = `form-control form-control-lg ${touched && error ? 'is-invalid ' : ''}`;
@@ -25,9 +37,18 @@ class Signup extends Component {
         );
     }
 
+    errorCallback(){
+        this.setState({ 
+            ...this.state,
+            hasError: !this.state.hasError
+        });
+    }
+
     onSubmit(values) {
         this.props.createUser(values, () => {
             this.props.successCallback();
+        }, () => {
+            this.errorCallback();
         });
     }
 
@@ -35,6 +56,13 @@ class Signup extends Component {
         const { handleSubmit } = this.props;
         return (
             <div className="modal-body">
+                <div> 
+                    {this.state.hasError &&
+                        <Alert color="danger">
+                            Email is already in use
+                        </Alert>
+                    }
+                </div>
                 <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                     <Field 
                         label="First Name"
