@@ -248,31 +248,6 @@ class ServiceView extends Component {
         );
     }
 
-    renderPhotoRow() {
-        return (
-            <div className="photo-row row">
-                <div className="photo col-2">
-                    <img className="" onClick={null} src={"https://picsum.photos/300/195/?random"} alt="Card image" />
-                </div>
-                <div className="photo col-2">
-                    <img className="" onClick={null} src={"https://picsum.photos/300/195/?random"} alt="Card image" />
-                </div>
-                <div className="photo col-2">
-                    <img className="" onClick={null} src={"https://picsum.photos/300/195/?random"} alt="Card image" />
-                </div>
-                <div className="photo col-2">
-                    <img className="" onClick={null} src={"https://picsum.photos/300/195/?random"} alt="Card image" />
-                </div>
-                <div className="photo col-2">
-                    <img className="" onClick={null} src={"https://picsum.photos/300/195/?random"} alt="Card image" />
-                </div>
-                <div className="photo col-2">
-                    <img className="" onClick={null} src={"https://picsum.photos/300/195/?random"} alt="Card image" />
-                </div>
-            </div>
-        );
-    }
-
     prepPhotos(photos) {
         var items = [];
 
