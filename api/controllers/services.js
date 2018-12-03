@@ -233,7 +233,7 @@ exports.service_get = (req, res, next) => {
 //get all of a users services
 exports.service_get_user_service = (req, res, next) => {
     var userId = mongoose.Types.ObjectId(req.params.usersId);
-    
+    var promises = [];
     var query = Service.where({owner: userId});
     query.find((err, found) => {
         if(err) {
@@ -246,9 +246,38 @@ exports.service_get_user_service = (req, res, next) => {
                 userServices: []
             })
         } else {
-            return res.status(200).json({
-                userServices: found
+            //where to do for each and find comments for each service
+            var serviceComments = []
+            found.forEach((service) => {
+                const promise = new Promise((resolve) => {
+                    Comment.find({serviceId: service._id}, (err, foundComments) =>{
+                        if(err) {
+                            return res.status(500).json({
+                                error: err
+                            })
+                        }
+                        console.log(foundComments);
+                        serviceComments.push(foundComments)
+                        resolve();
+                    })
+                    //resolve();
+                })
+                
+                
+                
+                
+                promises.push(promise);
             })
+            
+            Promise.all(promises).then(() => {
+                return res.status(200).json({
+                userServices: found,
+                userServicesComments: serviceComments
+            })
+                
+                
+            })
+            
         }
     })   
 }
