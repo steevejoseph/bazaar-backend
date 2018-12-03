@@ -4,6 +4,9 @@ mongoose.connect('mongodb://team7:ABC123@ds263832.mlab.com:63832/largo-dev', {us
 
 const Service = require('../../models/service.js');
 const Comment = require('../../models/comment.js');
+
+const uploadToImgur = require('../middleware/photo');
+
 exports.service_create = (req, res, next) => {
   
     // console.log(req.headers.authorization);
@@ -12,6 +15,16 @@ exports.service_create = (req, res, next) => {
   /*for(var i = 0; i < req.body.tags.length; i++) {
       tagList[i] = req.body.tags[i]
   }*/
+
+    const file = req.file.path;
+    let photos = [];
+    photos = uploadToImgur(req.file.path);
+
+
+
+
+
+
     //create a new service 
   var srv =  new Service({
     name: req.body.name,
@@ -19,7 +32,9 @@ exports.service_create = (req, res, next) => {
     description: req.body.description,
     price: req.body.price,
     reported: false,
-    tags: req.body.tags
+    tags: req.body.tags,
+    photos: photos,
+
     
   });
 
