@@ -24,13 +24,25 @@ class CreateEditService extends Component {
         if ((this.props.isEdit && !this.props.service) || !this.props.user)
             this.props.history.push('/');
         
-        else if (this.props.isEdit)
+        else if (this.props.isEdit) {
+            var options = []
+
+            if (this.props.service.options)
+                options = JSON.parse(this.props.service.options);
+            
             this.props.initialize({ 
                 serviceName: this.props.service.name,
                 category: this.props.service.tags,
                 description: this.props.service.description,
-                price: this.props.service.price
+                starterPrice: this.props.service.price,
+                standardPrice: options.length > 1 ? options[1].price : '',
+                superPrice: options.length > 2 ? options[2].price : '',
+                starterDescription: options.length > 0 ? options[0].description : '',
+                standardDescription: options.length > 1 ? options[1].description : '',
+                superDescription: options.length > 2 ? options[2].description : '',
             });
+        }
+
     }
 
     updateDescription(event) {
@@ -122,6 +134,104 @@ class CreateEditService extends Component {
             });
         }
     }
+    
+    renderOptionTabs() {
+        return (
+            <div className="option-tabs nav nav-tabs text-center nav-justified" id="nav-tab" role="tablist">
+                <a 
+                    className={`nav-item nav-link ${'active'}`} 
+                    id={`tab-starter`} 
+                    data-toggle="tab" 
+                    role="tab" 
+                    aria-controls={`starter`} 
+                    aria-selected={`nav-item nav-link ${'true'}`} 
+                    href={`#starter`}
+                    >
+                    Starter Tier
+                </a>
+                <a 
+                    className={`nav-item nav-link`} 
+                    id={`tab-standard`} 
+                    data-toggle="tab" 
+                    role="tab" 
+                    aria-controls={`standard`} 
+                    aria-selected={`nav-item nav-link false`} 
+                    href={`#standard`}
+                    >
+                    Standard Tier
+                </a>
+                <a 
+                    className={`nav-item nav-link`} 
+                    id={`tab-super`} 
+                    data-toggle="tab" 
+                    role="tab" 
+                    aria-controls={`super`} 
+                    aria-selected={`nav-item nav-link false`} 
+                    href={`#super`}
+                    >
+                    Super Tier
+                </a>
+            </div>
+        );
+    }
+
+    renderOptionContent() {
+        return (
+            <div className="option-info tab-content pt-3 px-4 pb-1" id="nav-tabContent">
+                <div 
+                    className={`tab-pane show active`} 
+                    id='starter'
+                    role="tabpanel" 
+                    aria-labelledby={`tab-starter`} 
+                    >
+                    <Field 
+                        label="Price"
+                        name="starterPrice"
+                        component={this.renderInputField}
+                    />
+                    <Field 
+                        label="Description (What makes this tier different from the rest)"
+                        name="starterDescription"
+                        component={this.renderTextarea}
+                    />
+                </div>
+                <div 
+                    className={`tab-pane`} 
+                    id='standard'
+                    role="tabpanel" 
+                    aria-labelledby={`tab-standard`} 
+                    >
+                    <Field 
+                        label="Price"
+                        name="standardPrice"
+                        component={this.renderInputField}
+                    />
+                    <Field 
+                        label="Description (What makes this tier different from the rest)"
+                        name="standardDescription"
+                        component={this.renderTextarea}
+                    />
+                </div>
+                <div 
+                    className={`tab-pane`} 
+                    id='super'
+                    role="tabpanel" 
+                    aria-labelledby={`tab-super`} 
+                    >
+                    <Field 
+                        label="Price"
+                        name="superPrice"
+                        component={this.renderInputField}
+                    />
+                    <Field 
+                        label="Description (What makes this tier different from the rest)"
+                        name="superDescription"
+                        component={this.renderTextarea}
+                    />
+                </div>
+            </div>
+        );
+    }
 
     render() {
         const { handleSubmit } = this.props;
@@ -135,19 +245,20 @@ class CreateEditService extends Component {
                         component={this.renderInputField}
                     />
                     <Field 
-                        label="Price"
-                        name="price"
-                        component={this.renderInputField}
-                    />
-                    <Field 
                         label="Category"
                         name="category"
                         component={this.renderDropdown}
                     />
+                        <div className="options text-muted pb-3">
+                            <nav>
+                                {this.renderOptionTabs()}
+                            </nav>
+                            {this.renderOptionContent()}
+                        </div>
                     <div className="row pb-3">
                         <div className="col-6">
                             <Field 
-                                label="Description (Markdown)"
+                                label="Overall Description (Markdown)"
                                 name="description"
                                 component={this.renderTextarea}
                                 onChange={this.updateDescription}
@@ -185,16 +296,47 @@ function validate(values) {
     if (!values.description) 
         errors.description = "Enter a description.";
 
-    if (!values.price) 
-        errors.price = "Enter a price.";
-    else if (values.price) {
-        const parse = parseInt(values.price);
+    if (!values.starterPrice) 
+        errors.starterPrice = "Enter a price.";
+    else if (values.starterPrice) {
+        if (values.starterPrice[0] === '$') 
+            values.starterPrice = values.starterPrice.substring(1);
+
+        const parse = parseInt(values.starterPrice);
 
         if (parse)
-            values.price = parse;
+            values.starterPrice = `$${parse}`;
         else {
-            values.price = ''
-            errors.price = "Enter only numbers.";
+            values.starterPrice = ''
+            errors.starterPrice = "Enter only numbers.";
+        }
+    }
+
+    if (values.standardPrice) {
+        if (values.standardPrice[0] === '$') 
+            values.standardPrice = values.standardPrice.substring(1);
+
+        const parse = parseInt(values.standardPrice);
+
+        if (parse)
+            values.standardPrice = `$${parse}`;
+        else {
+            values.standardPrice = ''
+            errors.standardPrice = "Enter only numbers.";
+        }
+    }
+
+    if (values.superPrice) {
+        if (values.superPrice[0] === '$') 
+            values.superPrice = values.superPrice.substring(1);
+
+        const parse = parseInt(values.superPrice);
+
+        if (parse)
+            values.superPrice = `$${parse}`;
+        else {
+            values.superPrice = ''
+            errors.superPrice = "Enter only numbers.";
         }
     }
 
