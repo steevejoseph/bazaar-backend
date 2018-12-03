@@ -136,7 +136,8 @@ exports.service_edit = (req, res, next) => {
                 name : req.body.name,
                 description : req.body.description,
                 price: req.body.price,
-                tags: req.body.tags
+                tags: req.body.tags,
+                options: req.body.options
             }, {'new' : true})
             .exec().then(result => {
                 res.status(200).json({
