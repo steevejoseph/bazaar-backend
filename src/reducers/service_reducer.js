@@ -74,7 +74,6 @@ export default function(state = {}, action) {
                     accountServices: []
                 };
         case FETCH_USER_VIEW_SERVICES:
-                console.log("state reducer: ", action.payload.data);
             if (action.payload.status == 200){
                 return { 
                     ...state,

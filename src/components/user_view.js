@@ -19,6 +19,8 @@ class UserView extends Component {
         };
 
         this.renderServices = this.renderServices.bind(this);
+        this.renderCounter = this.renderCounter.bind(this);
+        this.renderTopReviews = this.renderTopReviews.bind(this);
     }
 
     componentDidMount(){
@@ -40,15 +42,32 @@ class UserView extends Component {
         );
     }
 
+    renderCounter(rating) {
+        return (
+            <div>
+                <div className="user-view-counter bg-secondary rounded text-white">
+                    <CountUp
+                        className="custom-count"
+                        start={0}
+                        end={rating}
+                        duration={4}
+                        delay={0}
+                        decimals={1}
+                    />
+                </div>
+                <div className="user-view-rating">average rating</div>
+            </div>
+        );
+    }
+
     renderTopReviews(review, type){
-       
-        return(
+        return (
             <h6>
                 <h5>{`Top ${type} Review`}</h5>
                 <div className="top-text">
                     <Rating 
                         starColor={'rgb(0, 132, 137)'} 
-                        overallRating={review.rateing ? review.rateing : 0} 
+                        overallRating={review.rateing} 
                         />
                     <TextEllipsis 
                         lines={1} 
@@ -57,10 +76,7 @@ class UserView extends Component {
                         tagClass={'className'} 
                         debounceTimeoutOnResize={200} 
                         useJsOnly={true} 
-                        onResult={(result) => { 
-                            if (result === TextEllipsis.RESULT.TRUNCATED) console.log('text get truncated');
-                            else console.log('text does not get truncated');
-                            }}>
+                        >
                         {`"${review.comment}"`}
                     </TextEllipsis>
                 </div>
@@ -83,9 +99,7 @@ class UserView extends Component {
             );
 
         const rating = userRating(this.props.profileComments);
-        console.log("profileComments: ", this.props.profileComments);
         const topComments = topReviews(this.props.profileComments);
-        console.log("topComments: ", topComments);
         var mdSize = (!topComments) ? 5 : 3;
 
         return (
@@ -98,21 +112,11 @@ class UserView extends Component {
                         <hr className="user-view-hr" />
 
                         <Fade in={this.state.fadeIn} timeout={300} tag="h1" className="mt-6">
-                            <div className={`row offset-md-${mdSize}`}>
 
+                            <div className={`row offset-md-${mdSize}`}>
                                 <div className="col col-4 rating-email">   
                                     <div className="row"> 
-                                        <div className="user-view-counter bg-secondary rounded text-white">
-                                            <CountUp
-                                                className="custom-count"
-                                                start={0}
-                                                end={rating}
-                                                duration={4}
-                                                delay={0}
-                                                decimals={1}
-                                            />
-                                        </div>
-                                        <div className="user-view-rating">average rating</div>
+                                        {this.renderCounter(rating)}
                                     </div>    
                                     <div className="row user-view-contact">
                                         <i className=" fa fa-envelope fa-lg" />
@@ -124,14 +128,14 @@ class UserView extends Component {
 
                                 <div className="col offset-md-1 top-reviews">
                                     <div className="row top-positive">
-                                        {(topComments && topComments.positive) && this.renderTopReviews(topComments.positive, "Positive")}                                        
+                                        {topComments && this.renderTopReviews(topComments.positive, "Positive")}                                    
                                     </div>
                                     <div className="row top-critical">
                                         {topComments && this.renderTopReviews(topComments.critical, "Critical")}
                                     </div>
                                 </div>
-
                             </div>
+
                         </Fade>
                     </Fade>
                 </Jumbotron>
@@ -155,11 +159,10 @@ function topReviews(comments) {
             if(list.length === 0)
                 return null;
             
-            const data = {
+            return {
                 positive: _.last(list),
                 critical: _.head(list)
-            }
-            return data;
+            };
         }
          return null; 
 }
@@ -181,7 +184,6 @@ function userRating(commentsByServices) {
 }
 
 function mapStateToProps( state ) {
-    console.log("state: ", state);
     return {
         user: state.user.user,
         profileServices: state.services.profileServices,
