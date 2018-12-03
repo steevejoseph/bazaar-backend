@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { setServiceToEdit } from '../actions';
+import { setServiceToEdit, addFavorite } from '../actions';
 import PhotoInput from './photo_input';
 
 const items = [
@@ -23,6 +23,7 @@ class ServiceCard extends Component {
         this.openServiceView = this.openServiceView.bind(this);
         this.handleEditServiceClickEvent = this.handleEditServiceClickEvent.bind(this);
         this.handleDeleteServiceClickEvent = this.handleDeleteServiceClickEvent.bind(this);
+        this.handleHeartClickEvent = this.handleHeartClickEvent.bind(this);
     }
 
     openServiceView() {
@@ -39,12 +40,27 @@ class ServiceCard extends Component {
         this.props.toggleDeleteServiceModal();
     }
 
+    handleHeartClickEvent() {
+        if (this.props.user)
+            this.props.addFavorite(this.props.service._id)
+    }
+
     renderGearbox() {
         return (
             <div className="gearbox text-right">
                 <PhotoInput resource={"service"} resourceId={this.props.service._id}/>
                 <i onClick={this.handleEditServiceClickEvent} className="fa fa-gear text-muted" />
                 <i onClick={this.handleDeleteServiceClickEvent} className="fa fa-trash-o text-danger" />
+            </div>
+        );
+    }
+
+    renderFavoriteButton() {
+        return (
+            <div onClick={this.handleHeartClickEvent} className="heart-card">
+                <i className={`fa ${this.props.user 
+                    && this.props.user.favorites
+                    && this.props.user.favorites.includes(this.props.service._id)  ? 'fa-heart' : 'fa-heart-o'}`} />
             </div>
         );
     }
@@ -56,6 +72,7 @@ class ServiceCard extends Component {
         return (
             <div className="col-lg-3 col-md-6 col-sm-6 col-12 p-0">
                     <div className="card">
+                    {this.renderFavoriteButton()}
                     <div className="img-container">
                         <img className="card-img-top cursor img" onClick={this.openServiceView} src={!this.props.service.photos || this.props.service.photos.length === 0 ? "https://picsum.photos/600/390/?random" : this.props.service.photos[0]} alt="Card image" />
                     </div>
@@ -71,4 +88,10 @@ class ServiceCard extends Component {
     }
 }
 
-export default withRouter(connect(null, {setServiceToEdit})(ServiceCard));
+function mapStateToProps(state) {
+    return {
+        user: state.user.user
+    };
+}
+
+export default withRouter(connect(mapStateToProps, {setServiceToEdit, addFavorite})(ServiceCard));
