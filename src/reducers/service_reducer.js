@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { SERVICE_SEARCH_TAG, SET_SERVICE_TO_EDIT, FETCH_ALL_SERVICES, 
          CREATE_SERVICE, SERVICE_SEARCH, FETCH_USERS_SERVICES, 
          EDIT_SERVICE, DELETE_SERVICE, CREATE_REVIEW, FETCH_SERVICE_AND_OWNER, 
-         FETCH_USER_VIEW_SERVICES } from '../actions';
+         FETCH_USER_VIEW_SERVICES, FETCH_FAVORITE_SERVICES } from '../actions';
 
 export default function(state = {}, action) {   
     switch (action.type) {
@@ -94,6 +94,11 @@ export default function(state = {}, action) {
         case CREATE_REVIEW:
             return {
                 ...state,
+            }
+        case FETCH_FAVORITE_SERVICES:
+            return {
+                ...state,
+                favorites: action.payload
             }
         default:
             return state;

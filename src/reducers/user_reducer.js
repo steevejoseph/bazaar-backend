@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { CREATE_USER, LOGIN, GET_USER_FROM_LOCAL_STORAGE, LOG_OUT_USER, FETCH_SERVICE_AND_OWNER} from '../actions';
+import { CREATE_USER, LOGIN, GET_USER_FROM_LOCAL_STORAGE, LOG_OUT_USER, 
+    FETCH_SERVICE_AND_OWNER, ADD_FAVORITE } from '../actions';
 
 export default function(state = {}, action) {
     switch (action.type) {
@@ -33,7 +34,6 @@ export default function(state = {}, action) {
             }
         case LOG_OUT_USER:
             return {
-                ...state,
                 user: null,
                 loggedIn: false,
             }
@@ -42,6 +42,15 @@ export default function(state = {}, action) {
                 ...state,
                 serviceOwner: action.payload.data.owner
             }
+        case ADD_FAVORITE:
+            if (action.payload.status === 200) {
+                localStorage.setItem('loggedInUser', JSON.stringify(action.payload.data.result))
+                return {
+                    ...state,
+                    user: action.payload.data.result
+                }
+            }
+            return state;
         default:
             return state;
     }

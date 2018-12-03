@@ -409,8 +409,13 @@ img {
   padding-bottom: 10px;
 }
 
-.navbar-brand {
-
+.heart-card {
+  position: absolute;
+  z-index: 1;
+  color: white;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
 }
 
 .top-text { 
@@ -421,4 +426,11 @@ img {
 
 .top-critical {
   margin-top: 15px;
+}
+  
+.heart-service-view {
+  font-size: 30px;
+  padding-top: 17px;
+  padding-right: 10px;
+  text-align: right;
 }
