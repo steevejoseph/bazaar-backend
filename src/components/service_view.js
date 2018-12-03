@@ -9,24 +9,6 @@ import Markdown from 'markdown-to-jsx';
 import { SyncLoader } from 'react-spinners';
 import { MARKDOWN_OPTIONS } from '../constants';
 
-const OPTIONS = [
-    {
-        name: "Starter",
-        description: "2 concepts to choose from with high resolution jpeg simple logos only.",
-        price: 10
-    },
-    {
-        name: "Standard",
-        description: "3 concepts to choose from with HD jpeg and transparent background.",
-        price: 25
-    },
-    {
-        name: "Super",
-        description: "3 concepts to choose from with all files, 3d mockup, unlimited revisions and fast delivery.",
-        price: 50
-    }
-]
-
 const items = [
     {
       src: `${"https://picsum.photos/1200/780/?random"}`,
@@ -136,7 +118,7 @@ class ServiceView extends Component {
     renderOptionTabs() {
         var i = 0;
 
-        return _.map(OPTIONS, option => {
+        return _.map(JSON.parse(this.props.service.options), option => {
             return (
                 <a 
                     className={`nav-item nav-link ${i++ == 0 ? 'active' : ''}`} 
@@ -158,7 +140,7 @@ class ServiceView extends Component {
         const serviceOwner = this.props.service.owner;
         const loggedInUserIsOwner = this.props.user && (serviceOwner === this.props.user._id);
 
-        return _.map(OPTIONS, option => {
+        return _.map(JSON.parse(this.props.service.options), option => {
             return (
                 <div 
                     className={`tab-pane ${i++ == 0 ? 'show active' : ''}`} 
@@ -352,8 +334,8 @@ class ServiceView extends Component {
 
                         <div className="col px-1">
                             <div className="options-and-owner sticky-top px-2">
-                                {this.renderOptions()}
-                                <div className="p-3" />
+                                {this.props.service.options && this.renderOptions()}
+                                {this.props.service.options && <div className="p-3" />}
                                 {this.renderOwner()}
                             </div>
                         </div>

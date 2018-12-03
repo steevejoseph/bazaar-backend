@@ -65,12 +65,35 @@ export function createUser(values, callback, errorCallback) {
 }
 
 export function createService(values, callback) {
+    var options = [];
+
+    options.push({
+        name: "Starter",
+        description: values.starterDescription,
+        price: values.starterPrice.substring(1)
+    });
+
+    if (values.standardPrice)
+        options.push({
+            name: "Standard",
+            description: values.standardDescription,
+            price: values.standardPrice.substring(1)
+        });
+        
+    if (values.superPrice)
+        options.push({
+            name: "Super",
+            description: values.superDescription,
+            price: values.superPrice.substring(1)
+        });
+
     const data = {
         name: values.serviceName,
         tags: values.category,
         description: values.description,
         owner: values.user._id,
-        price: values.price
+        price: values.starterPrice.substring(1),
+        options: JSON.stringify(options)
     };
 
     return axios.post(`${ROOT_URL}/services/create`, data).then((req) => {
@@ -84,11 +107,34 @@ export function createService(values, callback) {
 }
 
 export function editService(values, callback) {
+    var options = [];
+
+    options.push({
+        name: "Starter",
+        description: values.starterDescription,
+        price: values.starterPrice.substring(1)
+    });
+
+    if (values.standardPrice)
+        options.push({
+            name: "Standard",
+            description: values.standardDescription,
+            price: values.standardPrice.substring(1)
+        });
+        
+    if (values.superPrice)
+        options.push({
+            name: "Super",
+            description: values.superDescription,
+            price: values.superPrice.substring(1)
+        });
+
     const data = {
         name: values.serviceName,
         tags: values.category,
         description: values.description,
         price: values.price,
+        options: JSON.stringify(options),
         id: values.id
     };
 
