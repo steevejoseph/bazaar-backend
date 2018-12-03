@@ -5,13 +5,13 @@ import { Jumbotron, Fade } from 'reactstrap';
 import { SyncLoader } from 'react-spinners';
 import CountUp from 'react-countup';
 import ServiceCardListRow from './service_card_list_row';
+import { serviceRating } from './service_view';
 
 class UserView extends Component {
 
     constructor(props) {
         super(props);
         this.state = { 
-            avgRating: 0,
             fadeIn: true 
         };
 
@@ -50,6 +50,8 @@ class UserView extends Component {
                         />
                 </div>
             );
+        console.log("profilecomments: ", this.props.profileComments);
+        const rating = userRating(this.props.profileComments);
 
         return (
             <div> 
@@ -66,8 +68,8 @@ class UserView extends Component {
                                     <CountUp
                                         className="custom-count"
                                         start={0}
-                                        end={4.3}
-                                        duration={4}
+                                        end={rating}
+                                        duration={2}
                                         delay={0}
                                         decimals={1}
                                     />
@@ -86,17 +88,34 @@ class UserView extends Component {
                     </Fade>
                 </Jumbotron>
  
-                {this.renderServices('Most Popular', [])}
+                {this.renderServices('Top Rated', [])}
                 {this.renderServices(`${this.props.serviceOwner.firstName}'s Services`, this.props.profileServices)}
             </div>
         );
     }
 }
 
+function userRating(commentsByServices) {
+
+    var i, sum = 0, length = commentsByServices.length;
+
+    for(i = 0; i < commentsByServices.length; i++) {
+        if(commentsByServices[i].length == 0)
+            length--;
+        else sum += serviceRating(commentsByServices[i]);
+    }
+
+    if(length === 0) return 0;
+
+    return sum/length;
+}
+
 function mapStateToProps( state ) {
+    console.log("state: ", state);
     return {
         user: state.user.user,
         profileServices: state.services.profileServices,
+        profileComments: state.services.profileComments,
         serviceOwner: state.user.serviceOwner
     };
 }
