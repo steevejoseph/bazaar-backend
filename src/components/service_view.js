@@ -279,9 +279,6 @@ class ServiceView extends Component {
         const loggedInUserIsOwner = this.props.user && (serviceOwner === this.props.user._id);
         const rating = serviceRating(this.props.comments);
 
-        //if(!this.props.comments) serviceRating = 0;
-        //else serviceRating = serviceRating(this.props.comments);
-
         return (
             <div className="service-view container">
 

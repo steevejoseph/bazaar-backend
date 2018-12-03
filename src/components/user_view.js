@@ -95,6 +95,10 @@ class UserView extends Component {
     }
 }
 
+function topReviews() {
+     
+}
+
 function userRating(commentsByServices) {
 
     var i, sum = 0, length = commentsByServices.length;
