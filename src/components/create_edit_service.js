@@ -190,7 +190,7 @@ class CreateEditService extends Component {
                         component={this.renderInputField}
                     />
                     <Field 
-                        label="Description (What makes this tier different from the rest)"
+                        label="Description (What makes this tier different from the rest?)"
                         name="starterDescription"
                         component={this.renderTextarea}
                     />
@@ -207,7 +207,7 @@ class CreateEditService extends Component {
                         component={this.renderInputField}
                     />
                     <Field 
-                        label="Description (What makes this tier different from the rest)"
+                        label="Description (What makes this tier different from the rest?)"
                         name="standardDescription"
                         component={this.renderTextarea}
                     />
@@ -224,7 +224,7 @@ class CreateEditService extends Component {
                         component={this.renderInputField}
                     />
                     <Field 
-                        label="Description (What makes this tier different from the rest)"
+                        label="Description (What makes this tier different from the rest?)"
                         name="superDescription"
                         component={this.renderTextarea}
                     />
