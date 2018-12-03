@@ -6,6 +6,8 @@ import { SyncLoader } from 'react-spinners';
 import CountUp from 'react-countup';
 import ServiceCardListRow from './service_card_list_row';
 import { serviceRating } from './service_view';
+import Rating from './service_rating';
+import _ from 'lodash';
 
 class UserView extends Component {
 
@@ -50,42 +52,74 @@ class UserView extends Component {
                         />
                 </div>
             );
-        console.log("profilecomments: ", this.props.profileComments);
         const rating = userRating(this.props.profileComments);
+        const topComments = topReviews(this.props.profileComments);
+
+        console.log("top comments: ", topComments);
 
         return (
             <div> 
                 <Jumbotron>
-                    <Fade in={this.state.fadeIn} tag="h1" className="mt-6">
+                    <Fade in={this.state.fadeIn} timeout={200} tag="h1" className="mt-6">
                         <h1 className="jumbo-greeting display-3 text-center">
                             {`Hi, I'm ${this.props.serviceOwner.firstName}!`}
                         </h1>
                         <hr className="user-view-hr" />
+                        <Fade in={this.state.fadeIn} timeout={300} tag="h1" className="mt-6">
 
-                        <div className="offset-md-5">
-                            <div className="row">
-                                <div className="user-view-counter col-xs-12 bg-secondary rounded text-white">
-                                    <CountUp
-                                        className="custom-count"
-                                        start={0}
-                                        end={rating}
-                                        duration={2}
-                                        delay={0}
-                                        decimals={1}
-                                    />
+                            <div className="row offset-md-1">
+
+
+                                <div className="col col-4 rating-email">   
+                                    <div className="row">                           
+                
+                                        <div className="user-view-counter col-xs-12 bg-secondary rounded text-white">
+                                            <CountUp
+                                                className="custom-count"
+                                                start={0}
+                                                end={rating}
+                                                duration={2}
+                                                delay={0}
+                                                decimals={1}
+                                            />
+                                        </div>
+                                        <div className="user-view-rating">average rating</div>
+                                    </div>    
+                                    <div className="row user-view-contact">
+                                        <i className="col-xs-12 fa fa-envelope fa-lg" />
+                                        <div className="col-xs-12 user-view-email">
+                                            {this.props.serviceOwner.email}
+                                        </div>
+                                    </div>  
+                                    
+                                </div>  
+
+
+                                <div className="col top-reviews">
+                                    <div className="row top-positive">
+                                        <h5>{"Top Positive Review"}</h5>
+                                            <Rating 
+                                                starColor={'rgb(0, 132, 137)'} 
+                                                overallRating={topComments.positive.rateing} 
+                                                />
+                                            <h6 className="positive-comment">{`"${topComments.positive.comment}"`}</h6>
+                                    </div>
+
+                                    <div className="row top-critical">
+                                        <h5>{"Top Critcal Review"}</h5>
+                                        <Rating 
+                                            starColor={'rgb(0, 132, 137)'} 
+                                            overallRating={topComments.critical.rateing} 
+                                            />
+                                        <h6>{`"${topComments.critical.comment}"`}</h6>
+                                    </div>
+                                
                                 </div>
-                                <div className="col-xs-12 user-view-rating">average rating</div>
                             </div>
+                        </Fade>
 
-                            <div className="row user-view-contact">
-                                <i className="col-xs-12 fa fa-envelope fa-lg" />
-                                <div className="col-xs-12 user-view-email">
-                                    {this.props.serviceOwner.email}
-                                </div>
-                            </div>    
 
-                        </div>
-                    </Fade>
+                        </Fade>
                 </Jumbotron>
  
                 {this.renderServices('Top Rated', [])}
@@ -95,11 +129,32 @@ class UserView extends Component {
     }
 }
 
-function topReviews() {
+function topReviews(comments) {
+    var cutoff = 3, i, j, k;
+    var topPositive, topCritical,  topPositiveRating = 0, topCriticalRating = 5;
+
+    var list = [], modify = [];
+    
+        if(comments){
+
+            for(var i = 0; i < comments.length; i++)
+                list = _.union(list, comments[i]);
+            
+            list =  _.sortBy(list, 'rateing');
+            console.log("modify: ", _.head(list).comment);
+
+            const data = {
+                positive: _.last(list),
+                critical: _.head(list)
+            }
+            return data;
+        }
+         return null;   
      
 }
 
 function userRating(commentsByServices) {
+    if(!commentsByServices) return 0;
 
     var i, sum = 0, length = commentsByServices.length;
 

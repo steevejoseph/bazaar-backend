@@ -13,7 +13,6 @@ class ServiceReviewsList extends Component {
                             starColor={'rgb(0, 132, 137)'} 
                             overallRating={comment.rateing} 
                             />
-                        <div className="p-2"/>
                         {comment.comment}
                         <div className=""></div>
                     </h6>

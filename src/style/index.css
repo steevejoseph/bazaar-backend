@@ -389,7 +389,7 @@ img {
 .user-view-email {
   margin-left: 10px;
   font-size: 15px;
-  padding-top: 12px;
+  margin-top: 12px;
 }
 
 .user-view-counter {
@@ -411,4 +411,8 @@ img {
 
 .navbar-brand {
 
+}
+
+.top-critical {
+    margin-top: 30px;
 }
