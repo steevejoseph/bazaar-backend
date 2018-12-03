@@ -132,7 +132,7 @@ export function editService(values, callback) {
         name: values.serviceName,
         tags: values.category,
         description: values.description,
-        price: values.price,
+        price: values.starterPrice.substring(1),
         options: JSON.stringify(options),
         id: values.id
     };
