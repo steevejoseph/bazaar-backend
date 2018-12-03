@@ -41,6 +41,7 @@ class UserView extends Component {
     }
 
     renderTopReviews(review, type){
+       
         return(
             <h6>
                 <h5>{`Top ${type} Review`}</h5>
@@ -82,7 +83,10 @@ class UserView extends Component {
             );
 
         const rating = userRating(this.props.profileComments);
+        console.log("profileComments: ", this.props.profileComments);
         const topComments = topReviews(this.props.profileComments);
+        console.log("topComments: ", topComments);
+        var mdSize = (!topComments) ? 5 : 3;
 
         return (
             <div> 
@@ -94,7 +98,7 @@ class UserView extends Component {
                         <hr className="user-view-hr" />
 
                         <Fade in={this.state.fadeIn} timeout={300} tag="h1" className="mt-6">
-                            <div className="row offset-md-3">
+                            <div className={`row offset-md-${mdSize}`}>
 
                                 <div className="col col-4 rating-email">   
                                     <div className="row"> 
@@ -120,7 +124,7 @@ class UserView extends Component {
 
                                 <div className="col offset-md-1 top-reviews">
                                     <div className="row top-positive">
-                                        {topComments && this.renderTopReviews(topComments.positive, "Positive")}                                        
+                                        {(topComments && topComments.positive) && this.renderTopReviews(topComments.positive, "Positive")}                                        
                                     </div>
                                     <div className="row top-critical">
                                         {topComments && this.renderTopReviews(topComments.critical, "Critical")}
@@ -132,7 +136,6 @@ class UserView extends Component {
                     </Fade>
                 </Jumbotron>
  
-                {this.renderServices('Top Rated', [])}
                 {this.renderServices(`${this.props.serviceOwner.firstName}'s Services`, this.props.profileServices)}
             </div>
         );
@@ -148,6 +151,9 @@ function topReviews(comments) {
                 list = _.union(list, comments[i]);
             
             list =  _.sortBy(list, 'rateing');
+            
+            if(list.length === 0)
+                return null;
             
             const data = {
                 positive: _.last(list),
