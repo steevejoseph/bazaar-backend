@@ -44,18 +44,15 @@ class UserView extends Component {
 
     renderCounter(rating) {
         return (
-            <div>
-                <div className="user-view-counter bg-secondary rounded text-white">
-                    <CountUp
-                        className="custom-count"
-                        start={0}
-                        end={rating}
-                        duration={4}
-                        delay={0}
-                        decimals={1}
-                    />
-                </div>
-                <div className="user-view-rating">average rating</div>
+            <div className="user-view-counter bg-secondary rounded text-white">
+                <CountUp
+                    className="custom-count"
+                    start={0}
+                    end={rating}
+                    duration={4}
+                    delay={0}
+                    decimals={1}
+                />
             </div>
         );
     }
@@ -117,6 +114,7 @@ class UserView extends Component {
                                 <div className="col col-4 rating-email">   
                                     <div className="row"> 
                                         {this.renderCounter(rating)}
+                                        <div className="user-view-rating">average rating</div>
                                     </div>    
                                     <div className="row user-view-contact">
                                         <i className=" fa fa-envelope fa-lg" />
