@@ -81,7 +81,7 @@ class ServiceView extends Component {
             this.props.addFavorite(this.props.service._id)
     }
 
-    renderServiceReviews() {
+    renderServiceReviews(rating) {
         return(
             <div className="review-list">
                 <ServiceReviewsList
