@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchServiceAndOwner, connectChat, createRoom} from '../actions/index';
+import { fetchServiceAndOwner, connectChat, createRoom, addFavorite } from '../actions/index';
 import Rating from './service_rating';
 import CreateReview from './create_review';
 import ServiceReviewsList from './service_reviews_list';
@@ -31,6 +31,7 @@ class ServiceView extends Component {
         this.renderOptionContent = this.renderOptionContent.bind(this);
         this.handleOwnerClick = this.handleOwnerClick.bind(this);
         this.renderCarouselItems = this.renderCarouselItems.bind(this);
+        this.handleHeartClickEvent = this.handleHeartClickEvent.bind(this);
     }
 
     componentDidMount() {
@@ -83,6 +84,11 @@ class ServiceView extends Component {
 
         this.props.createRoom(this.props.currentUser, this.props.service.owner, roomName);
         this.props.history.push(`/messages`);
+    }
+
+    handleHeartClickEvent() {
+        if (this.props.user)
+            this.props.addFavorite(this.props.service._id)
     }
 
     renderServiceReviews() {
@@ -269,6 +275,16 @@ class ServiceView extends Component {
         );
     }
 
+    renderFavoriteButton() {
+        return (
+            <div onClick={this.handleHeartClickEvent} className="heart-service-view">
+                <i className={`fa ${this.props.user 
+                    && this.props.user.favorites
+                    && this.props.user.favorites.includes(this.props.service._id)  ? 'fa-heart' : 'fa-heart-o'}`} />
+            </div>
+        );
+    }
+
     render() {
         const { id } = this.props.match.params;
 
@@ -298,7 +314,12 @@ class ServiceView extends Component {
                                     {this.renderCarousel(!this.props.service.photos || this.props.service.photos.length === 0 ? items : this.prepPhotos(this.props.service.photos))}
                                 </div>
                                 <div className="service-header">
-                                    <h1 className="title">{this.props.service.name}</h1>
+                                    <div className="row">
+                                        <h1 className="col col-10 title">{this.props.service.name}</h1>
+                                        <div className="col col-2">
+                                            {this.renderFavoriteButton()}
+                                        </div>
+                                    </div>
                                     <h6 className="category mb-2 text-muted">{this.props.service.tags.length > 0 ? this.props.service.tags[0].toUpperCase() : ''}</h6>
                                     <h6 className="price card-subtitle mb-2 text-success ">${this.props.service.price} per service</h6>
                                 </div>
@@ -349,4 +370,4 @@ function mapStateToProps( state ) {
     };
 }
 
-export default connect(mapStateToProps, { fetchServiceAndOwner, connectChat, createRoom})(ServiceView);
+export default connect(mapStateToProps, { addFavorite, fetchServiceAndOwner, connectChat, createRoom})(ServiceView);

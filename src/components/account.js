@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchUsersServices } from '../actions';
+import { fetchUsersServices, fetchFavoriteServices } from '../actions';
 import ServiceCardListRow from './service_card_list_row.js';
 import Modal from './modal';
 import CreateEditService from './create_edit_service';
 import DeleteService from './delete_service';
 import { SyncLoader } from 'react-spinners';
-
 
 class Account extends Component {
     constructor(props) {
@@ -28,8 +27,10 @@ class Account extends Component {
     }
 
     componentDidMount() {
-        if (this.props.user)
+        if (this.props.user) {
             this.props.fetchUsersServices(this.props.user._id);
+            this.props.fetchFavoriteServices(this.props.user._id);
+        }
     }
 
     toggleDeleteServiceModal() {
@@ -44,16 +45,6 @@ class Account extends Component {
         this.toggleDeleteServiceModal();
     }
 
-    renderEditModal() {
-        return (
-            <Modal 
-                isOpen={this.state.showEditServiceModal}
-                toggle={this.toggleEditServiceModal}
-                modalBody={<CreateEditService isEdit={true} successCallback={this.editSuccessCallback}/>}
-            />
-        );
-    }
-
     renderDeleteModal() {
         return (
             <Modal 
@@ -65,7 +56,7 @@ class Account extends Component {
     }
 
     render() {
-        if (!this.props.services)       
+        if (!this.props.services || !this.props.favorites)       
             return (
                 <div className="account container text-center">
                     <SyncLoader 
@@ -78,23 +69,30 @@ class Account extends Component {
                 </div>
             );
 
-        if(this.props.services.length === 0)
+        if (this.props.services.length === 0 && (!this.props.favorites || this.props.favorites.length === 0))
             return (
-                <div className="container account">
-                    <h5>You do not own any services</h5>
+                <div className="account container text-center">
+                    <h1>You don't have any services or favorites.</h1>
                 </div>
             );
 
         return (
             <div className="container account">
-                <ServiceCardListRow 
-                    header="My Services" 
-                    services={this.props.services} 
-                    ableToEdit={true} 
-                    toggleEditServiceModal={this.toggleEditServiceModal}
-                    toggleDeleteServiceModal={this.toggleDeleteServiceModal}
-                    />
-                {this.renderEditModal()}
+                {this.props.services.length > 0 && 
+                    <ServiceCardListRow 
+                        header="My Services" 
+                        services={this.props.services} 
+                        ableToEdit={true} 
+                        toggleEditServiceModal={this.toggleEditServiceModal}
+                        toggleDeleteServiceModal={this.toggleDeleteServiceModal}
+                        />
+                }
+                {this.props.favorites && this.props.favorites.length > 0 &&
+                    <ServiceCardListRow 
+                        header="My Favorites" 
+                        services={this.props.favorites} 
+                        />
+                }
                 {this.renderDeleteModal()}
             </div>
         );
@@ -102,10 +100,13 @@ class Account extends Component {
 }
 
 function mapStateToProps(state) {
+    console.log(state);
+    
     return { 
         user: state.user.user,
-        services: state.services.accountServices
+        services: state.services.accountServices,
+        favorites: state.services.favorites
     };
 }
 
-export default connect(mapStateToProps, {fetchUsersServices} )(Account);
+export default connect(mapStateToProps, {fetchUsersServices, fetchFavoriteServices} )(Account);

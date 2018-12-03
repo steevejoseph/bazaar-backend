@@ -24,6 +24,8 @@ export const FETCH_USERS_ROOMS = 'fetch_users_rooms';
 export const CREATE_ROOM = 'create_room';
 export const SEND_MESSAGE = 'send_message';
 export const FETCH_USER_VIEW_SERVICES = 'fetch_user_view_services';
+export const ADD_FAVORITE = 'add_favorite';
+export const FETCH_FAVORITE_SERVICES = 'fetch_favorite_services';
 
 export function login(values, callback, errorCallback) {
     const data = {
@@ -314,4 +316,36 @@ export function createRoom(currentUser, serviceOwner, roomName){
             console.log("User needs to be added to chatkit");
         }
     })
+}
+
+export function addFavorite(serviceID) {
+    const data = {
+        newFavoriteId: serviceID
+    }
+
+    return axios.post(`${ROOT_URL}/users/addFavorite`, data).then((req) => {
+        return {
+            type: ADD_FAVORITE,
+            payload: req
+        };
+    });
+}
+
+export function fetchFavoriteServices(userID) {
+   return axios.get(`${ROOT_URL}/users/${userID}`).then((req) => {
+
+        var services = [];
+        var set = {};
+
+        for (var i = 0; i < req.data.favoriteServices.length; i++)
+            if (!set[req.data.favoriteServices[i].service._id]) {
+                services.push(req.data.favoriteServices[i].service)    
+                set[req.data.favoriteServices[i].service._id] = true;
+            }
+
+        return {
+            type: FETCH_FAVORITE_SERVICES,
+            payload: services
+        };
+    });
 }
