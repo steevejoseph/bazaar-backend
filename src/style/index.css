@@ -389,7 +389,7 @@ img {
 .user-view-email {
   margin-left: 10px;
   font-size: 15px;
-  padding-top: 12px;
+  margin-top: 12px;
 }
 
 .user-view-counter {
@@ -404,8 +404,8 @@ img {
 }
 
 .user-view-contact {
-  padding-top: 10px;
-  padding-left: 3px;
+  padding-top: 40px;
+  padding-left: 1px;
   padding-bottom: 10px;
 }
 
@@ -418,6 +418,16 @@ img {
   font-size: 20px;
 }
 
+.top-text { 
+  height: 40px;
+  width: 80%;
+  overflow: hidden;
+}
+
+.top-critical {
+  margin-top: 15px;
+}
+  
 .heart-service-view {
   font-size: 30px;
   padding-top: 17px;

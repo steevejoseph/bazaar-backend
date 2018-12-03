@@ -77,8 +77,9 @@ export default function(state = {}, action) {
             if (action.payload.status == 200){
                 return { 
                     ...state,
-                    profileServices: action.payload.data.userServices
-                    };
+                    profileServices: action.payload.data.userServices,
+                    profileComments: action.payload.data.userServicesComments
+                };
             }
             else
                 return {

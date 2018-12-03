@@ -54,16 +54,6 @@ class ServiceView extends Component {
         this.props.fetchServiceAndOwner(id);
     }
 
-    overallRating (){
-        var sum = 0, i;
-
-        if(!this.props.comments) return 0;
-
-        for (i = 0; i < this.props.comments.length; i++)
-            sum += this.props.comments[i].rateing;
-
-        return sum/this.props.comments.length;
-    }
 
     handleOwnerClick(){
         this.props.history.push(`/user/${this.props.serviceOwner._id}`);
@@ -91,12 +81,12 @@ class ServiceView extends Component {
             this.props.addFavorite(this.props.service._id)
     }
 
-    renderServiceReviews() {
+    renderServiceReviews(rating) {
         return(
             <div className="review-list">
                 <ServiceReviewsList
                     comments={this.props.comments}
-                    overallRating={this.overallRating()}
+                    overallRating={rating}
                     starColor={'rgb(0, 132, 137)'}
                     />
             </div>
@@ -303,6 +293,7 @@ class ServiceView extends Component {
 
         const serviceOwner = this.props.service.owner;
         const loggedInUserIsOwner = this.props.user && (serviceOwner === this.props.user._id);
+        const rating = serviceRating(this.props.comments);
 
         return (
             <div className="service-view container">
@@ -345,9 +336,9 @@ class ServiceView extends Component {
                     <div className="reviews col-md-8 p-0 pt-3">
                         <Rating
                             starColor={'rgb(0, 132, 137)'}
-                            overallRating={this.overallRating()}
+                            overallRating={rating}
                             />
-                        {this.renderServiceReviews()}
+                        {this.renderServiceReviews(rating)}
                         {this.props.loggedIn && !loggedInUserIsOwner && this.renderCreateReview()}
                     </div>
 
@@ -355,6 +346,17 @@ class ServiceView extends Component {
             </div>
         );
     }
+}
+
+export function serviceRating(comments){
+    var sum = 0, i;
+
+        if(!comments) return 0;
+
+        for (i = 0; i < comments.length; i++)
+            sum += comments[i].rateing;
+
+        return sum/comments.length;
 }
 
 function mapStateToProps( state ) {
