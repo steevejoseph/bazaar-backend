@@ -26,7 +26,6 @@ export const SEND_MESSAGE = 'send_message';
 export const FETCH_USER_VIEW_SERVICES = 'fetch_user_view_services';
 export const ADD_FAVORITE = 'add_favorite';
 export const FETCH_FAVORITE_SERVICES = 'fetch_favorite_services';
-export const FETCH_FAVORITE_IDS = 'fetch_favorite_ids';
 
 export function login(values, callback, errorCallback) {
     const data = {
@@ -334,6 +333,7 @@ export function addFavorite(serviceID) {
 
 export function fetchFavoriteServices(userID) {
    return axios.get(`${ROOT_URL}/users/${userID}`).then((req) => {
+
         var services = [];
         var set = {};
 
@@ -349,12 +349,3 @@ export function fetchFavoriteServices(userID) {
         };
     });
 }
-
-export function fetchFavoriteIds(userID) {
-    return axios.get(`${ROOT_URL}/users/${userID}`).then((req) => {
-         return {
-             type: FETCH_FAVORITE_IDS,
-             payload: req
-         };
-     });
- }
