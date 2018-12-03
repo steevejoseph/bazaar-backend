@@ -19,7 +19,8 @@ exports.service_create = (req, res, next) => {
     description: req.body.description,
     price: req.body.price,
     reported: false,
-    tags: req.body.tags
+    tags: req.body.tags,
+    options: req.body.options
     
   });
 

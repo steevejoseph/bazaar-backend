@@ -39,7 +39,9 @@ var serviceSchema = new mongoose.Schema({
     photos: {
         type:[String], 
         default: []
-    }
+    },
+    
+    options: String
 });
 
 serviceSchema.index({
