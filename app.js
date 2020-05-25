@@ -82,6 +82,11 @@ app.use('/api/users', userAPI);
 app.use('/api/services', servicesAPI);
 app.use('/api/photos', photosAPI);
 
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+app.get('/', function(req, res, next) {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

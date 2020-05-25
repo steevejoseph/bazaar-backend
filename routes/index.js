@@ -6,10 +6,7 @@ var request = require('request');
 var urljoin = require("url-join");
 var baseUrl = 'http://localhost:' + process.env.PORT;
 var nodemailer = require('nodemailer');
-
-router.get('/', function(req, res, next) {
-  res.render('index');
-});
+const path = require('path');
 
 router.get("/signup", function(req, res){
 	res.render("signup.ejs");
