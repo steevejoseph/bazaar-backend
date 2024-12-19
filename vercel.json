@@ -6,7 +6,7 @@
       "use": "@vercel/static-build",
       "config": {
         "distDir": "build",
-        "buildCommand": "cd frontend && npm install && npm run build"
+        "buildCommand": "npm run build"
       }
     },
     {
@@ -26,5 +26,8 @@
       "src": "/(.*)",
       "dest": "/frontend/build/$1"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
