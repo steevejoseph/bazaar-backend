@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "node ./bin/www",
-    "start": "npm run build:frontend && node ./bin/www",
-    "build:frontend": "cd frontend && npm run build"
+    "start": "node ./bin/www",
+    "build": "npm run build:frontend",
+    "build:frontend": "cd frontend && npm install && npm run build",
+    "vercel-build": "npm run build"
   },
   "dependencies": {
     "@pusher/chatkit-client": "^1.2.0",
