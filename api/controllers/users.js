@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs'); //normal bcrypt has issues with heroku thus the use of bcryptjs need to change to use same thing as last project (passport)
 const jwt = require('jsonwebtoken'); //for creation of tokens to authentication
 require("dotenv").config();
-mongoose.connect(process.env.MONGO_DB_ATLAS_URL, { useNewUrlParser: true });
+
 const Chatkit = require("@pusher/chatkit-server");
 
 const saltRounds = 10; //number of times to salt password hash
@@ -12,7 +12,8 @@ const saltRounds = 10; //number of times to salt password hash
 const User = require("../models/user.js"); //require the user schema
 const Service = require("../models/service.js");
 const Comments = require("../models/comment.js");
-
+const connectDB = require("../../config/database.js");
+connectDB();
 
  // init chatkit
     const chatkit = new Chatkit.default({

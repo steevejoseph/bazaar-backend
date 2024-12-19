@@ -7,9 +7,11 @@ imgur.setAPIUrl('https://api.imgur.com/3/');
 
 const Service = require("../models/service.js");
 const User = require("../models/user.js");
+const connectDB = require("../../config/database.js");
 
 require("dotenv").config();
-mongoose.connect(process.env.MONGO_DB_ATLAS_URL, { useNewUrlParser: true });
+connectDB();
+
 // POSTS to ${ROOT_URL}/photos/service/:serviceId/create
 exports.photo_create_service = (req, res, next) => {
     console.log(JSON.stringify(req.file));

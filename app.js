@@ -21,6 +21,7 @@ var photosAPI = require("./api/routes/photosapi");
 
 var app = express();
 const jwt = require('jsonwebtoken');
+const connectDB = require("./config/database");
 
 // // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -28,7 +29,7 @@ const jwt = require('jsonwebtoken');
 
 // database connection
 require("dotenv").config();
-mongoose.connect(process.env.MONGO_DB_ATLAS_URL, { useNewUrlParser: true });
+connectDB();
 
 app.use(logger('dev'));
 app.use(express.json());
