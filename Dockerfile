@@ -43,9 +43,8 @@ COPY --from=builder /app/bin ./bin
 COPY --from=builder /app/app.js .
 COPY --from=builder /app/config ./config
 
-# Add non-root user for security
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-USER appuser
+# Create uploads directory
+RUN mkdir -p ./api/uploads
 
 # Set production environment
 ENV NODE_ENV=production
