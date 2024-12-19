@@ -5,11 +5,11 @@ const imgur = require('imgur');
 imgur.setClientId('2ce55c3b8fb0ca4');
 imgur.setAPIUrl('https://api.imgur.com/3/');
 
-const Service = require('../../models/service.js');
-const User = require('../../models/user.js');
+const Service = require("../models/service.js");
+const User = require("../models/user.js");
 
-mongoose.connect('mongodb://team7:ABC123@ds263832.mlab.com:63832/largo-dev', {useNewUrlParser: true});
-
+require("dotenv").config();
+mongoose.connect(process.env.MONGO_DB_ATLAS_URL, { useNewUrlParser: true });
 // POSTS to ${ROOT_URL}/photos/service/:serviceId/create
 exports.photo_create_service = (req, res, next) => {
     console.log(JSON.stringify(req.file));

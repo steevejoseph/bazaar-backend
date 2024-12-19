@@ -8,8 +8,8 @@ const Service = require('../models/service.js');
 const User = require('../models/user.js');
 
 var signupUrl = "https://bazaar-backend.herokuapp.com/api/users/signup"
-mongoose.connect('mongodb://team7:ABC123@ds263832.mlab.com:63832/largo-dev', {useNewUrlParser: true});
-
+require("dotenv").config();
+mongoose.connect(process.env.MONGO_DB_ATLAS_URL, { useNewUrlParser: true });
 var services = [];
 
 function clearDatabase() {

@@ -3,14 +3,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs'); //normal bcrypt has issues with heroku thus the use of bcryptjs need to change to use same thing as last project (passport)
 const jwt = require('jsonwebtoken'); //for creation of tokens to authentication
-mongoose.connect('mongodb://team7:ABC123@ds263832.mlab.com:63832/largo-dev', {useNewUrlParser: true});
-const Chatkit = require('@pusher/chatkit-server');
+require("dotenv").config();
+mongoose.connect(process.env.MONGO_DB_ATLAS_URL, { useNewUrlParser: true });
+const Chatkit = require("@pusher/chatkit-server");
 
 const saltRounds = 10; //number of times to salt password hash
 
-const User = require('../../models/user.js'); //require the user schema
-const Service = require('../../models/service.js');
-const Comments = require('../../models/comment.js');
+const User = require("../models/user.js"); //require the user schema
+const Service = require("../models/service.js");
+const Comments = require("../models/comment.js");
 
 
  // init chatkit
@@ -93,9 +94,9 @@ exports.user_login = (req, res, next) => {
   User.findOne({email: userEmail}).exec()
   .then(user => {
     // console.log("type: " + typeof user +" user:\n"+user);
-    if(user === {} || user === null || user === undefined) {
+    if (user === null || user === undefined) {
       return res.status(401).json({
-        message: 'Authentication failed'
+        message: "Authentication failed",
       });
     }
     bcrypt.compare(req.body.password, user.passwordHash, (err, result) => {

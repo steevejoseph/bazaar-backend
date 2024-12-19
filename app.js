@@ -30,14 +30,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // database connection
-mongoose.connect('mongodb://team7:ABC123@ds263832.mlab.com:63832/largo-dev', {useNewUrlParser: true});
-
+require("dotenv").config();
+mongoose.connect(process.env.MONGO_DB_ATLAS_URL, { useNewUrlParser: true });
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 app.use(cors());
 

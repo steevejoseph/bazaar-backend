@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://team7:ABC123@ds263832.mlab.com:63832/largo-dev', {useNewUrlParser: true});
-
-const Service = require('../../models/service.js');
-const Comment = require('../../models/comment.js');
+require("dotenv").config();
+mongoose.connect(process.env.MONGO_DB_ATLAS_URL, { useNewUrlParser: true });
+const Service = require("../models/service.js");
+const Comment = require("../models/comment.js");
 exports.service_create = (req, res, next) => {
   
     // console.log(req.headers.authorization);
