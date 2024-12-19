@@ -29,7 +29,7 @@
     "regex": "^0.1.1",
     "sass": "^1.69.7",
     "serve": "^10.1.1",
-    "webpack": "5.89.0"
+    "webpack": "5.94.0"
   },
   "devDependencies": {},
   "scripts": {
