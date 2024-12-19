@@ -9,8 +9,8 @@
   "scripts": {
     "dev": "node ./bin/www",
     "start": "node ./bin/www",
-    "build": "cd frontend && pnpm install && pnpm run build",
-    "vercel-build": "pnpm install && cd frontend && pnpm install && pnpm run build"
+    "build": "cd frontend && pnpm install --no-frozen-lockfile && pnpm run build",
+    "vercel-build": "pnpm install --no-frozen-lockfile && cd frontend && pnpm install --no-frozen-lockfile && pnpm run build"
   },
   "dependencies": {
     "@pusher/chatkit-client": "^1.2.0",

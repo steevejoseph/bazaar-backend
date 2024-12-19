@@ -1,22 +1,39 @@
 {
   "version": 2,
-  "buildCommand": "cd frontend && pnpm install --no-frozen-lockfile && pnpm run build",
-  "outputDirectory": "frontend/build",
-  "installCommand": "pnpm install --no-frozen-lockfile",
   "builds": [
+    {
+      "src": "bin/www",
+      "use": "@vercel/node",
+      "config": {
+        "nodeVersion": "18.x"
+      }
+    },
     {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "zeroConfig": true,
-        "nodeVersion": "18.x"
+        "nodeVersion": "18.x",
+        "buildCommand": "cd frontend && pnpm install --no-frozen-lockfile && pnpm run build",
+        "outputDirectory": "build"
       }
     }
   ],
   "routes": [
     {
+      "src": "/static/(.*)",
+      "dest": "/frontend/build/static/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/frontend/build/favicon.ico"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "/frontend/build/manifest.json"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/frontend/build/$1"
+      "dest": "/bin/www"
     }
   ]
 }
