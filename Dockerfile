@@ -11,10 +11,10 @@ RUN npm install -g pnpm@8.15.4
 COPY package.json pnpm-lock.yaml* ./
 COPY frontend/package.json frontend/
 
-# Install dependencies
-RUN pnpm install
+# Install dependencies with --no-frozen-lockfile to allow updates
+RUN pnpm install --no-frozen-lockfile
 WORKDIR /app/frontend
-RUN pnpm install
+RUN pnpm install --no-frozen-lockfile
 WORKDIR /app
 
 # Copy source files
@@ -34,7 +34,7 @@ RUN npm install -g pnpm@8.15.4
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --prod
+RUN pnpm install --prod --no-frozen-lockfile
 
 # Copy built frontend and necessary files
 COPY --from=builder /app/frontend/build ./frontend/build
