@@ -5,7 +5,8 @@
       "src": "bin/www",
       "use": "@vercel/node",
       "config": {
-        "nodeVersion": "18.x"
+        "nodeVersion": "18.x",
+        "installCommand": "pnpm install --no-frozen-lockfile"
       }
     },
     {
@@ -13,6 +14,7 @@
       "use": "@vercel/static-build",
       "config": {
         "nodeVersion": "18.x",
+        "installCommand": "pnpm install --no-frozen-lockfile",
         "buildCommand": "cd frontend && pnpm install --no-frozen-lockfile && pnpm run build",
         "outputDirectory": "build"
       }
@@ -35,5 +37,6 @@
       "src": "/(.*)",
       "dest": "/bin/www"
     }
-  ]
+  ],
+  "installCommand": "pnpm install --no-frozen-lockfile"
 }
