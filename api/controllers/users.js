@@ -9,9 +9,9 @@ const Chatkit = require("@pusher/chatkit-server");
 
 const saltRounds = 10; //number of times to salt password hash
 
-const User = require('../../models/user.js'); //require the user schema
-const Service = require('../../models/service.js');
-const Comments = require('../../models/comment.js');
+const User = require("../models/user.js"); //require the user schema
+const Service = require("../models/service.js");
+const Comments = require("../models/comment.js");
 
 
  // init chatkit
@@ -94,9 +94,9 @@ exports.user_login = (req, res, next) => {
   User.findOne({email: userEmail}).exec()
   .then(user => {
     // console.log("type: " + typeof user +" user:\n"+user);
-    if(user === {} || user === null || user === undefined) {
+    if (user === null || user === undefined) {
       return res.status(401).json({
-        message: 'Authentication failed'
+        message: "Authentication failed",
       });
     }
     bcrypt.compare(req.body.password, user.passwordHash, (err, result) => {

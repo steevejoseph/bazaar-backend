@@ -5,8 +5,8 @@ const imgur = require('imgur');
 imgur.setClientId('2ce55c3b8fb0ca4');
 imgur.setAPIUrl('https://api.imgur.com/3/');
 
-const Service = require('../../models/service.js');
-const User = require('../../models/user.js');
+const Service = require("../models/service.js");
+const User = require("../models/user.js");
 
 require("dotenv").config();
 mongoose.connect(process.env.MONGO_DB_ATLAS_URL, { useNewUrlParser: true });

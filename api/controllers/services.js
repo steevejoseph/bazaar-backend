@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 require("dotenv").config();
 mongoose.connect(process.env.MONGO_DB_ATLAS_URL, { useNewUrlParser: true });
-const Service = require('../../models/service.js');
-const Comment = require('../../models/comment.js');
+const Service = require("../models/service.js");
+const Comment = require("../models/comment.js");
 exports.service_create = (req, res, next) => {
   
     // console.log(req.headers.authorization);
