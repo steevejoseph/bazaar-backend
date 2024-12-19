@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "engines": {
-    "node": ">=18.0.0"
+    "node": "18.x",
+    "pnpm": "8.x"
   },
   "scripts": {
     "dev": "node ./bin/www",
