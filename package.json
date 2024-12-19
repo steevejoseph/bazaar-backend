@@ -9,8 +9,8 @@
   "scripts": {
     "dev": "node ./bin/www",
     "start": "node ./bin/www",
-    "build": "cd frontend && npm install && npm run build",
-    "vercel-build": "npm install && cd frontend && npm install && npm run build"
+    "build": "cd frontend && pnpm install && pnpm run build",
+    "vercel-build": "pnpm install && cd frontend && pnpm install && pnpm run build"
   },
   "dependencies": {
     "@pusher/chatkit-client": "^1.2.0",
