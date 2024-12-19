@@ -26,6 +26,9 @@ importers:
       loaders.css:
         specifier: ^0.1.2
         version: 0.1.2
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       markdown-to-jsx:
         specifier: ^6.8.4
         version: 6.11.4(react@16.14.0)
