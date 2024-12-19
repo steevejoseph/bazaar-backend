@@ -68,3 +68,4 @@ export const MARKDOWN_OPTIONS = {
 
 export const tokenUrl = "https://us1.pusherplatform.io/services/chatkit_token_provider/v1/b90a149b-4af4-4243-9831-b133bff9a54e/token";
 export const instanceLocator = "v1:us1:b90a149b-4af4-4243-9831-b133bff9a54e";
+export const ROOT_URL = "/api";
