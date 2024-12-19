@@ -61,4 +61,4 @@ typings/
 .next
 
 # image uploads
-uploads/
+api/uploads/

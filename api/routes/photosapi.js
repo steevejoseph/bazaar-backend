@@ -7,7 +7,7 @@ const checkAuth = require('../middleware/check-auth.js');
 const photoCon = require('../controllers/photos.js');
 
 // make uploads folder in root of project.
-var imgdir = './uploads';
+var imgdir = "./api/uploads";
 if(!fs.existsSync(imgdir)){
   fs.mkdirSync(imgdir);
 }

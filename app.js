@@ -7,27 +7,24 @@ var mongoose = require('mongoose');
 var flash = require('connect-flash');
 var passport = require("passport");
 var session = require('express-session');
-var User = require("./models/user");
-var	LocalStrategy = require("passport-local");
-var bodyParser = require('body-parser');
+// var User = require("./models/user");
+// var	LocalStrategy = require("passport-local");
+// var bodyParser = require('body-parser');
 var cors = require("cors");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var servicesRouter = require('./routes/services');
+// var indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
+// var servicesRouter = require('./routes/services');
 const userAPI = require('./api/routes/usersapi');
-var servicesAPI = require('./api/routes/servicesapi');
-
-
-var photosAPI = require('./api/routes/photosapi');
-
+var servicesAPI = require("./api/routes/servicesapi");
+var photosAPI = require("./api/routes/photosapi");
 
 var app = express();
 const jwt = require('jsonwebtoken');
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// // view engine setup
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
 
 // database connection
 require("dotenv").config();
@@ -51,13 +48,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new LocalStrategy(User.authenticate()));
+// passport.use(new LocalStrategy(User.authenticate()));
 
 // Two more lines before we can start working on the routes
 // Responsible for encoding data and putting it back into the session
-passport.serializeUser(User.serializeUser());
-// Responsible for reading the session, taking data from the session and unencoding it
-passport.deserializeUser(User.deserializeUser());
+// passport.serializeUser(User.serializeUser());
+// // Responsible for reading the session, taking data from the session and unencoding it
+// passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next) {
 
@@ -74,17 +71,18 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/services', servicesRouter);
+// app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+// app.use('/services', servicesRouter);
 app.use('/api/users', userAPI);
 app.use('/api/services', servicesAPI);
 app.use('/api/photos', photosAPI);
 
-app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname, "frontend/build")));
 
-app.get('/', function(req, res, next) {
-  res.sendFile(path.join(__dirname, 'client', 'index.html'));
+// Anything that doesn't match the above, send back index.html
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "frontend/build", "index.html"));
 });
 
 // catch 404 and forward to error handler

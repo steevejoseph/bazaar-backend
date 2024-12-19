@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "dev": "node ./bin/www",
+    "start": "npm run build:frontend && node ./bin/www",
+    "build:frontend": "cd frontend && npm run build"
   },
   "dependencies": {
     "@pusher/chatkit-client": "^1.2.0",
