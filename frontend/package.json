@@ -11,7 +11,7 @@
     "font-awesome": "^4.7.0",
     "loaders.css": "^0.1.2",
     "lodash": "^4.17.21",
-    "markdown-to-jsx": "^6.8.4",
+    "markdown-to-jsx": "^7.4.0",
     "react": "^16.6.3",
     "react-countup": "^4.0.0",
     "react-dom": "^16.6.3",
