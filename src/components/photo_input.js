@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { ROOT_URL } from "../constants/index";
 import axios from 'axios';
 
-const ROOT_URL = 'https://bazaar-backend.herokuapp.com/api';
 
 class PhotoInput extends Component {
 	constructor(props) {
