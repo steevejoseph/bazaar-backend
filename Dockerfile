@@ -4,33 +4,37 @@ FROM node:18-alpine AS builder
 # Set working directory
 WORKDIR /app
 
-# Install pnpm globally
-RUN npm install -g npm
+# Install pnpm
+RUN npm install -g pnpm@8.15.4
 
 # Copy package files for better caching
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml* ./
 COPY frontend/package.json frontend/
 
 # Install dependencies
-RUN npm install
+RUN pnpm install
 WORKDIR /app/frontend
-RUN npm install
+RUN pnpm install
 WORKDIR /app
 
 # Copy source files
 COPY . .
 
-# Build frontend
-RUN cd frontend && npm run build
+# Build frontend with explicit environment
+ENV NODE_ENV=production
+RUN cd frontend && NODE_OPTIONS="--max_old_space_size=4096" pnpm run build
 
 # Production stage
 FROM node:18-alpine
 
+# Install pnpm
+RUN npm install -g pnpm@8.15.4
+
 # Install production dependencies only
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
-RUN npm install -g npm && npm install --prod
+COPY package.json pnpm-lock.yaml* ./
+RUN pnpm install --prod
 
 # Copy built frontend and necessary files
 COPY --from=builder /app/frontend/build ./frontend/build
@@ -50,4 +54,4 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 # Start the application
-CMD ["npm", "start"] 
+CMD ["pnpm", "start"] 
